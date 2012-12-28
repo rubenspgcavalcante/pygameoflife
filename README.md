@@ -11,15 +11,16 @@ It's a celular automaton wich follows a few rules
 *    For a space that is 'populated':
     *    Each cell with one or no neighbors dies, as if by loneliness. 
     *    Each cell with four or more neighbors dies, as if by overpopulation. 
-    *    Each cell with two or three neighbors survives.
+    *    Each cell with two or three neighbors survives.  
 
 *    For a space that is 'empty' or 'unpopulated'
     *   Each cell with three neighbors becomes populated. 
 
 ##Dependeces
+Tested in Ubuntu 12.10 LTS 64 wich the following versions
 *    python >= 2.6.x
-*    pygame
-*    zip
+*    pygame >= 1.9.x
+*    zip >= 3.0
 
 To download just do *make setup* (need user to be root or have sudo privileges)
 
