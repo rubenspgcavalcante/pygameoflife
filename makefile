@@ -24,7 +24,7 @@ clean:
 
 install: isroot
 	mkdir -p /usr/share/pygameoflife 
-	cp game-of-life.zip /usr/share/pygameoflife/ 
+	cp pygame-of-life.zip /usr/share/pygameoflife/ 
 	echo "python pygame-of-life.zip run" >> /usr/share/pygameoflife/run.sh 
 	ln -s --force /usr/share/pygameoflife/run.sh /usr/games/pygameoflife 
 	chmod +x /usr/games/pygameoflife
