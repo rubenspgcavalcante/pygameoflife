@@ -6,4 +6,7 @@ class GenerationsController:
     def __init__(self):
         return
 
+    def nextGeneration(self):
+
+        pass
     

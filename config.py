@@ -5,7 +5,7 @@ class Config(object):
         config = {
             "game": {
                 "window-size": (1024, 768),
-                "fps": 10,
+                "fps": 100,
                 "version": "0.01a"
             },
             "population": {

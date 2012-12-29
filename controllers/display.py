@@ -17,17 +17,19 @@ class DisplayController(object):
         pygame.display.set_icon(Resource.image("icon"))
         pygame.display.set_caption(Resource.get("display", "title"))
 
+        self.habitat = Habitat(self.screen)
+
     def getScreen(self):
         return self.screen
 
     def update(self):
         pygame.time.wait(Resource.get("display", "sleep"))
+        self.habitat.nextGeneration()
         pygame.display.update()
 
+
     def loadView(self):
-        habitat = Habitat(self.screen)
-        habitat.generateFirstPopulation()
+        
+        self.habitat.generateFirstPopulation()
 
-        args = {"habitat": habitat}
-
-        self.view.load(self, args)
+        self.view.load(self, args=None)

@@ -32,7 +32,7 @@ class Resource(object):
                     "icon": "",
                     "icon-size": (64, 64),
                     "title": "PyGame of the Life",
-                    "sleep": 100
+                    "sleep": 50
                 },
                 
                 "cell": {
@@ -41,6 +41,7 @@ class Resource(object):
                 },
 
                 "habitat": {
+                    "filename": "habitat.png",
                     "size": Config.get("game", "window-size"),
                     "frames": 1,
                 },
@@ -180,5 +181,5 @@ class Resource(object):
                 blank.paste(sqr, (i*16, j*16))
 
         print "generating background"
-        blank.save(proccessedDir + "bg.png")
+        blank.save(proccessedDir + Resource.get("habitat", "filename"))
 

@@ -22,6 +22,12 @@ class Cell(object):
     def is_dead(self):
         return self.life == self.lifeRange["min"]
 
+    def kill(self):
+        self.change_life(-self.lifeRange["max"])
+
+    def rebirth(self):
+        self.change_life(self.lifeRange["max"])
+
     def change_life(self, value):
         """Increase/Decrease life of the cell, limited by max/min life
 
