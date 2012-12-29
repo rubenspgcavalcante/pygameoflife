@@ -49,7 +49,7 @@ class Habitat(object):
             for j in range(self.gridSize[1]):
                 if Config.get("population", "first-percentage") >= random():
                     position = self.squarePosition((i,j))
-                    self.grid[i][j] = Cell(self.screen, position)
+                    self.grid[i][j] = Cell(self.screen, position, life=1)
 
 
     def check_neighborhood(self, position):
@@ -136,14 +136,15 @@ class Habitat(object):
             lin, col = pos
             if self.grid[lin][col] == None:
                 pixelPos = self.squarePosition(pos)
-                self.grid[lin][col] = Cell(self.screen, pixelPos)
+                self.grid[lin][col] = Cell(self.screen, pixelPos, life=1)
 
             else:
-                self.grid[lin][col].rebirth()
+                self.grid[lin][col].change_life(+1)
                 self.grid[lin][col].update()
 
         for pos in lists["stables"]:
             lin, col = pos
+            self.grid[lin][col].change_life(+1)
             self.grid[lin][col].update()
 
 

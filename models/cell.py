@@ -1,3 +1,5 @@
+from math import floor
+
 import pygame
 from pygame.locals import *
 
@@ -6,18 +8,21 @@ from resources.manager import Resource
 class Cell(object):
     """Entity Cell, represents a living/dead cell"""
 
-    def __init__(self, screen, position):
+    def __init__(self, screen, position, life=None):
         self.id = id(self)
 
         self.lifeRange = {"min": 0, "max": 10}
-        self.life = self.lifeRange["max"]
+
+        if life is not None:
+            self.life = life
+        else:
+            self.life = self.lifeRange["max"]
 
         self.images = Resource.sprite("cell")
-        self.image = self.get_image()
         self.position = position
         self.screen = screen
 
-        screen.blit(self.image, position)
+        screen.blit(self.get_image(), position)
 
     def is_dead(self):
         return self.life == self.lifeRange["min"]
@@ -50,10 +55,10 @@ class Cell(object):
         his life"""
 
         #Using proportional state
-        prop = (Resource.get("cell", "frames") * self.life)/self.lifeRange["max"]
-        state = int(prop)
+        prop = (self.lifeRange["max"] * self.life)/Resource.get("cell", "frames")
+        state = int(floor(prop))+1
 
-        return self.images[state-1]
+        return self.images[state]
 
     def update(self):
         """Updates the image of this cell in the screen. If the cell is dead

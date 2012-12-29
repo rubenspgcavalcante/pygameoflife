@@ -32,7 +32,7 @@ class Resource(object):
                     "icon": "",
                     "icon-size": (64, 64),
                     "title": "PyGame of the Life",
-                    "sleep": 50
+                    "sleep": 10
                 },
                 
                 "cell": {
