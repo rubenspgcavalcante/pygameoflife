@@ -174,10 +174,15 @@ class Resource(object):
         proccessedDir = basePath + Resource.get("general", "processeddir")
 
         sqr = Image.open(src + "background/block.png")
-        blank = Image.new("RGBA", (1024, 768))
 
-        for i in range(64):
-            for j in range(48):
+        size = Config.get("game", "window-size")
+        blank = Image.new("RGBA", size)
+
+        lin = size[0]/16
+        col = size[0]/16
+
+        for i in range(lin):
+            for j in range(col):
                 blank.paste(sqr, (i*16, j*16))
 
         print "generating background"
