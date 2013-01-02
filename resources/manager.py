@@ -59,6 +59,19 @@ class Resource(object):
             return None
 
     @staticmethod
+    def _getZipPackage():
+        zipPack = None
+        try:
+            #Searching for local zipfile
+            zipPack = ZipFile(os.getcwd() + "/pygame-of-life.zip")
+
+        except IOError:
+            #The game is installed and is not called directly
+            zipPack = ZipFile(Config.get("game", "install-dir") + "pygame-of-life.zip")
+
+        return zipPack
+
+    @staticmethod
     def sprite(entity):
         """
         Loads a set of images (sprite) wich forms a animation that represents
@@ -80,7 +93,8 @@ class Resource(object):
             path =  Resource.get("general", "rootdir") + \
                     Resource.get("general", "processeddir")
 
-            zipPack = ZipFile(os.getcwd() + "/pygame-of-life.zip")
+            zipPack = Resource._getZipPackage()
+
             data = zipPack.read(path + entity + ".png")
             data_io = StringIO(data)
             
@@ -114,7 +128,8 @@ class Resource(object):
             path =  Resource.get("general", "rootdir") + \
                     Resource.get("general", "processeddir")
 
-            zipPack = ZipFile(os.getcwd() + "/pygame-of-life.zip")
+            zipPack = Resource._getZipPackage()
+
             data = zipPack.read(path + entity + ".png")
             data_io = StringIO(data)
             

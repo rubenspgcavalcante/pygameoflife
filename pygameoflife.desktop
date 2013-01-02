@@ -1,0 +1,21 @@
+[Desktop Entry]
+Version=1.0
+Name=PyGame of Life
+Name[pt_BR]=PyJogo da Vida
+
+Comment=John Conway Game of Life implementation
+Comment[pt]=Implementação do John Conway Game of Life
+
+GenericName=Population Simulator
+GenericName[pt_BR]=Simulador de População
+
+Keywords=Game;PyGame;Python;Life
+Keywords[pt_BR]=Jogo;PyGame;Python;Vida
+
+Exec=pygameoflife
+Terminal=true
+Type=Application
+Icon=/usr/share/pygameoflife/icon.png
+Categories=GNOME;GTK;Game;Python;
+StartupNotify=true
+Actions=ClearCache;

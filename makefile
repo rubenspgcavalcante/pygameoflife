@@ -25,13 +25,16 @@ clean:
 install: isroot
 	mkdir -p /usr/share/pygameoflife 
 	cp pygame-of-life.zip /usr/share/pygameoflife/ 
-	echo "python pygame-of-life.zip run" >> /usr/share/pygameoflife/run.sh 
+	cp resources/data/icon.png /usr/share/pygameoflife/ 
+	cp pygameoflife.desktop /usr/share/applications/
+	echo "python /usr/share/pygameoflife/pygame-of-life.zip run" > /usr/share/pygameoflife/run.sh 
 	ln -s --force /usr/share/pygameoflife/run.sh /usr/games/pygameoflife 
 	chmod +x /usr/games/pygameoflife
 
 uninstall: isroot
 	rm -rf /usr/share/pygameoflife
 	rm -f /usr/games/pygameoflife
+	rm -f /usr/share/applications/pygameoflife.desktop
 
 setup: isroot
 	#Dowload dependeces

@@ -6,10 +6,11 @@ class Config(object):
             "game": {
                 "window-size": (1024, 768),
                 "fps": 100,
-                "version": "0.01a"
+                "version": "0.01a",
+                "install-dir": "/usr/share/pygameoflife",
             },
             "population": {
-                "first-percentage": 0.2
+                "first-percentage": 0.2,
             }
         }
 
