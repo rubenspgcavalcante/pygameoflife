@@ -12,10 +12,10 @@ It's a celular automaton wich follows a few rules
     *    Each cell with one or no neighbors dies, as if by loneliness. 
     *    Each cell with four or more neighbors dies, as if by overpopulation. 
     *    Each cell with two or three neighbors survives.  
-
+  
 *    For a space that is 'empty' or 'unpopulated'
     *   Each cell with three neighbors becomes populated. 
-
+  
 ##Dependeces
 Tested in Ubuntu 12.10 LTS 64 wich the following versions
 *    python >= 2.6.x

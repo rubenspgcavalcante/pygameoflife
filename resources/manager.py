@@ -25,14 +25,15 @@ class Resource(object):
                     "basePath": basePath,
                     "rootdir": "resources/",
                     "sourcedir": "src/",
-                    "processeddir": "data/"
+                    "processeddir": "cache/",
+                    "staticdir": "static/",
                 },
 
                 "display":{
                     "icon": "",
                     "icon-size": (64, 64),
                     "title": "PyGame of the Life",
-                    "sleep": 10
+                    "sleep": 10,
                 },
                 
                 "cell": {
@@ -63,7 +64,10 @@ class Resource(object):
         zipPack = None
         try:
             #Searching for local zipfile
-            zipPack = ZipFile(os.getcwd() + "/pygame-of-life.zip")
+            dirlen = len(Resource.get("general", "rootdir"))
+            path = os.path.dirname(os.path.realpath(__file__))[:-dirlen]
+
+            zipPack = ZipFile(path)
 
         except IOError:
             #The game is installed and is not called directly
@@ -111,22 +115,31 @@ class Resource(object):
             return images
 
     @staticmethod
-    def image(entity):
+    def image(entity, static=False):
         """
         Loads an single image that represents the entity in the game
         """
 
-        path =  Resource.get("general", "basePath") + \
-                Resource.get("general", "rootdir") + \
-                Resource.get("general", "processeddir")
+        path =  Resource.get("general", "basePath") + Resource.get("general", "rootdir")
+
+        if static:
+            path += Resource.get("general", "staticdir")
+
+        else:
+            path += Resource.get("general", "processeddir")
 
         try:
             singleImg = pygame.image.load(path + entity + ".png").convert_alpha()
 
         except pygame.error:
             #Path in the zip file
-            path =  Resource.get("general", "rootdir") + \
-                    Resource.get("general", "processeddir")
+            path =  Resource.get("general", "rootdir")
+
+            if static:            
+                path += Resource.get("general", "staticdir")
+
+            else:
+                path += Resource.get("general", "processeddir")
 
             zipPack = Resource._getZipPackage()
 

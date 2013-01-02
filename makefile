@@ -7,6 +7,7 @@ all: build clean
 
 build:
 	python $(FLAGS)
+	python __main__.py genimg
 	mkdir -p build
 	cp --parents ./*.pyc build/
 	cp --parents ./models/*.pyc build/
@@ -14,7 +15,8 @@ build:
 	cp --parents ./controllers/*.pyc build/
 	cp --parents ./helpers/*.pyc build/
 	cp --parents ./resources/*.pyc build/
-	cp --parents ./resources/data/*.png build/
+	cp --parents ./resources/cache/*.png build/
+	cp --parents ./resources/static/*.png build/
 
 	cd build/ && zip -r9 ../pygame-of-life * && cd ..
 
@@ -25,7 +27,7 @@ clean:
 install: isroot
 	mkdir -p /usr/share/pygameoflife 
 	cp pygame-of-life.zip /usr/share/pygameoflife/ 
-	cp resources/data/icon.png /usr/share/pygameoflife/ 
+	cp resources/static/icon.png /usr/share/pygameoflife/ 
 	cp pygameoflife.desktop /usr/share/applications/
 	echo "python /usr/share/pygameoflife/pygame-of-life.zip run" > /usr/share/pygameoflife/run.sh 
 	ln -s --force /usr/share/pygameoflife/run.sh /usr/games/pygameoflife 

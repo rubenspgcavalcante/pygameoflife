@@ -13,7 +13,7 @@ Keywords=Game;PyGame;Python;Life
 Keywords[pt_BR]=Jogo;PyGame;Python;Vida
 
 Exec=pygameoflife
-Terminal=true
+Terminal=false
 Type=Application
 Icon=/usr/share/pygameoflife/icon.png
 Categories=GNOME;GTK;Game;Python;

@@ -14,7 +14,7 @@ class DisplayController(object):
         pygame.init()
         self.view = MainView()
         self.screen = pygame.display.set_mode(Config.get("game", "window-size"))
-        pygame.display.set_icon(Resource.image("icon"))
+        pygame.display.set_icon(Resource.image("icon", static=True))
         pygame.display.set_caption(Resource.get("display", "title"))
 
         self.habitat = Habitat(self.screen)
