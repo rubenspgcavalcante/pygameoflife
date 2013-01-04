@@ -1,4 +1,5 @@
 *.pyc
 *~
 resources/cache/*
+!resources/cache/.gitkeep
 pygame-of-life.zip
