@@ -1,4 +1,6 @@
 import sys
+import os
+os.environ['SDL_VIDEO_CENTERED'] = '1'
 
 import pygame
 from pygame.locals import *
@@ -19,7 +21,7 @@ class MainView(object):
         displayController: DisplayController instance
         args: Dict with arguments to the view
         """
-
+        
         pygame.init()
 
         while True:

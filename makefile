@@ -18,6 +18,7 @@ build:
 	cp --parents ./resources/cache/*.png build/
 	cp --parents ./resources/static/*.png build/
 
+	rm pygame-of-life.zip -f
 	cd build/ && zip -r9 ../pygame-of-life * && cd ..
 
 clean:

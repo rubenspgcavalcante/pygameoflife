@@ -33,7 +33,7 @@ class Resource(object):
                     "icon": "",
                     "icon-size": (64, 64),
                     "title": "PyGame of the Life",
-                    "sleep": 10,
+                    "sleep": 0,
                 },
                 
                 "cell": {
@@ -43,7 +43,7 @@ class Resource(object):
 
                 "habitat": {
                     "filename": "habitat.png",
-                    "size": Config.get("game", "window-size"),
+                    "size": Config().get("game", "window-size"),
                     "frames": 1,
                 },
 
@@ -71,7 +71,7 @@ class Resource(object):
 
         except IOError:
             #The game is installed and is not called directly
-            zipPack = ZipFile(Config.get("game", "install-dir") + "pygame-of-life.zip")
+            zipPack = ZipFile(Config().get("game", "install-dir") + "pygame-of-life.zip")
 
         return zipPack
 
@@ -151,7 +151,6 @@ class Resource(object):
         finally:
             return singleImg
 
-
     @staticmethod
     def generateSprites():
         """
@@ -203,7 +202,7 @@ class Resource(object):
 
         sqr = Image.open(src + "background/block.png")
 
-        size = Config.get("game", "window-size")
+        size = Config().get("game", "window-size")
         blank = Image.new("RGBA", size)
 
         lin = size[0]/16

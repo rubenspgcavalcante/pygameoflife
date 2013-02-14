@@ -16,7 +16,7 @@ class Habitat(object):
     Represented by a grid with the size of the window
     """
     def __init__(self, screen):
-        winSize = Config.get("game", "window-size")
+        winSize = Config().get("game", "window-size")
 
         #Initializing a (i, j) list
         lins = int(winSize[0]/16)
@@ -47,7 +47,7 @@ class Habitat(object):
     def generateFirstPopulation(self):
         for i in range(self.gridSize[0]):
             for j in range(self.gridSize[1]):
-                if Config.get("population", "first-percentage") >= random():
+                if Config().get("population", "first-percentage") >= random():
                     position = self.squarePosition((i,j))
                     self.grid[i][j] = Cell(self.screen, position, life=1)
 
@@ -126,27 +126,31 @@ class Habitat(object):
         lists = self.who_die_or_birth()
         self.update()
 
-        #Kill cells
-        for pos in lists["blacklist"]:
-            lin, col = pos
-            self.grid[lin][col].kill()
-            self.grid[lin][col].update()
-
-        for pos in lists["whitelist"]:
-            lin, col = pos
-            if self.grid[lin][col] == None:
-                pixelPos = self.squarePosition(pos)
-                self.grid[lin][col] = Cell(self.screen, pixelPos, life=1)
-
-            else:
-                self.grid[lin][col].change_life(+1)
+        for frame in range(Resource.get("cell", "frames")):
+            #Kill cells
+            for pos in lists["blacklist"]:
+                lin, col = pos
+                self.grid[lin][col].change_life(-2)
                 self.grid[lin][col].update()
 
-        for pos in lists["stables"]:
-            lin, col = pos
-            self.grid[lin][col].change_life(+1)
-            self.grid[lin][col].update()
+            #Birth cells
+            for pos in lists["whitelist"]:
+                lin, col = pos
+                if self.grid[lin][col] == None:
+                    pixelPos = self.squarePosition(pos)
+                    self.grid[lin][col] = Cell(self.screen, pixelPos, life=0)
 
+                else:
+                    self.grid[lin][col].change_life(+1)
+                    self.grid[lin][col].update()
+
+            for pos in lists["stables"]:
+                lin, col = pos
+                self.grid[lin][col].change_life(+10)
+                self.grid[lin][col].update()
+
+            pygame.display.update()
+            pygame.time.wait(Resource.get("display", "sleep"))
 
     def update(self):
         self.screen.blit(self.image, (0,0))
