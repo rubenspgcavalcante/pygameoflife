@@ -13,7 +13,7 @@ class Launcher(QtGui.QMainWindow):
         # Set up the user interface from Designer.
         uiPath =  Resource.get("general", "basePath") + Resource.get("general", "rootdir") + "qt/launcher.ui"
 
-        self.ui = uic.loadUi(uiPath)
+        self.ui = Resource.getQtUI("launcher")
         self.setDefaults()
 
         self.center()

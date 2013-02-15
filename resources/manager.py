@@ -5,6 +5,7 @@ from zipfile import ZipFile
 from cStringIO import StringIO
 
 import pygame
+from PyQt4 import uic
 
 from config import Config
 from helpers.struct import Struct
@@ -27,6 +28,7 @@ class Resource(object):
                     "sourcedir": "src/",
                     "processeddir": "cache/",
                     "staticdir": "static/",
+                    "qtui": "qt/",
                 },
 
                 "display":{
@@ -150,6 +152,35 @@ class Resource(object):
 
         finally:
             return singleImg
+
+    @staticmethod
+    def getQtUI(uiName):
+        """
+        Loads a Qt UI file
+        """
+        path =  Resource.get("general", "basePath") + \
+                Resource.get("general", "rootdir") + \
+                Resource.get("general", "qtui")
+
+        try:
+            qtUI = uic.loadUi(path + uiName + ".ui")
+
+        except IOError:
+
+            #Path in the zip file
+            path =  Resource.get("general", "rootdir") + \
+                    Resource.get("general", "qtui")
+
+            zipPack = Resource._getZipPackage()
+
+            data = zipPack.read(path + uiName + ".ui")
+            data_io = StringIO(data)
+
+            qtUI = uic.loadUi(data_io)
+
+        finally:
+
+            return qtUI
 
     @staticmethod
     def generateSprites():

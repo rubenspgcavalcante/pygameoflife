@@ -15,15 +15,20 @@ build:
 	cp --parents ./controllers/*.pyc build/
 	cp --parents ./helpers/*.pyc build/
 	cp --parents ./resources/*.pyc build/
-	cp --parents ./resources/cache/*.png build/
-	cp --parents ./resources/static/*.png build/
 
-	rm pygame-of-life.zip -f
-	cd build/ && zip -r9 ../pygame-of-life * && cd ..
+	mkdir freezed
+	cxfreeze __main__.py --target-dir freezed --target-name pygameoflife
+
+	cp --parents ./resources/cache/*.png freezed/
+	cp --parents ./resources/static/*.png freezed/
+	cp --parents ./resources/qt/*.ui freezed/
+
+	cd freezed && zip -9urT ../pygame-of-life * && cd ..
 
 clean:
 	find . -name "*.pyc" -exec rm -rf {} \;
 	rm build/ -rf
+	rm freezed/ -rf
 
 install: isroot
 	mkdir -p /usr/share/pygameoflife 
