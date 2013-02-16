@@ -4,4 +4,4 @@ build
 freeze
 resources/cache/*
 !resources/cache/.gitkeep
-pygame-of-life.zip
+!releases/*.zip
