@@ -61,6 +61,3 @@ isroot:
 		echo "ERROR: Requires being root or sudo permissions" ; \
 	    exit 1 ; \
 	fi
-
-print:
-	echo Freeze-$(CX_FREEZE_VER)

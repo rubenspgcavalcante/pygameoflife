@@ -1,0 +1,15 @@
+script: "sudo make install"
+
+before_install:
+  - sudo make setup
+  - make
+
+python:
+  - "2.7"
+
+compiler:
+  - gcc
+
+branches:
+  only:
+    - master
