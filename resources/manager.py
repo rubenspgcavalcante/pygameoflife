@@ -13,9 +13,15 @@ class Resource(object):
     @staticmethod
     def get(obj, attr=None):
 
+        path = os.path.dirname(os.path.abspath(__file__))+"/"
+
+        if not os.path.exists(path):
+            #If compiled, the binarie is represented like a dir, so we must remove it
+            path = path.replace("/run-pygameoflife", "").replace("/manager.pyc", "")
+
         resource = {
                 "general":{
-                    "rootdir": "resources/",
+                    "resourcesPath": path,
                     "sourcedir": "src/",
                     "processeddir": "cache/",
                     "staticdir": "static/",
@@ -60,7 +66,7 @@ class Resource(object):
         """
 
         path =  \
-                Resource.get("general", "rootdir") + \
+                Resource.get("general", "resourcesPath") + \
                 Resource.get("general", "processeddir")
 
         sprite = pygame.image.load(path + entity + ".png").convert_alpha()
@@ -80,7 +86,7 @@ class Resource(object):
         Loads an single image that represents the entity in the game
         """
 
-        path = Resource.get("general", "rootdir")
+        path = Resource.get("general", "resourcesPath")
 
         if static:
             path += Resource.get("general", "staticdir")
@@ -96,7 +102,7 @@ class Resource(object):
         """
         Loads a Qt UI file
         """
-        path =  Resource.get("general", "rootdir") + \
+        path =  Resource.get("general", "resourcesPath") + \
                 Resource.get("general", "qtui")
 
         qtUI = uic.loadUi(path + uiName + ".ui")
@@ -112,7 +118,7 @@ class Resource(object):
         The frames must be numered XX.png in order of the animation.
         """
 
-        basePath = Resource.get("general", "rootdir")
+        basePath = Resource.get("general", "resourcesPath")
         src = basePath + Resource.get("general", "sourcedir")
         proccessedDir = basePath + Resource.get("general", "processeddir")
 
@@ -148,7 +154,7 @@ class Resource(object):
         Generates the background grid of the game, made up from a
         16x16 image.
         """
-        basePath = Resource.get("general", "rootdir")
+        basePath = Resource.get("general", "resourcesPath")
         src = basePath + Resource.get("general", "sourcedir")
         proccessedDir = basePath + Resource.get("general", "processeddir")
 

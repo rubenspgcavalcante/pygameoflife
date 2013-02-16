@@ -4,6 +4,7 @@ CURRENT_DIR = ${PWD##*/}
 APT_DEPENDECES= gcc python python-dev python-imaging python-pygame python-qt4 zip
 CX_FREEZE_VER = 4.3.1
 CX_FREEZE_LINK = "http://downloads.sourceforge.net/project/cx-freeze/$(CX_FREEZE_VER)/cx_Freeze-$(CX_FREEZE_VER).tar.gz"
+EXCLUDE_MODEULES = tcl,ttk,Tkinter,setuptolls,numpy
 
 # -- Rules -- #
 all: build clean
@@ -20,7 +21,7 @@ build:
 	cp --parents ./resources/*.pyc build/
 
 	mkdir -p freezed
-	cxfreeze __main__.py --target-dir freezed --target-name pygameoflife --exclude-modules=tcl,ttk,Tkinter
+	cxfreeze __main__.py --target-dir freezed --target-name run-pygameoflife --exclude-modules=$(EXCLUDE_MODEULES)
 
 	cp --parents ./resources/cache/*.png freezed/
 	cp --parents ./resources/static/*.png freezed/
@@ -40,7 +41,7 @@ install: isroot
 	rm -f /usr/share/pygame-of-life.zip
 	cp resources/static/icon.png /usr/share/pygameoflife/
 	cp pygameoflife.desktop /usr/share/applications/
-	ln -s --force /usr/share/pygameoflife/pygameoflife /usr/games/pygameoflife 
+	ln -s --force /usr/share/pygameoflife/run-pygameoflife /usr/games/pygameoflife 
 	chmod +x /usr/games/pygameoflife
 
 uninstall: isroot

@@ -12,7 +12,7 @@ GenericName[pt_BR]=Simulador de População
 Keywords=Game;PyGame;Python;Life
 Keywords[pt_BR]=Jogo;PyGame;Python;Vida
 
-Exec=pygameoflife
+Exec=pygameoflife >> ./usr/games/pygameoflife
 Terminal=false
 Type=Application
 Icon=/usr/share/pygameoflife/icon.png

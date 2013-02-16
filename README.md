@@ -1,6 +1,6 @@
 PyGame of Life 
-[![Build Status](https://travis-ci.org/rubenspgcavalcante/pygameoflife.png?branch=master)](https://travis-ci.org/rubenspgcavalcante/pygameoflife)
 ===========
+[![Build Status](https://travis-ci.org/rubenspgcavalcante/pygameoflife.png?branch=master)](https://travis-ci.org/rubenspgcavalcante/pygameoflife)
 
 ##About
 
@@ -16,6 +16,14 @@ It's a celular automaton wich follows a few rules
   
 *    For a space that is 'empty' or 'unpopulated'
     *   Each cell with three neighbors becomes populated. 
+
+***
+
+##Download and test
+Just unzip and run the the "run-pygameoflife" binaries.  
+  
+###Current Releases
+[Linux amd64](https://raw.github.com/rubenspgcavalcante/pygameoflife/master/releases/pygame-of-life.zip)
   
 ##Dependeces
 Tested in Ubuntu 12.10 LTS 64 wich the following versions
