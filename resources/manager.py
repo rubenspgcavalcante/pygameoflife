@@ -1,8 +1,6 @@
 import os
 import sys
 import Image
-from zipfile import ZipFile
-from cStringIO import StringIO
 
 import pygame
 from PyQt4 import uic
@@ -15,15 +13,8 @@ class Resource(object):
     @staticmethod
     def get(obj, attr=None):
 
-        #If calling directly the __main__.py, don't put a absolute basePath
-        if sys.argv[0] not in ("__main__.py", "__main__.pyc"):
-            basePath = os.path.dirname(sys.argv[0])+"/"
-        else:
-            basePath = "./"
-
         resource = {
                 "general":{
-                    "basePath": basePath,
                     "rootdir": "resources/",
                     "sourcedir": "src/",
                     "processeddir": "cache/",
@@ -62,59 +53,26 @@ class Resource(object):
             return None
 
     @staticmethod
-    def _getZipPackage():
-        zipPack = None
-        try:
-            #Searching for local zipfile
-            dirlen = len(Resource.get("general", "rootdir"))
-            path = os.path.dirname(os.path.realpath(__file__))[:-dirlen]
-
-            zipPack = ZipFile(path)
-
-        except IOError:
-            #The game is installed and is not called directly
-            zipPack = ZipFile(Config().get("game", "install-dir") + "pygame-of-life.zip")
-
-        return zipPack
-
-    @staticmethod
     def sprite(entity):
         """
         Loads a set of images (sprite) wich forms a animation that represents
         an entity
         """
 
-        path =  Resource.get("general", "basePath") + \
+        path =  \
                 Resource.get("general", "rootdir") + \
                 Resource.get("general", "processeddir")
 
-        try:
-            sprite = pygame.image.load(path + entity + ".png").convert_alpha()
+        sprite = pygame.image.load(path + entity + ".png").convert_alpha()
 
-        except pygame.error:
-            #If the file wasn't found, probaly the software is in the zip package
-            #So we'll try to load into the zip file
+        images = []
+        spriteWidth, spriteHeight = sprite.get_size()
+        width, height =  Resource.get(entity, "size")
 
-            #Path in the zip file
-            path =  Resource.get("general", "rootdir") + \
-                    Resource.get("general", "processeddir")
+        for i in xrange(int(spriteWidth / width)):
+            images.append(sprite.subsurface((i * width, 0, width, height)))
 
-            zipPack = Resource._getZipPackage()
-
-            data = zipPack.read(path + entity + ".png")
-            data_io = StringIO(data)
-            
-            sprite = pygame.image.load(data_io, entity + ".png").convert_alpha()
-
-        finally:
-            images = []
-            spriteWidth, spriteHeight = sprite.get_size()
-            width, height =  Resource.get(entity, "size")
-
-            for i in xrange(int(spriteWidth / width)):
-                images.append(sprite.subsurface((i * width, 0, width, height)))
-
-            return images
+        return images
 
     @staticmethod
     def image(entity, static=False):
@@ -122,7 +80,7 @@ class Resource(object):
         Loads an single image that represents the entity in the game
         """
 
-        path =  Resource.get("general", "basePath") + Resource.get("general", "rootdir")
+        path = Resource.get("general", "rootdir")
 
         if static:
             path += Resource.get("general", "staticdir")
@@ -130,57 +88,20 @@ class Resource(object):
         else:
             path += Resource.get("general", "processeddir")
 
-        try:
-            singleImg = pygame.image.load(path + entity + ".png").convert_alpha()
-
-        except pygame.error:
-            #Path in the zip file
-            path =  Resource.get("general", "rootdir")
-
-            if static:            
-                path += Resource.get("general", "staticdir")
-
-            else:
-                path += Resource.get("general", "processeddir")
-
-            zipPack = Resource._getZipPackage()
-
-            data = zipPack.read(path + entity + ".png")
-            data_io = StringIO(data)
-            
-            singleImg = pygame.image.load(data_io, entity + ".png").convert_alpha()
-
-        finally:
-            return singleImg
+        singleImg = pygame.image.load(path + entity + ".png").convert_alpha()
+        return singleImg
 
     @staticmethod
     def getQtUI(uiName):
         """
         Loads a Qt UI file
         """
-        path =  Resource.get("general", "basePath") + \
-                Resource.get("general", "rootdir") + \
+        path =  Resource.get("general", "rootdir") + \
                 Resource.get("general", "qtui")
 
-        try:
-            qtUI = uic.loadUi(path + uiName + ".ui")
+        qtUI = uic.loadUi(path + uiName + ".ui")
 
-        except IOError:
-
-            #Path in the zip file
-            path =  Resource.get("general", "rootdir") + \
-                    Resource.get("general", "qtui")
-
-            zipPack = Resource._getZipPackage()
-
-            data = zipPack.read(path + uiName + ".ui")
-            data_io = StringIO(data)
-
-            qtUI = uic.loadUi(data_io)
-
-        finally:
-
-            return qtUI
+        return qtUI
 
     @staticmethod
     def generateSprites():
