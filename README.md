@@ -1,4 +1,5 @@
-PyGame of Life
+PyGame of Life 
+[![Build Status](https://travis-ci.org/rubenspgcavalcante/pygameoflife.png?branch=master)](https://travis-ci.org/rubenspgcavalcante/pygameoflife)
 ===========
 
 ##About
@@ -20,12 +21,25 @@ It's a celular automaton wich follows a few rules
 Tested in Ubuntu 12.10 LTS 64 wich the following versions
 *    python >= 2.6.x
 *    pygame >= 1.9.x
-*    zip >= 3.0
+*    pyqt >= 4.x
+*    PIL >= 1.1.x
+*    zip >= 3.x
+*    cx-Freeze >= 4.3.x
 
-To download just do *make setup* (need user to be root or have sudo privileges)
+##Building Installing
+The first command will download and install all dependeces. (Needs apt)  
+Then, will build and compile the code using cx-Freeze.  
+Finnally will be installed
+```
+sudo make setup
+make
+sudo make install
+```
 
-#Building and installing
-To build just do *make*, and install do *make install*
+to unistall, just run
+```
+sudo make unistall
+```
 
 ##Author
 
