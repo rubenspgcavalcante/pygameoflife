@@ -3,5 +3,7 @@
 build
 freeze
 resources/cache/*
+releases/
+!releases/.gitkeep
 !resources/cache/.gitkeep
 !releases/*.zip

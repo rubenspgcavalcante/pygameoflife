@@ -16,12 +16,16 @@ class Launcher(QtGui.QMainWindow):
 
         self.center()
         self.ui.show()
+        self.ui.setFixedSize(self.ui.size());
 
         self.connect(self.ui.populationSlider, QtCore.SIGNAL('valueChanged(int)'), self.updatePopLabel)
 
         # Connect up the buttons.
         self.connect(self.ui.submit, QtCore.SIGNAL("clicked()"), self.runGame)
         self.connect(self.ui.cancel, QtCore.SIGNAL("clicked()"), self.exit)
+
+        #Window close button
+        self.ui.closeEvent = self.exit
 
     def center(self):
         qr = self.ui.frameGeometry()
@@ -45,12 +49,11 @@ class Launcher(QtGui.QMainWindow):
 
         Config().set("game", "window-size", resolution)
         Config().set("population", "first-percentage", initialPop)
+        self.ui.destroy()
         self.qApp.quit()
 
-    def exit(self):
+    def exit(self, event=None):
         sys.exit()
 
     def updatePopLabel(self, value):
         self.ui.populationValueLabel.setText(str(value) + "%")
-
-

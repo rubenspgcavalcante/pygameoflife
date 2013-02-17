@@ -66,8 +66,7 @@ class Resource(object):
         an entity
         """
 
-        path =  \
-                Resource.get("general", "resourcesPath") + \
+        path =  Resource.get("general", "resourcesPath") + \
                 Resource.get("general", "processeddir")
 
         sprite = pygame.image.load(path + entity + ".png").convert_alpha()

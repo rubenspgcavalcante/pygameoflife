@@ -28,12 +28,14 @@ build:
 	cp --parents ./resources/*.pyc build/
 
 	mkdir -p freezed
-	cxfreeze __main__.py $(HIDE_CONSOLE_WIN32) --target-dir freezed --target-name $(BIN_NAME) --exclude-modules=$(EXCLUDE_MODEULES)
+	mkdir -p freezed/pygameoflife
+	cxfreeze __main__.py $(HIDE_CONSOLE_WIN32) --target-dir freezed/pygameoflife --target-name $(BIN_NAME) --exclude-modules=$(EXCLUDE_MODEULES)
 
-	cp --parents ./resources/cache/*.png freezed/
-	cp --parents ./resources/static/*.png freezed/
-	cp --parents ./resources/qt/*.ui freezed/
+	cp --parents ./resources/cache/*.png freezed/pygameoflife/
+	cp --parents ./resources/static/*.png freezed/pygameoflife/
+	cp --parents ./resources/qt/*.ui freezed/pygameoflife/
 
+	rm -f releases/pygame-of-life_$(OS_TYPE)_$(ARCH_TYPE).zip
 	cd freezed && zip -9urT ../releases/pygame-of-life_$(OS_TYPE)_$(ARCH_TYPE) * && cd ..
 
 clean:
@@ -44,7 +46,7 @@ clean:
 
 install: isroot
 	cp releases/pygame-of-life_$(OS_TYPE)_$(ARCH_TYPE).zip /usr/share/
-	unzip -uo /usr/share/pygame-of-life_$(OS_TYPE)_$(ARCH_TYPE).zip -d /usr/share/pygameoflife
+	unzip -uo /usr/share/pygame-of-life_$(OS_TYPE)_$(ARCH_TYPE).zip -d /usr/share
 	rm -f /usr/share/pygame-of-life_$(OS_TYPE)_$(ARCH_TYPE).zip
 	cp resources/static/icon.png /usr/share/pygameoflife/
 	cp pygameoflife.desktop /usr/share/applications/
