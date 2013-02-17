@@ -1,5 +1,6 @@
 import os
 import sys
+import re
 import Image
 
 import pygame
@@ -17,7 +18,7 @@ class Resource(object):
 
         if not os.path.exists(path):
             #If compiled, the binarie is represented like a dir, so we must remove it
-            path = path.replace("/run-pygameoflife", "").replace("/manager.pyc", "")
+            path = re.sub(r'((/|\\)run-pygameoflife(.exe)?)', "", path).replace("/manager.pyc", "")
 
         resource = {
                 "general":{

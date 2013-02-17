@@ -35,6 +35,7 @@ Tested in Ubuntu 12.10 LTS 64 wich the following versions
 *    pyqt >= 4.x
 *    PIL >= 1.1.x
 *    zip >= 3.x
+*    unzip >= 5.51.x
 *    cx-Freeze >= 4.3.x
 
 ##Building Installing
