@@ -19,14 +19,6 @@ It's a celular automaton wich follows a few rules
 
 ***
 
-##Download
-Just unzip and then execute "run-pygameoflife" binary.  
-  
-###Current Releases
-[Linux amd64](https://raw.github.com/rubenspgcavalcante/pygameoflife/master/releases/pygame-of-life_Linux_x86_64.zip)
-
-***
-
 #Compiling by the source
 ##Dependeces
 Tested in Ubuntu 12.10 LTS 64 wich the following versions
