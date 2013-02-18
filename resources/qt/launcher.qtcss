@@ -1,0 +1,28 @@
+QMainWindow {
+	background-image: url("resources/static/launcher-bg.png");
+	border: 1px solid #000;
+}
+
+QLabel {
+	color: #FFF;
+}
+
+QPushButton {
+	border: 1px solid #000;
+	border-radius: 5px;
+	color: #DDD;
+	background-image: url("resources/static/btn.png");
+}
+
+QPushButton:pressed {
+	color: #AAA;
+	background-image: url("resources/static/btn-pressed.png");
+}
+
+QPushButton:focus {
+    outline: none;
+}
+
+QStatusBar {
+	background-image: url("resources/static/btn.png");
+}
