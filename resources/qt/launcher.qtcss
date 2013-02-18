@@ -7,8 +7,47 @@ QLabel {
 	color: #FFF;
 }
 
-QPushButton {
+QComboBox {
+	border: 2px solid #000;
+	border-radius: 4px;
+	height: 24px;
+	background-image: url("resources/static/btn.png");	
+}
+
+QComboBox:on {
+	background-color: #222;	
+}
+
+QComboBox:!on {
+	background-color: #444;	
+}
+ 
+QComboBox::drop-down {
+	border: 2px solid #333;
+}
+ 
+QComboBox::down-arrow {
+	padding: 0px 5px 0px 5px;
+	image: url("");
+}
+ 
+QComboBox::down-arrow:on {
+ 
+}
+
+QComboBox QAbstractItemView {
+     border: 2px solid #FFF;
+     border-radius: 8px;
+ }
+
+QComboBox QListView {
+	background-color: #555;
 	border: 1px solid #000;
+	color: #FFF;
+} 
+
+QPushButton {
+	border: 1px solid #444;
 	border-radius: 5px;
 	color: #DDD;
 	background-image: url("resources/static/btn.png");
