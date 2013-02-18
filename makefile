@@ -4,6 +4,7 @@ CURRENT_DIR = ${PWD##*/}
 CX_FREEZE_VER = 4.3.1
 CX_FREEZE_LINK = "http://downloads.sourceforge.net/project/cx-freeze/$(CX_FREEZE_VER)/cx_Freeze-$(CX_FREEZE_VER).tar.gz"
 EXCLUDE_MODEULES = tcl,ttk,Tkinter,setuptolls,numpy
+APT_DEPENDECES= gcc python python-dev python-imaging python-pygame python-qt4 zip
 
 OS_TYPE = $(shell if [ `uname` = Linux ] ; then echo Linux ; else echo Win ; fi)
 
@@ -60,7 +61,7 @@ uninstall: isroot
 
 setup: isroot
 	#Dowload and install dependeces
-	apt-get install gcc python python-dev python-pygame python-qt4 zip
+	apt-get install $(APT_DEPENDECES)
 	wget $(CX_FREEZE_LINK) -t 5 -S -w 1 -N --trust-server-name
 	tar -zxvf cx_Freeze-$(CX_FREEZE_VER).tar.gz --overwrite
 	cd cx_Freeze-$(CX_FREEZE_VER) && python setup.py install

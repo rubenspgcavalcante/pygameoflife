@@ -7,6 +7,13 @@ PyGame of Life
 This game is based in the 'Game of Life' or simply 'Life' proposed by John Conway in a scientific [article](http://ddi.cs.uni-potsdam.de/HyFISCH/Produzieren/lis_projekt/proj_gamelife/ConwayScientificAmerican.htm) in 1970.  
 It's a celular automaton wich follows a few rules
 
+#Download
+To execute just run the "run-pygameoflife" executable.  
+The current releases are:
+
+*    [Windows i686](https://sourceforge.net/projects/pygame-of-life/files/pygame-of-life_Win_i686.zip/download)
+*    [Linux x86-64](http://sourceforge.net/projects/pygame-of-life/files/pygame-of-life_Linux_x86_64.zip/download)
+
 ###The Rules
 
 *    For a space that is 'populated':
