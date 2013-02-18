@@ -110,14 +110,14 @@ class Resource(object):
         return qtUI
 
     @staticmethod
-    def getQtCss(uiName):
+    def getQss(uiName):
         """
         Loads a Qt Style Sheet file
         """
         path =  Resource.get("general", "resourcesPath") + \
                 Resource.get("general", "qtui")
 
-        cssFile = open(path + uiName + ".qtcss", "r")
+        cssFile = open(path + uiName + ".qss", "r")
         qtCSS = cssFile.read().replace("\n", "")
         cssFile.close()
 

@@ -3,7 +3,7 @@ FLAGS = -m compileall .
 CURRENT_DIR = ${PWD##*/}
 CX_FREEZE_VER = 4.3.1
 CX_FREEZE_LINK = "http://downloads.sourceforge.net/project/cx-freeze/$(CX_FREEZE_VER)/cx_Freeze-$(CX_FREEZE_VER).tar.gz"
-EXCLUDE_MODEULES = tcl,ttk,Tkinter,setuptolls,numpy
+EXCLUDE_MODULES = tcl,ttk,Tkinter,setuptolls,numpy
 APT_DEPENDECES= gcc python python-dev python-imaging python-pygame python-qt4 zip
 
 OS_TYPE = $(shell if [ `uname` = Linux ] ; then echo Linux ; else echo Win ; fi)
@@ -30,7 +30,7 @@ build:
 
 	mkdir -p freezed
 	mkdir -p freezed/pygameoflife
-	cxfreeze __main__.py $(HIDE_CONSOLE_WIN32) --target-dir freezed/pygameoflife --target-name $(BIN_NAME) --exclude-modules=$(EXCLUDE_MODEULES)
+	cxfreeze __main__.py $(HIDE_CONSOLE_WIN32) --target-dir freezed/pygameoflife --target-name $(BIN_NAME) --exclude-modules=$(EXCLUDE_MODULES)
 
 	cp --parents ./resources/cache/*.png freezed/pygameoflife/
 	cp --parents ./resources/static/*.png freezed/pygameoflife/

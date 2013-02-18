@@ -12,6 +12,13 @@ QComboBox {
 	border-radius: 4px;
 	height: 24px;
 	background-image: url("resources/static/btn.png");	
+	color: #FFF;
+	margin: 0px;
+	padding-left: 50%;
+}
+
+QComboBox:focus {
+	color: #DDD;	
 }
 
 QComboBox:on {
