@@ -110,6 +110,20 @@ class Resource(object):
         return qtUI
 
     @staticmethod
+    def getQtCss(uiName):
+        """
+        Loads a Qt Style Sheet file
+        """
+        path =  Resource.get("general", "resourcesPath") + \
+                Resource.get("general", "qtui")
+
+        cssFile = open(path + uiName + ".qtcss", "r")
+        qtCSS = cssFile.read().replace("\n", "")
+        cssFile.close()
+
+        return qtCSS
+
+    @staticmethod
     def generateSprites():
         """
         Generates all the sprites merging the frames in the source directory

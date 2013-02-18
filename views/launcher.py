@@ -18,6 +18,8 @@ class Launcher(QtGui.QMainWindow):
         self.ui.show()
         self.ui.setFixedSize(self.ui.size());
 
+        self.ui.setStyleSheet(Resource.getQtCss("launcher"))
+
         self.connect(self.ui.populationSlider, QtCore.SIGNAL('valueChanged(int)'), self.updatePopLabel)
 
         # Connect up the buttons.
