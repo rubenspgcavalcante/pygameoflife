@@ -35,6 +35,7 @@ build:
 	cp --parents ./resources/cache/*.png freezed/pygameoflife/
 	cp --parents ./resources/static/*.png freezed/pygameoflife/
 	cp --parents ./resources/qt/*.ui freezed/pygameoflife/
+	cp --parents ./resources/qt/*.qss freezed/pygameoflife/
 
 	rm -f releases/pygame-of-life_$(OS_TYPE)_$(ARCH_TYPE).zip
 	cd freezed && zip -9urT ../releases/pygame-of-life_$(OS_TYPE)_$(ARCH_TYPE) * && cd ..

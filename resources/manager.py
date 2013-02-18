@@ -117,8 +117,10 @@ class Resource(object):
         path =  Resource.get("general", "resourcesPath") + \
                 Resource.get("general", "qtui")
 
+        basePath = Resource.get("general", "resourcesPath")
+
         cssFile = open(path + uiName + ".qss", "r")
-        qtCSS = cssFile.read().replace("\n", "")
+        qtCSS = cssFile.read().replace("\n", "").replace("%path%", basePath)
         cssFile.close()
 
         return qtCSS

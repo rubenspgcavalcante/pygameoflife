@@ -1,5 +1,5 @@
 QMainWindow {
-	background-image: url("resources/static/launcher-bg.png");
+	background-image: url("%path%static/launcher-bg.png");
 	border: 1px solid #000;
 }
 
@@ -11,7 +11,7 @@ QComboBox {
 	border: 2px solid #000;
 	border-radius: 4px;
 	height: 24px;
-	background-image: url("resources/static/btn.png");	
+	background-image: url("%path%static/btn.png");	
 	color: #FFF;
 	margin: 0px;
 	padding-left: 50%;
@@ -57,12 +57,12 @@ QPushButton {
 	border: 1px solid #444;
 	border-radius: 5px;
 	color: #DDD;
-	background-image: url("resources/static/btn.png");
+	background-image: url("%path%static/btn.png");
 }
 
 QPushButton:pressed {
 	color: #AAA;
-	background-image: url("resources/static/btn-pressed.png");
+	background-image: url("%path%static/btn-pressed.png");
 }
 
 QPushButton:focus {
@@ -70,5 +70,5 @@ QPushButton:focus {
 }
 
 QStatusBar {
-	background-image: url("resources/static/btn.png");
+	background-image: url("%path%static/btn.png");
 }
