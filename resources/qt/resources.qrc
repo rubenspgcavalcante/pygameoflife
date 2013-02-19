@@ -1,0 +1,11 @@
+<!DOCTYPE RCC><RCC version="1.0">
+	<qresource>
+		<file>images/launcher-bg.png</file>
+		<file>images/bg.png</file>
+		<file>images/button.png</file>
+		<file>images/button-press.png</file>
+		<file>images/arrow.png</file>
+		<file>images/sliderbar.png</file>
+		<file>images/sliderbar-active.png</file>
+	</qresource>
+</RCC>
