@@ -4,7 +4,7 @@ CURRENT_DIR = ${PWD##*/}
 CX_FREEZE_VER = 4.3.1
 CX_FREEZE_LINK = "http://downloads.sourceforge.net/project/cx-freeze/$(CX_FREEZE_VER)/cx_Freeze-$(CX_FREEZE_VER).tar.gz"
 EXCLUDE_MODULES = tcl,ttk,Tkinter,setuptolls,numpy
-APT_DEPENDECES= gcc python python-dev python-imaging python-pygame python-qt4 zip
+APT_DEPENDECES= gcc python python-dev python-imaging python-pygame python-qt4 pyqt4-dev-tools zip
 
 OS_TYPE = $(shell if [ `uname` = Linux ] ; then echo Linux ; else echo Win ; fi)
 
@@ -17,7 +17,7 @@ HIDE_CONSOLE_WIN32 = $(shell if [ `uname` != Linux ] ; then echo --base-name=Win
 # -- Rules -- #
 all: build clean
 
-build:
+build: qtresource
 	python $(FLAGS)
 	python __main__.py genimg
 	mkdir -p build
@@ -39,6 +39,9 @@ build:
 
 	rm -f releases/pygame-of-life_$(OS_TYPE)_$(ARCH_TYPE).zip
 	cd freezed && zip -9urT ../releases/pygame-of-life_$(OS_TYPE)_$(ARCH_TYPE) * && cd ..
+
+qtresource:
+	pyrcc4 -py2 resources/qt/resources.qrc -o resources/qtresources.py
 
 clean:
 	find . -name "*.pyc" -exec rm -rf {} \;

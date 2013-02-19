@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import os
 import sys
 import re
@@ -9,6 +11,7 @@ from PyQt4 import uic
 from config import Config
 from helpers.struct import Struct
 
+
 class Resource(object):
 
     @staticmethod
@@ -18,7 +21,7 @@ class Resource(object):
 
         if not os.path.exists(path):
             #If compiled, the binarie is represented like a dir, so we must remove it
-            path = re.sub(r'((/|\\)run-pygameoflife(.exe)?)', "", path).replace("/manager.pyc", "")
+            path = re.sub(r'((/|\\)run-pygameoflife(.exe)?)', "", path).replace("/manager.pyc", "").replace(" ", "\ ")
 
         resource = {
                 "general":{

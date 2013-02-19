@@ -1,5 +1,12 @@
 PyGame of Life 
 ===========
+
+<p align="center">
+  <img src="resources/static/icon.png"/>
+</p>
+
+##Build status
+Last build in Travis continuous integration  
 [![Build Status](https://travis-ci.org/rubenspgcavalcante/pygameoflife.png?branch=master)](https://travis-ci.org/rubenspgcavalcante/pygameoflife)
 
 ##About
@@ -42,6 +49,7 @@ Tested in Ubuntu 12.10 LTS 64 wich the following versions
 *    python >= 2.6.x
 *    pygame >= 1.9.x
 *    pyqt >= 4.x
+*    pyrcc4-dev-tools >= 4.8.x
 *    PIL >= 1.1.x
 *    zip >= 3.x
 *    unzip >= 5.51.x
