@@ -34,14 +34,13 @@ build: qtresource
 
 	cp --parents ./resources/cache/*.png freezed/pygameoflife/
 	cp --parents ./resources/static/*.png freezed/pygameoflife/
-	cp --parents ./resources/qt/*.ui freezed/pygameoflife/
-	cp --parents ./resources/qt/*.qss freezed/pygameoflife/
 
 	rm -f releases/pygame-of-life_$(OS_TYPE)_$(ARCH_TYPE).zip
 	cd freezed && zip -9urT ../releases/pygame-of-life_$(OS_TYPE)_$(ARCH_TYPE) * && cd ..
 
 qtresource:
 	pyrcc4 -py2 resources/qt/resources.qrc -o resources/qtresources.py
+	pyuic4 resources/qt/launcher.ui -o resources/qtlauncher.py
 
 clean:
 	find . -name "*.pyc" -exec rm -rf {} \;

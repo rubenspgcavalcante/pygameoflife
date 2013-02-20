@@ -1,5 +1,6 @@
 <!DOCTYPE RCC><RCC version="1.0">
 	<qresource>
+        <file>launcher.qss</file>
 		<file>images/launcher-bg.png</file>
 		<file>images/bg.png</file>
 		<file>images/button.png</file>

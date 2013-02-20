@@ -3,9 +3,10 @@ import sys
 from controllers.display import DisplayController
 
 from resources.manager import Resource
+from resources import qtresources
 
 if __name__ == "__main__":
-    
+
     if "genimg" in sys.argv:
             Resource.generateSprites()
             Resource.generateBg()
