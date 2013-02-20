@@ -41,9 +41,9 @@ build: resources
 
 resources:
 	#Generating game images and qt resources
-	python __main__.py genimg
 	pyrcc4 -py2 resources/qt/resources.qrc -o resources/qtresources.py
 	pyuic4 resources/qt/launcher.ui -o resources/qtlauncher.py
+	python __main__.py genimg
 
 clean:
 	find . -name "*.pyc" -exec rm -rf {} \;

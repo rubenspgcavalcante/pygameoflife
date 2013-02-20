@@ -2,6 +2,7 @@
 *~
 ehthumbs.db
 Thumbs.db
+build
 freeze
 resources/cache/*
 resources/qtresources.py
