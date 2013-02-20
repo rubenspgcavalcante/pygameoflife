@@ -34,16 +34,6 @@ The current releases are:
 
 ***
 
-##Download
-Just unzip and then execute "run-pygameoflife" binary.  
-  
-###Current Releases
-*    [Linux amd64](https://raw.github.com/rubenspgcavalcante/pygameoflife/master/releases/pygame-of-life_Linux_x86_64.zip)
-
-*    [Windows i686](https://raw.github.com/rubenspgcavalcante/pygameoflife/master/releases/pygame-of-life_Win_i686.zip)
-
-***
-
 #Running
 To run directly just install the dependeces, generates the resources and execute by:
 ```
