@@ -17,11 +17,11 @@ class Resource(object):
     @staticmethod
     def get(obj, attr=None):
 
-        path = os.path.dirname(os.path.abspath(__file__))+"/"
+        path = os.path.dirname(os.path.abspath(__file__))
 
         if not os.path.exists(path):
             #If compiled, the binarie is represented like a dir, so we must remove it
-            path = re.sub(r'((/|\\)run-pygameoflife(.exe)?)', "", path).replace("/manager.pyc", "").replace(" ", "\ ")
+            path = re.sub(r'((/|\\)run-pygameoflife(.exe)?)', "", path).replace("/manager.pyc", "")
 
         resource = {
                 "general":{
@@ -62,6 +62,7 @@ class Resource(object):
         except KeyError:
             return None
 
+
     @staticmethod
     def sprite(entity):
         """
@@ -69,10 +70,9 @@ class Resource(object):
         an entity
         """
 
-        path =  Resource.get("general", "resourcesPath") + \
-                Resource.get("general", "processeddir")
+        path =  os.path.join(Resource.get("general", "resourcesPath"), Resource.get("general", "processeddir"))
 
-        sprite = pygame.image.load(path + entity + ".png").convert_alpha()
+        sprite = pygame.image.load(os.path.join(path, entity + ".png")).convert_alpha()
 
         images = []
         spriteWidth, spriteHeight = sprite.get_size()
@@ -83,6 +83,7 @@ class Resource(object):
 
         return images
 
+
     @staticmethod
     def image(entity, static=False):
         """
@@ -90,15 +91,15 @@ class Resource(object):
         """
 
         path = Resource.get("general", "resourcesPath")
-
         if static:
-            path += Resource.get("general", "staticdir")
+            path = os.path.join(path, Resource.get("general", "staticdir"))
 
         else:
-            path += Resource.get("general", "processeddir")
+            path = os.path.join(path, Resource.get("general", "processeddir"))
 
-        singleImg = pygame.image.load(path + entity + ".png").convert_alpha()
+        singleImg = pygame.image.load(os.path.join(path, entity + ".png")).convert_alpha()
         return singleImg
+
 
     @staticmethod
     def getQtUI(uiName):
@@ -111,6 +112,7 @@ class Resource(object):
         qtUI = uic.loadUi(path + uiName + ".ui")
 
         return qtUI
+
 
     @staticmethod
     def getQss(uiName):
@@ -128,6 +130,7 @@ class Resource(object):
 
         return qtCSS
 
+
     @staticmethod
     def generateSprites():
         """
@@ -138,8 +141,8 @@ class Resource(object):
         """
 
         basePath = Resource.get("general", "resourcesPath")
-        src = basePath + Resource.get("general", "sourcedir")
-        proccessedDir = basePath + Resource.get("general", "processeddir")
+        src = os.path.join(basePath, Resource.get("general", "sourcedir"))
+        proccessedDir = os.path.join(basePath, Resource.get("general", "processeddir"))
 
         for _dir in os.listdir(src):
 
@@ -168,7 +171,8 @@ class Resource(object):
                 entity = _dir.split("-")[0];
 
                 print "generating: " + entity + ".png"
-                final.save(proccessedDir + entity + ".png")
+                final.save(os.path.join(proccessedDir , entity + ".png"))
+
                 
     @staticmethod
     def generateBg():
@@ -177,10 +181,10 @@ class Resource(object):
         16x16 image.
         """
         basePath = Resource.get("general", "resourcesPath")
-        src = basePath + Resource.get("general", "sourcedir")
-        proccessedDir = basePath + Resource.get("general", "processeddir")
+        src = os.path.join(basePath, Resource.get("general", "sourcedir"))
+        proccessedDir = os.path.join(basePath, Resource.get("general", "processeddir"))
 
-        sqr = Image.open(src + "background/block.png")
+        sqr = Image.open(os.path.join(src, "background/block.png"))
 
         size = Config().get("game", "window-size")
         blank = Image.new("RGBA", size)
@@ -193,5 +197,5 @@ class Resource(object):
                 blank.paste(sqr, (i*16, j*16))
 
         print "generating background"
-        blank.save(proccessedDir + Resource.get("habitat", "filename"))
+        blank.save(os.path.join(proccessedDir, Resource.get("habitat", "filename")))
 

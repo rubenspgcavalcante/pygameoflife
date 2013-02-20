@@ -74,6 +74,7 @@ class Launcher(QtGui.QMainWindow):
         Config().set("game", "window-size", resolution)
         Config().set("population", "first-percentage", initialPop)
         self.qApp.quit()
+        self.hide()
 
 
     def exit(self, event=None):
