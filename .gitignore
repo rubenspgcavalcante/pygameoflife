@@ -1,8 +1,11 @@
 *.pyc
 *~
-build
+ehthumbs.db
+Thumbs.db
 freeze
 resources/cache/*
+resources/qtresources.py
+resources/qtlauncher.py
 releases/
 !releases/.gitkeep
 !resources/cache/.gitkeep

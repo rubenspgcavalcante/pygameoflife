@@ -14,6 +14,8 @@ BIN_NAME = $(shell if [ `uname` = Linux ] ; then echo run-pygameoflife ; else ec
 
 HIDE_CONSOLE_WIN32 = $(shell if [ `uname` != Linux ] ; then echo --base-name=Win32GUI ; fi)
 
+.PHONY: resources
+
 # -- Rules -- #
 all: build clean
 
