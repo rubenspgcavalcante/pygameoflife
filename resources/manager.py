@@ -155,11 +155,14 @@ class Resource(object):
                 sortedFiles.sort()
 
                 for index, _file in enumerate(sortedFiles):
-                    path = src + _dir + "/" + _file
-                    frame = Image.open(path)
 
+                    if re.search(r'^[0-9]+(.png)$', _file):
+                        path = src + _dir + "/" + _file
+                        frame = Image.open(path)
+                        final.paste(frame, (index*16, 0))
 
-                    final.paste(frame, (index*16, 0))
+                    else:
+                        print _file + " is not a valid type, not using it"
 
                 
                 entity = _dir.split("-")[0];
