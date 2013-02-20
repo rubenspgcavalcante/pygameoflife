@@ -17,9 +17,8 @@ HIDE_CONSOLE_WIN32 = $(shell if [ `uname` != Linux ] ; then echo --base-name=Win
 # -- Rules -- #
 all: build clean
 
-build: qtresource
+build: resources
 	python $(FLAGS)
-	python __main__.py genimg
 	mkdir -p build
 	cp --parents ./*.pyc build/
 	cp --parents ./models/*.pyc build/
@@ -38,7 +37,9 @@ build: qtresource
 	rm -f releases/pygame-of-life_$(OS_TYPE)_$(ARCH_TYPE).zip
 	cd freezed && zip -9urT ../releases/pygame-of-life_$(OS_TYPE)_$(ARCH_TYPE) * && cd ..
 
-qtresource:
+resources:
+	#Generating game images and qt resources
+	python __main__.py genimg
 	pyrcc4 -py2 resources/qt/resources.qrc -o resources/qtresources.py
 	pyuic4 resources/qt/launcher.ui -o resources/qtlauncher.py
 

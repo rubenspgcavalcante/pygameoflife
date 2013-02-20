@@ -28,6 +28,7 @@ The current releases are:
     *    Each cell with four or more neighbors dies, as if by overpopulation. 
     *    Each cell with two or three neighbors survives.  
   
+  
 *    For a space that is 'empty' or 'unpopulated'
     *   Each cell with three neighbors becomes populated. 
 
@@ -43,22 +44,34 @@ Just unzip and then execute "run-pygameoflife" binary.
 
 ***
 
-#Compiling by the source
+#Running
+To run directly just install the dependeces, generates the resources and execute by:
+```
+make setup
+make resources
+python __main__.py
+```
+
 ##Dependeces
 Tested in Ubuntu 12.10 LTS 64 wich the following versions
 *    python >= 2.6.x
 *    pygame >= 1.9.x
 *    pyqt >= 4.x
-*    pyrcc4-dev-tools >= 4.8.x
+*    pyuic4 >= 4.9.x
+*    pyrcc4 >= 4.8.x
 *    PIL >= 1.1.x
 *    zip >= 3.x
 *    unzip >= 5.51.x
 *    cx-Freeze >= 4.3.x
 
 ##Building Installing
-The first command will download and install all dependeces. (Needs apt)  
-Then, will build and compile the code using cx-Freeze.  
-Finnally will be installed
+If you want to build or/and install, do:  
+The first command will download and install all dependeces, if you didn't already installed. (Needs apt)  
+Then, will build and compile the code using cx-Freeze. The build will be stored in release directory with the name pygame-of-life_OS_ARCH.zip where OS is your Operational system and ARCH your processor (or hardware) architeture. (If you just want build stops in this pass)  
+The last command will: (Note, it will work only in Unix based system)  
+Install under /usr/share/ the last release  
+Create a symbolic link into /usr/games  
+Create a desktop entry into /usr/applications
 ```
 sudo make setup
 make

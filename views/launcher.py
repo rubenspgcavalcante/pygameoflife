@@ -73,7 +73,6 @@ class Launcher(QtGui.QMainWindow):
 
         Config().set("game", "window-size", resolution)
         Config().set("population", "first-percentage", initialPop)
-        self.destroy()
         self.qApp.quit()
 
 
