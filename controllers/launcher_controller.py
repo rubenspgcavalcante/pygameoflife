@@ -2,14 +2,19 @@ import sys
 
 from PyQt4 import QtCore, QtGui, uic
 
+from core.controller import *
+from core.event import *
+
 from config import Config
 from resources.manager import Resource
 from resources.qtlauncher import Ui_MainWindow
 
-class Launcher(QtGui.QMainWindow):
-    def __init__(self, qApp):
+class LauncherController(QtGui.QMainWindow, Controller):
+    def __init__(self):
+        self.qApp = QtGui.QApplication(sys.argv)
+
         QtGui.QMainWindow.__init__(self)
-        self.qApp = qApp
+        Controller.__init__(self)        
 
         # Set up the user interface from Designer.
         self.ui = Ui_MainWindow()
@@ -23,6 +28,13 @@ class Launcher(QtGui.QMainWindow):
 
         self.connectSignals()
 
+        self.bind(AppStartEvent(), self.appExec)
+
+    def appExec(self, event):
+        self.qApp.exec_()
+
+    def defaultAction(self):
+        pass
 
     def connectSignals(self):
 
@@ -75,11 +87,12 @@ class Launcher(QtGui.QMainWindow):
         Config().set("population", "first-percentage", initialPop)
         self.qApp.quit()
         self.hide()
+        self.trigger(GameStartEvent())
 
 
     def exit(self, event=None):
+        self.trigger(QuitEvent())
         sys.exit()
-
 
     def updatePopLabel(self, value):
         self.ui.populationValueLabel.setText(str(value) + "%")

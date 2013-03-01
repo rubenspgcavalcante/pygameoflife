@@ -1,6 +1,13 @@
 import sys
 
-from controllers.display import DisplayController
+from core.event import *
+from core.mediator import *
+
+from controllers.keyboard_controller import *
+from controllers.cpuspinner_controller import *
+from controllers.display_controller import *
+from controllers.launcher_controller import *
+from models.game_model import Game
 
 from resources.manager import Resource
 from resources import qtresources
@@ -17,7 +24,12 @@ if __name__ == "__main__":
         print "run: run the application"
         print "--help: show this help\n"
 
-
     else:
-        display = DisplayController()
-        display.loadView()
+        keybd = KeyboardController()
+        spinner = CPUSpinnerController()
+        launcher = LauncherController()
+
+        game = Game()
+        display = DisplayController(game)
+
+        spinner.run()

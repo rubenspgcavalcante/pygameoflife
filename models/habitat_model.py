@@ -3,19 +3,21 @@ from random import random
 import pygame
 from pygame.locals import *
 
-from models.cell import Cell
+from core.model import Model
+from models.cell_model import Cell
 
 from resources.manager import Resource
 from config import Config
 from helpers.singleton import singleton
 
-class Habitat(object):
+class Habitat(Model):
 
     """
     Habitat of the cells.
     Represented by a grid with the size of the window
     """
-    def __init__(self, screen):
+    def __init__(self):
+        Model.__init__(self)
         winSize = Config().get("game", "window-size")
 
         #Initializing a (i, j) list
@@ -25,31 +27,14 @@ class Habitat(object):
 
         self.grid = [ [None] * cols for i in range(lins)]
 
-        self.screen = screen
-        self.image =  Resource.image("habitat")
-        self.screen.blit(self.image, (0,0))
-
-    def squarePosition(self, index):
-        """
-        Calculates the position of the given 'square'.
-        Return None if is offset.
-
-        param:
-        index => A (x,y) tuple
-        """
-
-        if index[0] > self.gridSize[0]+1 or index[1] > self.gridSize[1]+1:
-            return None
-
-        else:
-            return (16 * index[0], 16 * index[1])
+    def defaultAction(self):
+        pass
 
     def generateFirstPopulation(self):
         for i in range(self.gridSize[0]):
             for j in range(self.gridSize[1]):
                 if Config().get("population", "first-percentage") >= random():
-                    position = self.squarePosition((i,j))
-                    self.grid[i][j] = Cell(self.screen, position, life=1)
+                    self.grid[i][j] = Cell()
 
 
     def check_neighborhood(self, position):
@@ -95,7 +80,6 @@ class Habitat(object):
         #Mantain the state
         stables = []
 
-
         for i in range(self.gridSize[0]):
             for j in range(self.gridSize[1]):
 
@@ -108,10 +92,6 @@ class Habitat(object):
                     if neighbors < 2:
                         blacklist.append(position)
 
-                    elif neighbors in (2,3):
-                        stables.append(position)
-                        pass
-
                     elif neighbors > 3:
                         blacklist.append(position)
 
@@ -120,37 +100,24 @@ class Habitat(object):
                     if neighbors == 3:
                         whitelist.append(position)
 
-        return {"whitelist": whitelist, "blacklist": blacklist, "stables": stables}
+        return {"whitelist": whitelist, "blacklist": blacklist}
 
     def nextGeneration(self):
         lists = self.who_die_or_birth()
-        self.update()
 
         for frame in range(Resource.get("cell", "frames")):
             #Kill cells
             for pos in lists["blacklist"]:
                 lin, col = pos
-                self.grid[lin][col].change_life(-2)
-                self.grid[lin][col].update()
+                self.grid[lin][col].kill()
 
             #Birth cells
             for pos in lists["whitelist"]:
                 lin, col = pos
                 if self.grid[lin][col] == None:
-                    pixelPos = self.squarePosition(pos)
-                    self.grid[lin][col] = Cell(self.screen, pixelPos, life=0)
+                    self.grid[lin][col] = Cell()
 
                 else:
-                    self.grid[lin][col].change_life(+1)
-                    self.grid[lin][col].update()
+                    self.grid[lin][col].birth()
 
-            for pos in lists["stables"]:
-                lin, col = pos
-                self.grid[lin][col].change_life(+10)
-                self.grid[lin][col].update()
-
-            pygame.display.update()
-            pygame.time.wait(Resource.get("display", "sleep"))
-
-    def update(self):
-        self.screen.blit(self.image, (0,0))
+        return lists
