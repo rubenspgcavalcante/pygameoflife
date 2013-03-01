@@ -1,46 +1,31 @@
+import pygame
+from pygame.locals import *
+
 from core.view import *
+from resources.manager import *
 
 class CellSprite(View):
-    def __init__(self):
+    def __init__(self, screen):
         View.__init__(self)
 
-        self.images = Resource.sprite("cell")
-        self.position = position
         self.screen = screen
-
-        screen.blit(self.get_image(), position)
+        self.images = Resource.sprite("cell")
+        self.background = Resource.image("bg")
 
     def get_image(self):
         """Get the image representing the current state of the cell, based into
         his life"""
 
-        #Using proportional state
-        prop = (self.lifeRange["max"] * self.life)/Resource.get("cell", "frames")
-        state = int(floor(prop))+1
+        return self.images[9]
 
-        return self.images[state]
-
-    def update(self):
+    def put(self, position):
         """Updates the image of this cell in the screen. If the cell is dead
         don't plot it again"""
 
-        if self.is_dead():
-            return False
-        else:
-            self.screen.blit(self.get_image(), self.position)
-            return True
+        x, y = position[0] * 16, position[1] * 16
+        self.screen.blit(self.background, (x,y))
+        self.screen.blit(self.get_image(), (x,y))
 
-    def squarePosition(self, index):
-        """
-        Calculates the position of the given 'square'.
-        Return None if is offset.
-
-        param:
-        index => A (x,y) tuple
-        """
-
-        if index[0] > self.gridSize[0]+1 or index[1] > self.gridSize[1]+1:
-            return None
-
-        else:
-            return (16 * index[0], 16 * index[1])
+    def remove(self, position):
+        x, y = position[0] * 16, position[1] * 16
+        self.screen.blit(self.background, (x,y))
