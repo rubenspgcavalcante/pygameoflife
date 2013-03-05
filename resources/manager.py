@@ -151,7 +151,7 @@ class Resource(object):
             if "frames" in _dir:
                 entity = _dir.split("-")[0]
                 resource = Resource.get(entity)
-                width = resource["size"][0] * resource["frames"]
+                width = resource["size"][0] * Resource.get("animation", "frames")
 
                 size = (width, resource["size"][0])
                 final = Image.new("RGBA", size)
