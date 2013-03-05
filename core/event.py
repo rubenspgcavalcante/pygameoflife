@@ -25,10 +25,11 @@ class AppStartEvent(Event):
         self.name = "App Started Event"
 
 class NewGenerationEvent(Event):
-    def __init__(self, whitelist=None, blacklist=None):
+    def __init__(self, whitelist=None, blacklist=None, stables=None):
         self.name = "New Generation Event"
         self.whitelist = whitelist
         self.blacklist = blacklist
+        self.stables = stables
 
 class ChangeSpeedEvent(Event):
     def __init__(self, delayChange=None):

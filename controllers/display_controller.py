@@ -11,6 +11,7 @@ from core.constants import *
 from models.game_model import Game
 from views.cell_sprite import CellSprite
 from views.habitat_sprite import HabitatSprite
+from views.notification_sprite import NotificationSprite
 
 from config import *
 from resources.manager import *
@@ -24,9 +25,8 @@ class DisplayController(Controller):
 
         self.screen = None
         self.speed = None
+        self.speedNotification = None
 
-        self.backSprites = pygame.sprite.RenderUpdates()
-        self.frontSprites = pygame.sprite.RenderUpdates()
         self.bind(GameStartEvent(), self.show)
 
         self.game = game
@@ -48,7 +48,9 @@ class DisplayController(Controller):
             for position in event.blacklist:
                 cellSprite.remove(position)
 
-            pygame.display.flip()
+        #Stables
+        for position in event.stables:
+            cellSprite.put(position, frames-1)
 
     def changeSpeed(self, event):
         currentSpeed = Config().get("game", "speed")
@@ -62,16 +64,22 @@ class DisplayController(Controller):
             currentSpeed = diference
 
         Config().set("game", "speed", currentSpeed)
+        self.speedNotification.put()
 
     def show(self, event):
         config = Config()
         self.screen = pygame.display.set_mode(config.get("game", "window-size"))
         pygame.display.set_icon(Resource.image("icon", static=True))
         pygame.display.set_caption(Resource.get("display", "title"))
+
         habitat = HabitatSprite()
         habitat.generate(self.screen)
+
+        self.speedNotification = NotificationSprite(self.screen, "speed")
+
         self.game.state = Game.STATE_RUNNING
 
     def defaultAction(self):
-        pass
+        self.speedNotification.update()
+        pygame.display.flip()
 

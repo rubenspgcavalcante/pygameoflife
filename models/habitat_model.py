@@ -94,23 +94,26 @@ class Habitat(Model):
                     elif neighbors > 3:
                         blacklist.append(position)
 
+                    else:
+                        stables.append(position)
+
                 #Empty cell or Unpopulated
                 else:
                     if neighbors == 3:
                         whitelist.append(position)
 
-        return {"whitelist": whitelist, "blacklist": blacklist}
+        return (whitelist, blacklist, stables)
 
     def nextGeneration(self):
-        lists = self.who_die_or_birth()
+        whitelist, blacklist, stables = self.who_die_or_birth()
 
         #Kill cells
-        for pos in lists["blacklist"]:
+        for pos in blacklist:
             lin, col = pos
             self.grid[lin][col].kill()
 
         #Birth cells
-        for pos in lists["whitelist"]:
+        for pos in whitelist:
             lin, col = pos
             if self.grid[lin][col] == None:
                 self.grid[lin][col] = Cell()
@@ -118,4 +121,4 @@ class Habitat(Model):
             else:
                 self.grid[lin][col].birth()
 
-        return lists
+        return (whitelist, blacklist, stables)

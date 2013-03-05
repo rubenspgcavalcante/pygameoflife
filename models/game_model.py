@@ -16,6 +16,6 @@ class Game(Model):
 
     def defaultAction(self):
         if self.state == Game.STATE_RUNNING:
-            lists = self.habitat.nextGeneration()
-            whitelist, blacklist = lists["whitelist"], lists["blacklist"]
-            self.trigger(NewGenerationEvent(whitelist, blacklist))
+
+            whitelist, blacklist, stables = self.habitat.nextGeneration()
+            self.trigger(NewGenerationEvent(whitelist, blacklist, stables))
