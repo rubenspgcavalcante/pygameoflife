@@ -105,19 +105,18 @@ class Habitat(Model):
     def nextGeneration(self):
         lists = self.who_die_or_birth()
 
-        for frame in range(Resource.get("cell", "frames")):
-            #Kill cells
-            for pos in lists["blacklist"]:
-                lin, col = pos
-                self.grid[lin][col].kill()
+        #Kill cells
+        for pos in lists["blacklist"]:
+            lin, col = pos
+            self.grid[lin][col].kill()
 
-            #Birth cells
-            for pos in lists["whitelist"]:
-                lin, col = pos
-                if self.grid[lin][col] == None:
-                    self.grid[lin][col] = Cell()
+        #Birth cells
+        for pos in lists["whitelist"]:
+            lin, col = pos
+            if self.grid[lin][col] == None:
+                self.grid[lin][col] = Cell()
 
-                else:
-                    self.grid[lin][col].birth()
+            else:
+                self.grid[lin][col].birth()
 
         return lists

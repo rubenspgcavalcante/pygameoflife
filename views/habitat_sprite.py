@@ -4,7 +4,7 @@ from resources.manager import Resource
 class HabitatSprite(View):
     def __init__(self):
         View.__init__(self)
-        self.background = Resource.image("bg")
+        self.background = Resource.image("bg", True)
 
     def generate(self, screen):
         resources = Resource()

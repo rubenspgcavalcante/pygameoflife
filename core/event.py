@@ -12,11 +12,6 @@ class QuitEvent(Event):
 	def __init__(self):
 		self.name = "Program Quit Event"
 
-class MapBuiltEvent(Event):
-	def __init__(self, gameMap):
-		self.name = "Map Finished Building Event"
-		self.map = gameMap
-
 class GameStartEvent(Event):
 	def __init__(self):
 		self.name = "Game Started Event"
@@ -34,3 +29,8 @@ class NewGenerationEvent(Event):
         self.name = "New Generation Event"
         self.whitelist = whitelist
         self.blacklist = blacklist
+
+class ChangeSpeedEvent(Event):
+    def __init__(self, delayChange=None):
+        self.name = "Change Speed Event"
+        self.delayChange = delayChange

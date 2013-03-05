@@ -36,12 +36,14 @@ class Resource(object):
                     "icon": "",
                     "icon-size": (64, 64),
                     "title": "PyGame of the Life",
-                    "sleep": 0,
+                },
+
+                "animation": {
+                    "frames": 4,
                 },
                 
                 "cell": {
                     "size": (16, 16),
-                    "frames": 11,
                 },
 
                 "habitat": {
@@ -172,30 +174,4 @@ class Resource(object):
 
                 print "generating: " + entity + ".png"
                 final.save(os.path.join(proccessedDir , entity + ".png"))
-
-                
-    @staticmethod
-    def generateBg():
-        """
-        Generates the background grid of the game, made up from a
-        16x16 image.
-        """
-        basePath = Resource.get("general", "resourcesPath")
-        src = os.path.join(basePath, Resource.get("general", "sourcedir"))
-        proccessedDir = os.path.join(basePath, Resource.get("general", "processeddir"))
-
-        sqr = Image.open(os.path.join(src, "background/block.png"))
-
-        size = Config().get("game", "window-size")
-        blank = Image.new("RGBA", size)
-
-        lin = size[0]/16
-        col = size[0]/16
-
-        for i in range(lin):
-            for j in range(col):
-                blank.paste(sqr, (i*16, j*16))
-
-        print "generating background"
-        blank.save(os.path.join(proccessedDir, Resource.get("habitat", "filename")))
 

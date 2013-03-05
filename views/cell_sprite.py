@@ -10,21 +10,15 @@ class CellSprite(View):
 
         self.screen = screen
         self.images = Resource.sprite("cell")
-        self.background = Resource.image("bg")
+        self.background = Resource.image("bg", True)
 
-    def get_image(self):
-        """Get the image representing the current state of the cell, based into
-        his life"""
+    def get_image(self, state):
+        return self.images[state]
 
-        return self.images[9]
-
-    def put(self, position):
-        """Updates the image of this cell in the screen. If the cell is dead
-        don't plot it again"""
-
+    def put(self, position, state):
         x, y = position[0] * 16, position[1] * 16
         self.screen.blit(self.background, (x,y))
-        self.screen.blit(self.get_image(), (x,y))
+        self.screen.blit(self.get_image(state), (x,y))
 
     def remove(self, position):
         x, y = position[0] * 16, position[1] * 16

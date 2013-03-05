@@ -9,6 +9,9 @@ class Config(object):
                 "window-size": (1024, 768),
                 "version": "0.01a",
                 "install-dir": "/usr/share/pygameoflife",
+                "max-delay": 100,
+                "min-delay": 0,
+                "speed": None,
             },
             "population": {
                 "first-percentage": 0.2,
@@ -20,9 +23,9 @@ class Config(object):
                     (1024, 768),
                 ],
                 "speed": {
-                    "slow": 100,
-                    "medium": 50,
-                    "fast": 25,
+                    "slow": 50,
+                    "medium": 30,
+                    "fast": 10,
                 }
             }
         }

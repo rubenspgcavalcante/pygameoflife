@@ -23,16 +23,16 @@ class KeyboardController(Controller):
 				event = QuitEvent()
 
 			elif pygameEvent.type == KEYDOWN and pygameEvent.key == K_UP:
-				event = CharactorMoveRequest(DIRECTION_UP)
+				event = ChangeSpeedEvent(DELAY_DOWN)
 
 			elif pygameEvent.type == KEYDOWN and pygameEvent.key == K_DOWN:
-				event = CharactorMoveRequest(DIRECTION_DOWN)
+				event = ChangeSpeedEvent(DELAY_UP)
 
 			elif pygameEvent.type == KEYDOWN and pygameEvent.key == K_LEFT:
-				event = CharactorMoveRequest(DIRECTION_LEFT)
+				event = ChangeSpeedEvent(DELAY_UP)
 
 			elif pygameEvent.type == KEYDOWN and pygameEvent.key == K_RIGHT:
-				event = CharactorMoveRequest(DIRECTION_RIGHT)
+				event = ChangeSpeedEvent(DELAY_DOWN)
 
 			if event:
 				self.trigger(event)

@@ -85,6 +85,7 @@ class LauncherController(QtGui.QMainWindow, Controller):
 
         Config().set("game", "window-size", resolution)
         Config().set("population", "first-percentage", initialPop)
+        Config().set("game", "speed", speed)
         self.qApp.quit()
         self.hide()
         self.trigger(GameStartEvent())

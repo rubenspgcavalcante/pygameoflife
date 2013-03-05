@@ -16,7 +16,6 @@ if __name__ == "__main__":
 
     if "genimg" in sys.argv:
             Resource.generateSprites()
-            Resource.generateBg()
 
     elif "--help" in sys.argv:
         print "Usage: run-pygameoflife <commands>\n\nCommands:"

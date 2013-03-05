@@ -4,6 +4,7 @@ from pygame.locals import *
 from core.event import *
 from core.controller import *
 from core.event import *
+from core.constants import *
 from models.game_model import Game
 from views.cell_sprite import CellSprite
 from views.habitat_sprite import HabitatSprite
@@ -18,23 +19,45 @@ class DisplayController(Controller):
         pygame.init()
 
         self.screen = None
+        self.speed = None
+
         self.backSprites = pygame.sprite.RenderUpdates()
         self.frontSprites = pygame.sprite.RenderUpdates()
         self.bind(GameStartEvent(), self.show)
 
         self.game = game
+
         self.bind(NewGenerationEvent(), self.getGeneration)
+        self.bind(ChangeSpeedEvent(), self.changeSpeed)
 
     def getGeneration(self, event):
         cellSprite = CellSprite(self.screen)
-        for position in event.whitelist:
-            cellSprite.put(position)
+        frames = Resource.get("animation", "frames")
+        self.speed = Config().get("game", "speed")
 
-        for position in event.blacklist:
-            cellSprite.remove(position)
+        #Animation loop
+        for state in range(frames):
+            pygame.time.wait(self.speed)
+            for position in event.whitelist:
+                cellSprite.put(position, state)
 
-        pygame.display.flip()
+            for position in event.blacklist:
+                cellSprite.remove(position)
 
+            pygame.display.flip()
+
+    def changeSpeed(self, event):
+        currentSpeed = Config().get("game", "speed")
+        diference = currentSpeed + event.delayChange
+
+        if diference < 0 or diference < Config().get("game", "min-delay"):
+            currentSpeed = Config().get("game", "min-delay")
+        elif diference > Config().get("game", "max-delay"):
+            currentSpeed += Config().get("game", "min-delay")
+        else:
+            currentSpeed = diference
+
+        Config().set("game", "speed", currentSpeed)
 
     def show(self, event):
         config = Config()
