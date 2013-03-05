@@ -8,7 +8,6 @@ from models.cell_model import Cell
 
 from resources.manager import Resource
 from config import Config
-from helpers.singleton import singleton
 
 class Habitat(Model):
 

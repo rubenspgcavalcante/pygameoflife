@@ -1,3 +1,5 @@
+import os
+
 import pygame
 from pygame.locals import *
 
@@ -5,6 +7,7 @@ from core.event import *
 from core.controller import *
 from core.event import *
 from core.constants import *
+
 from models.game_model import Game
 from views.cell_sprite import CellSprite
 from views.habitat_sprite import HabitatSprite
@@ -15,6 +18,7 @@ from resources.manager import *
 class DisplayController(Controller):
     def __init__(self, game):
         Controller.__init__(self)
+        os.environ['SDL_VIDEO_CENTERED'] = '1'
 
         pygame.init()
 

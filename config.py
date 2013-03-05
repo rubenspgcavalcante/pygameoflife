@@ -1,4 +1,4 @@
-from helpers.singleton import singleton
+from core.singleton import singleton
 
 @singleton
 class Config(object):
