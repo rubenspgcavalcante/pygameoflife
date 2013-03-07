@@ -7,13 +7,13 @@ from core.event import *
 from core.controller import *
 from core.event import *
 from core.constants import *
+from core.config import *
 
 from models.game_model import Game
 from views.cell_sprite import CellSprite
 from views.habitat_sprite import HabitatSprite
 from views.notification_sprite import NotificationSprite
 
-from config import *
 from resources.manager import *
 
 class DisplayController(Controller):
@@ -26,6 +26,7 @@ class DisplayController(Controller):
         self.screen = None
         self.speed = None
         self.speedNotification = None
+        self.layers = []
 
         self.bind(GameStartEvent(), self.show)
 
@@ -33,6 +34,16 @@ class DisplayController(Controller):
 
         self.bind(NewGenerationEvent(), self.getGeneration)
         self.bind(ChangeSpeedEvent(), self.changeSpeed)
+
+
+    def defaultAction(self):
+        pass
+
+
+    def orderedUpdate(self):
+        self.speedNotification.update()
+        pygame.display.flip()
+
 
     def getGeneration(self, event):
         cellSprite = CellSprite(self.screen)
@@ -47,10 +58,14 @@ class DisplayController(Controller):
 
             for position in event.blacklist:
                 cellSprite.remove(position)
+            
+            #Stables
+            for position in event.stables:
+                cellSprite.put(position, frames-1)
 
-        #Stables
-        for position in event.stables:
-            cellSprite.put(position, frames-1)
+            self.orderedUpdate()
+
+
 
     def changeSpeed(self, event):
         currentSpeed = Config().get("game", "speed")
@@ -66,6 +81,7 @@ class DisplayController(Controller):
         Config().set("game", "speed", currentSpeed)
         self.speedNotification.put()
 
+
     def show(self, event):
         config = Config()
         self.screen = pygame.display.set_mode(config.get("game", "window-size"))
@@ -78,8 +94,3 @@ class DisplayController(Controller):
         self.speedNotification = NotificationSprite(self.screen, "speed")
 
         self.game.state = Game.STATE_RUNNING
-
-    def defaultAction(self):
-        self.speedNotification.update()
-        pygame.display.flip()
-

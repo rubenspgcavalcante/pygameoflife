@@ -4,10 +4,11 @@ import pygame
 from pygame.locals import *
 
 from core.model import Model
+from core.config import Config
+
 from models.cell_model import Cell
 
 from resources.manager import Resource
-from config import Config
 
 class Habitat(Model):
 

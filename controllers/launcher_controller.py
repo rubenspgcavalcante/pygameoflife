@@ -4,8 +4,8 @@ from PyQt4 import QtCore, QtGui, uic
 
 from core.controller import *
 from core.event import *
+from core.config import Config
 
-from config import Config
 from resources.manager import Resource
 from resources.qtlauncher import Ui_MainWindow
 

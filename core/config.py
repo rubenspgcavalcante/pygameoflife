@@ -7,11 +7,11 @@ class Config(object):
         self.config = {
             "game": {
                 "window-size": (1024, 768),
-                "version": "0.01a",
+                "version": "0.6",
                 "install-dir": "/usr/share/pygameoflife",
-                "max-delay": 100,
-                "min-delay": 0,
                 "speed": None,
+                "min-delay": 0,
+                "max-delay": 100,
             },
             "population": {
                 "first-percentage": 0.2,
