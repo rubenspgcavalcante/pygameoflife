@@ -67,6 +67,7 @@ uninstall: isroot
 
 setup: isroot
 	#Dowload and install dependeces
+	apt-get update --fix-missing
 	apt-get install $(APT_DEPENDECES)
 	wget $(CX_FREEZE_LINK) -t 5 -S -w 1 -N --trust-server-name
 	tar -zxvf cx_Freeze-$(CX_FREEZE_VER).tar.gz --overwrite

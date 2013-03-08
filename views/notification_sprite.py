@@ -35,8 +35,13 @@ class NotificationSprite(View):
                 self.screen.blit(self.image, self.position)
 
             else:
-                width, height = self.image.get_size()
-                for x in range(width)[::16]:
-                    for y in range(height)[::16]:
-                        self.screen.blit(self.bg, (x, y))
+                self.clean()
                 self.active = False
+
+
+    def clean(self):
+        width, height = self.image.get_size()
+        for x in range(width)[::16]:
+            for y in range(height)[::16]:
+                self.screen.blit(self.bg, (x, y))
+        

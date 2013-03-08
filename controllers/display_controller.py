@@ -41,6 +41,8 @@ class DisplayController(Controller):
 
 
     def orderedUpdate(self):
+        
+        self.speedNotification.clean()
         self.speedNotification.update()
         pygame.display.flip()
 
