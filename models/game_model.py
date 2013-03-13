@@ -13,9 +13,19 @@ class Game(Model):
         self.habitat = Habitat()
         self.habitat.generateFirstPopulation()
         self.state = Game.STATE_PREPARING
+        self.bind(PauseEvent(), self.pause)
+
+    def pause(self, event):
+        if self.state == Game.STATE_RUNNING:
+            self.state = Game.STATE_PAUSED
+
+        elif self.state == Game.STATE_PAUSED:
+            self.state = Game.STATE_RUNNING
 
     def defaultAction(self):
         if self.state == Game.STATE_RUNNING:
-
             whitelist, blacklist, stables = self.habitat.nextGeneration()
             self.trigger(NewGenerationEvent(whitelist, blacklist, stables))
+
+        elif self.state == Game.STATE_PAUSED:
+            pass

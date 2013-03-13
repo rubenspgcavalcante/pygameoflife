@@ -3,7 +3,9 @@ import sys
 from core.event import *
 from core.mediator import *
 
+from controllers.pygame_input_controller import *
 from controllers.keyboard_controller import *
+from controllers.mouse_controller import *
 from controllers.cpuspinner_controller import *
 from controllers.display_controller import *
 from controllers.launcher_controller import *
@@ -17,13 +19,19 @@ if __name__ == "__main__":
     if "genimg" in sys.argv:
             Resource.generateSprites()
 
+    elif "--version" in sys.argv:
+            print Config().get("game", "version")
+
     elif "--help" in sys.argv:
         print "Usage: run-pygameoflife <commands>\n\nCommands:"
-        print "genimg: generates the images used in application from sources"
-        print "--help: show this help\n"
+        print "'genimg'  generates the images used in application from sources"
+        print "'--version' show the game version"
+        print "'--help' show this help\n"
 
     else:
-        keybd = KeyboardController()
+        inputs = PygameInputController()
+        keyboard = KeyboardController()
+        mouse = MouseController()
         spinner = CPUSpinnerController()
         launcher = LauncherController()
 

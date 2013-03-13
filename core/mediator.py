@@ -18,11 +18,16 @@ class Mediator:
 	def unregisterListener( self, listener ):
 		if listener in self.listeners:
 			del self.listeners[ listener ]
+
+	def debugBlackList(self, event):
+		if isinstance(event, TickEvent) or \
+		isinstance(event, NewGenerationEvent):
+			return True
 		
 	def post( self, event ):
 		listeners = self.listeners.items()
 
-		if self.debug and not isinstance(event, TickEvent) and not isinstance(event, NewGenerationEvent):
+		if self.debug and not self.debugBlackList(event):
 			print event.name
 
 		for listener in listeners:

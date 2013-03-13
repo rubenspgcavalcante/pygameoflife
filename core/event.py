@@ -24,12 +24,32 @@ class AppStartEvent(Event):
     def __init__(self):
         self.name = "App Started Event"
 
+class KeyboardEvent(Event):
+    def __init__(self, key=None):
+        self.name = "Keyboard Event"
+        self.key = key
+
+class MouseEvent(Event):
+    def __init__(self, button=None):
+        self.name = "Mouse Event"
+        self.button = button
+
+class SetCellEvent(Event):
+    def __init__(self, posx=None, posy=None):
+        self.name = "Set Cell Event"
+        self.posx = posx
+        self.posy = posy
+
 class NewGenerationEvent(Event):
     def __init__(self, whitelist=None, blacklist=None, stables=None):
         self.name = "New Generation Event"
         self.whitelist = whitelist
         self.blacklist = blacklist
         self.stables = stables
+
+class PauseEvent(Event):
+    def __init__(self):
+        self.name = "Pause Event"
 
 class ChangeSpeedEvent(Event):
     def __init__(self, delayChange=None):

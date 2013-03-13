@@ -1,23 +1,29 @@
 # -- Macros -- #
+
 FLAGS = -m compileall .
 CURRENT_DIR = ${PWD##*/}
 CX_FREEZE_VER = 4.3.1
 CX_FREEZE_LINK = "http://downloads.sourceforge.net/project/cx-freeze/$(CX_FREEZE_VER)/cx_Freeze-$(CX_FREEZE_VER).tar.gz"
 EXCLUDE_MODULES = tcl,ttk,Tkinter,setuptolls,numpy
 APT_DEPENDECES= gcc python python-dev python-imaging python-pygame python-qt4 pyqt4-dev-tools zip
-
-OS_TYPE = $(shell if [ `uname` = Linux ] ; then echo Linux ; else echo Win ; fi)
-
-ARCH_TYPE = $(shell if [ `uname -p` != unknown ] ; then uname -p ; else uname -m ; fi)
-
-BIN_NAME = $(shell if [ `uname` = Linux ] ; then echo run-pygameoflife ; else echo run-pygameoflife.exe ; fi)
-
 HIDE_CONSOLE_WIN32 = $(shell if [ `uname` != Linux ] ; then echo --base-name=Win32GUI ; fi)
+
+# --------------------------------------- Game attributes ----------------------------------------------------#
+OS_TYPE = $(shell if [ `uname` = Linux ] ; then echo Linux ; else echo Win ; fi)
+ARCH_TYPE = $(shell if [ `uname -p` != unknown ] ; then uname -p ; else uname -m ; fi)
+BIN_NAME = $(shell if [ `uname` = Linux ] ; then echo run-$(GAME_NAME) ; else echo run-$(GAME_NAME).exe ; fi)
+GAME_VERSION = $(shell python __main__.py --version)
+GAME_NAME = pygameoflife
+ZIP_NAME = $(GAME_NAME)_$(GAME_VERSION)_$(OS_TYPE)_$(ARCH_TYPE)
+# ------------------------------------- End game attributes --------------------------------------------------#
 
 .PHONY: resources
 
 # -- Rules -- #
 all: build clean
+
+teste:
+	echo $(GAME_VERSION)
 
 build: resources
 	python $(FLAGS)
@@ -30,14 +36,14 @@ build: resources
 	cp --parents ./resources/*.pyc build/
 
 	mkdir -p freezed
-	mkdir -p freezed/pygameoflife
-	cxfreeze __main__.py $(HIDE_CONSOLE_WIN32) --target-dir freezed/pygameoflife --target-name $(BIN_NAME) --exclude-modules=$(EXCLUDE_MODULES)
+	mkdir -p freezed/$(GAME_NAME)
+	cxfreeze __main__.py $(HIDE_CONSOLE_WIN32) --target-dir freezed/$(GAME_NAME) --target-name $(BIN_NAME) --exclude-modules=$(EXCLUDE_MODULES)
 
-	cp --parents ./resources/cache/*.png freezed/pygameoflife/
-	cp --parents ./resources/static/*.png freezed/pygameoflife/
+	cp --parents ./resources/cache/*.png freezed/$(GAME_NAME)/
+	cp --parents ./resources/static/*.png freezed/$(GAME_NAME)/
 
-	rm -f releases/pygame-of-life_$(OS_TYPE)_$(ARCH_TYPE).zip
-	cd freezed && zip -9urT ../releases/pygame-of-life_$(OS_TYPE)_$(ARCH_TYPE) * && cd ..
+	rm -f releases/$(ZIP_NAME).zip
+	cd freezed && zip -9urT ../releases/$(ZIP_NAME) * && cd ..
 
 resources:
 	#Generating game images and qt resources
@@ -52,18 +58,18 @@ clean:
 	rm cx_Freeze-* -rf
 
 install: isroot
-	cp releases/pygame-of-life_$(OS_TYPE)_$(ARCH_TYPE).zip /usr/share/
+	cp releases/$(ZIP_NAME).zip /usr/share/
 	unzip -uo /usr/share/pygame-of-life_$(OS_TYPE)_$(ARCH_TYPE).zip -d /usr/share
 	rm -f /usr/share/pygame-of-life_$(OS_TYPE)_$(ARCH_TYPE).zip
-	cp resources/static/icon.png /usr/share/pygameoflife/
-	cp pygameoflife.desktop /usr/share/applications/
-	ln -s --force /usr/share/pygameoflife/run-pygameoflife /usr/games/pygameoflife 
-	chmod +x /usr/games/pygameoflife
+	cp resources/static/icon.png /usr/share/$(GAME_NAME)/
+	cp $(GAME_NAME).desktop /usr/share/applications/
+	ln -s --force /usr/share/$(GAME_NAME)/run-$(GAME_NAME) /usr/games/$(GAME_NAME) 
+	chmod +x /usr/games/$(GAME_NAME)
 
 uninstall: isroot
-	rm -rf /usr/share/pygameoflife
-	rm -f /usr/games/pygameoflife
-	rm -f /usr/share/applications/pygameoflife.desktop
+	rm -rf /usr/share/$(GAME_NAME)
+	rm -f /usr/games/$(GAME_NAME)
+	rm -f /usr/share/applications/$(GAME_NAME).desktop
 
 setup: isroot
 	#Dowload and install dependeces

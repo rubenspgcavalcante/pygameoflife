@@ -3,6 +3,7 @@ from random import random
 import pygame
 from pygame.locals import *
 
+from core.event import SetCellEvent
 from core.model import Model
 from core.config import Config
 
@@ -26,6 +27,7 @@ class Habitat(Model):
         self.gridSize = (lins, cols)
 
         self.grid = [ [None] * cols for i in range(lins)]
+        self.bind(SetCellEvent(), self.setCell)
 
     def defaultAction(self):
         pass
@@ -35,6 +37,12 @@ class Habitat(Model):
             for j in range(self.gridSize[1]):
                 if Config().get("population", "first-percentage") >= random():
                     self.grid[i][j] = Cell()
+
+    def setCell(self, event):
+        x, y = event.posx, event.posy
+        x = int(x/16)
+        y = int(y/16)
+        self.grid[x][y] = Cell()
 
 
     def check_neighborhood(self, position):

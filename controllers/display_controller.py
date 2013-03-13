@@ -34,14 +34,21 @@ class DisplayController(Controller):
 
         self.bind(NewGenerationEvent(), self.getGeneration)
         self.bind(ChangeSpeedEvent(), self.changeSpeed)
+        self.bind(SetCellEvent(), self.setCell)
 
 
     def defaultAction(self):
         pass
 
+    def setCell(self, event):
+        x, y = event.posx, event.posy
+        x = int(x/16)
+        y = int(y/16)
+        cellSprite = CellSprite(self.screen)
+        cellSprite.put((x, y), Resource.get("animation", "frames") - 1)
+        pygame.display.flip()
 
     def orderedUpdate(self):
-        
         self.speedNotification.clean()
         self.speedNotification.update()
         pygame.display.flip()
