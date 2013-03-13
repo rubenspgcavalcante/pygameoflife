@@ -42,7 +42,8 @@ class Habitat(Model):
         x, y = event.posx, event.posy
         x = int(x/16)
         y = int(y/16)
-        self.grid[x][y] = Cell()
+        keepAlive = Config().get("cell", "setedCellKeepAlive")
+        self.grid[x][y] = Cell(keepAlive)
 
 
     def check_neighborhood(self, position):
@@ -117,9 +118,21 @@ class Habitat(Model):
         whitelist, blacklist, stables = self.who_die_or_birth()
 
         #Kill cells
-        for pos in blacklist:
-            lin, col = pos
-            self.grid[lin][col].kill()
+        lenght = len(blacklist)
+        i = 0
+
+        while i < lenght:
+            lin, col = blacklist[i]            
+            killed = self.grid[lin][col].kill()
+
+            if not killed:
+                stables.append(blacklist[i])
+                del blacklist[i]
+                lenght -= 1
+
+            else:
+                i += 1
+
 
         #Birth cells
         for pos in whitelist:

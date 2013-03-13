@@ -16,6 +16,10 @@ class Config(object):
             "population": {
                 "first-percentage": 0.2,
             },
+            "cell": {
+                #number of cycles to keep this type of cell alive
+                "setedCellKeepAlive": 6
+            },
             "setup": {
                 "resolutions": [
                     (400, 300),
