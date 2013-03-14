@@ -8,5 +8,8 @@
 		<file>images/arrow.png</file>
 		<file>images/sliderbar.png</file>
 		<file>images/sliderbar-active.png</file>
+		<file>images/keyboard.png</file>
+		<file>images/keyboard-pressed.png</file>
+		<file>images/keymap.png</file>
 	</qresource>
 </RCC>

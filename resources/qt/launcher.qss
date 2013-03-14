@@ -112,3 +112,12 @@ QSlider::handle:horizontal {
 QSlider::handle:horizontal:hover {
 	background-image: url(":images/sliderbar-active.png");
 }
+
+QPushButton#keyMap {
+	background-image: url(":images/keyboard.png");
+	background-position: center;
+}
+
+QPushButton#keyMap:pressed {
+	background-image: url(":images/keyboard-pressed.png");
+}

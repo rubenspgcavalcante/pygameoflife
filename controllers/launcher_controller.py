@@ -9,6 +9,7 @@ from core.config import Config
 from resources.manager import Resource
 from resources.qtlauncher import Ui_MainWindow
 
+
 class LauncherController(QtGui.QMainWindow, Controller):
     def __init__(self):
         self.qApp = QtGui.QApplication(sys.argv)
@@ -19,6 +20,7 @@ class LauncherController(QtGui.QMainWindow, Controller):
         # Set up the user interface from Designer.
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
         self.setDefaults()
         self.loadQss();
 
@@ -41,6 +43,7 @@ class LauncherController(QtGui.QMainWindow, Controller):
         self.connect(self.ui.populationSlider, QtCore.SIGNAL('valueChanged(int)'), self.updatePopLabel)
 
         # Connect up the buttons.
+        self.connect(self.ui.keyMap, QtCore.SIGNAL("clicked()"), self.showKeyMap)
         self.connect(self.ui.submit, QtCore.SIGNAL("clicked()"), self.runGame)
         self.connect(self.ui.cancel, QtCore.SIGNAL("clicked()"), self.exit)
 
@@ -62,10 +65,10 @@ class LauncherController(QtGui.QMainWindow, Controller):
 
 
     def center(self):
-        qr = self.frameGeometry()
-        cp = QtGui.QDesktopWidget().availableGeometry().center()
-        qr.moveCenter(cp)
-        self.move(qr.topLeft())
+        windowFrame = self.frameGeometry()
+        centerPosition = QtGui.QDesktopWidget().availableGeometry().center()
+        windowFrame.moveCenter(centerPosition)
+        self.move(windowFrame.topLeft())
 
 
     def setDefaults(self):
@@ -76,6 +79,21 @@ class LauncherController(QtGui.QMainWindow, Controller):
         for speed in Config().get("setup", "speed"):
             value = Config().get("setup", "speed")[speed]
             self.ui.speedComboBox.addItem(speed, value)
+            
+
+    def showKeyMap(self):
+        self.ui.keyMapWindow = QtGui.QWidget()
+        self.ui.keyMapWindow.setWindowTitle("Key map")
+        windowFrame = self.ui.keyMapWindow.frameGeometry()
+        centerPosition = QtGui.QDesktopWidget().availableGeometry().center()
+        windowFrame.moveCenter(centerPosition)
+        self.ui.keyMapWindow.move(windowFrame.topLeft())
+
+        picture = QtGui.QLabel(self.ui.keyMapWindow)
+        picture.setGeometry(0, 0, 800, 240)
+        picture.setPixmap(QtGui.QPixmap(":/images/keymap.png"))
+
+        self.ui.keyMapWindow.show()
 
 
     def runGame(self):
