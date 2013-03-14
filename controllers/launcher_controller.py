@@ -32,14 +32,16 @@ class LauncherController(QtGui.QMainWindow, Controller):
 
         self.bind(AppStartEvent(), self.appExec)
 
+
     def appExec(self, event):
         self.qApp.exec_()
+
 
     def defaultAction(self):
         pass
 
-    def connectSignals(self):
 
+    def connectSignals(self):
         self.connect(self.ui.populationSlider, QtCore.SIGNAL('valueChanged(int)'), self.updatePopLabel)
 
         # Connect up the buttons.
@@ -52,7 +54,6 @@ class LauncherController(QtGui.QMainWindow, Controller):
 
 
     def loadQss(self):
-        
         css = QtCore.QFile(':/launcher.qss')
         css.open(QtCore.QIODevice.ReadOnly)
 
@@ -84,6 +85,7 @@ class LauncherController(QtGui.QMainWindow, Controller):
     def showKeyMap(self):
         self.ui.keyMapWindow = QtGui.QWidget()
         self.ui.keyMapWindow.setWindowTitle("Key map")
+        self.ui.keyMapWindow.setFixedSize(QtCore.QSize(800, 240));
         windowFrame = self.ui.keyMapWindow.frameGeometry()
         centerPosition = QtGui.QDesktopWidget().availableGeometry().center()
         windowFrame.moveCenter(centerPosition)
@@ -112,6 +114,7 @@ class LauncherController(QtGui.QMainWindow, Controller):
     def exit(self, event=None):
         self.trigger(QuitEvent())
         sys.exit()
+
 
     def updatePopLabel(self, value):
         self.ui.populationValueLabel.setText(str(value) + "%")
