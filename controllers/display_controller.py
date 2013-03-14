@@ -12,7 +12,7 @@ from core.config import *
 from models.game_model import Game
 from views.cell_sprite import CellSprite
 from views.habitat_sprite import HabitatSprite
-from views.notification_sprite import NotificationSprite
+from views.notification_sprite import *
 
 from resources.manager import *
 
@@ -25,7 +25,10 @@ class DisplayController(Controller):
 
         self.screen = None
         self.speed = None
-        self.speedNotification = None
+        self.speedUpNotification = None
+        self.speedDownNotification = None
+        self.activeNotification = None
+
         self.layers = []
 
         self.bind(GameStartEvent(), self.show)
@@ -49,8 +52,10 @@ class DisplayController(Controller):
         pygame.display.flip()
 
     def orderedUpdate(self):
-        self.speedNotification.clean()
-        self.speedNotification.update()
+        if self.activeNotification is not None:
+            self.activeNotification.clean()
+            self.activeNotification.update()
+
         pygame.display.flip()
 
 
@@ -80,6 +85,16 @@ class DisplayController(Controller):
         currentSpeed = Config().get("game", "speed")
         diference = currentSpeed + event.delayChange
 
+        #Before change, clean the area of the efective active notification, if exists
+        if self.activeNotification is not None:
+                self.activeNotification.clean()
+
+        if event.state == ChangeSpeedEvent.UP:
+            self.activeNotification = self.speedUpNotification
+
+        elif event.state == ChangeSpeedEvent.DOWN:
+            self.activeNotification = self.speedDownNotification
+
         if diference < 0 or diference < Config().get("game", "min-delay"):
             currentSpeed = Config().get("game", "min-delay")
         elif diference > Config().get("game", "max-delay"):
@@ -88,7 +103,8 @@ class DisplayController(Controller):
             currentSpeed = diference
 
         Config().set("game", "speed", currentSpeed)
-        self.speedNotification.put()
+
+        self.activeNotification.put()
 
 
     def show(self, event):
@@ -100,6 +116,7 @@ class DisplayController(Controller):
         habitat = HabitatSprite()
         habitat.generate(self.screen)
 
-        self.speedNotification = NotificationSprite(self.screen, "speed")
+        self.speedUpNotification = SpeedUpNotification(self.screen)
+        self.speedDownNotification = SpeedDownNotification(self.screen)
 
         self.game.state = Game.STATE_RUNNING

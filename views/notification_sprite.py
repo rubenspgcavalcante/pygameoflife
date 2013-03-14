@@ -7,7 +7,7 @@ from core.view import *
 from resources.manager import *
 
 class NotificationSprite(View):
-    def __init__(self, screen, notification):
+    def __init__(self, screen):
         View.__init__(self)
 
         self.screen = screen
@@ -16,8 +16,7 @@ class NotificationSprite(View):
         self.tick = 0
         self.active = False
 
-        self.notification = notification
-        self.image = Resource.image(self.notification, True)
+        self.image = Resource.image(self.__class__.__name__, True)
         self.bg = Resource.image("bg", True)
 
     def defaultAction(self):
@@ -44,4 +43,12 @@ class NotificationSprite(View):
         for x in range(width)[::16]:
             for y in range(height)[::16]:
                 self.screen.blit(self.bg, (x, y))
-        
+
+
+class SpeedUpNotification(NotificationSprite):
+    def __init__(self, screen):
+        NotificationSprite.__init__(self, screen)
+
+class SpeedDownNotification(NotificationSprite):
+    def __init__(self, screen):
+        NotificationSprite.__init__(self, screen)

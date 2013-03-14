@@ -52,6 +52,12 @@ class PauseEvent(Event):
         self.name = "Pause Event"
 
 class ChangeSpeedEvent(Event):
+    UP = 1
+    DOWN = 0
     def __init__(self, delayChange=None):
         self.name = "Change Speed Event"
         self.delayChange = delayChange
+        if delayChange < 0:
+            self.state = ChangeSpeedEvent.UP
+        else:
+            self.state = ChangeSpeedEvent.DOWN
