@@ -3,7 +3,7 @@ from random import random
 import pygame
 from pygame.locals import *
 
-from core.event import SetCellEvent
+from core.event import SetCellEvent, DelCellEvent
 from core.model import Model
 from core.config import Config
 
@@ -28,6 +28,7 @@ class Habitat(Model):
 
         self.grid = [ [None] * cols for i in range(lins)]
         self.bind(SetCellEvent(), self.setCell)
+        self.bind(DelCellEvent(), self.delCell)
 
     def defaultAction(self):
         pass
@@ -38,12 +39,23 @@ class Habitat(Model):
                 if Config().get("population", "first-percentage") >= random():
                     self.grid[i][j] = Cell()
 
+
     def setCell(self, event):
         x, y = event.posx, event.posy
         x = int(x/16)
         y = int(y/16)
+
         keepAlive = Config().get("cell", "setedCellKeepAlive")
         self.grid[x][y] = Cell(keepAlive)
+
+
+    def delCell(self, event):
+        x, y = event.posx, event.posy
+        x = int(x/16)
+        y = int(y/16)
+
+        if self.grid[x][y] is not None:
+            self.grid[x][y].kill()
 
 
     def check_neighborhood(self, position):
@@ -117,13 +129,13 @@ class Habitat(Model):
     def nextGeneration(self):
         whitelist, blacklist, stables = self.who_die_or_birth()
 
-        #Kill cells
+        #Damage cells
         lenght = len(blacklist)
         i = 0
 
         while i < lenght:
             lin, col = blacklist[i]            
-            killed = self.grid[lin][col].kill()
+            killed = self.grid[lin][col].damage()
 
             if not killed:
                 stables.append(blacklist[i])

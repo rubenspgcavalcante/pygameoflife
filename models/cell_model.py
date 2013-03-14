@@ -21,7 +21,7 @@ class Cell(Model):
     def is_dead(self):
         return not self.alive
 
-    def kill(self):
+    def damage(self):
         if self.keepAlive:
             self.keepAlive -= 1
             return False
@@ -29,6 +29,10 @@ class Cell(Model):
         else:
             self.alive = False
             return True
+
+    def kill(self):
+        self.keepAlive = 0
+        self.alive = False
 
     def birth(self):
         self.alive = True

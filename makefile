@@ -43,7 +43,7 @@ build: resources
 	cp --parents ./resources/static/*.png freezed/$(GAME_NAME)/
 
 	rm -f releases/$(ZIP_NAME).zip
-	cd freezed && zip -9urT ../releases/$(ZIP_NAME) * && cd ..
+	cd freezed && zip -9urT ../releases/$(ZIP_NAME).zip * && cd ..
 
 resources:
 	#Generating game images and qt resources
@@ -59,8 +59,8 @@ clean:
 
 install: isroot
 	cp releases/$(ZIP_NAME).zip /usr/share/
-	unzip -uo /usr/share/pygame-of-life_$(OS_TYPE)_$(ARCH_TYPE).zip -d /usr/share
-	rm -f /usr/share/pygame-of-life_$(OS_TYPE)_$(ARCH_TYPE).zip
+	unzip -uo /usr/share/$(ZIP_NAME).zip -d /usr/share
+	rm -f /usr/share/$(ZIP_NAME).zip
 	cp resources/static/icon.png /usr/share/$(GAME_NAME)/
 	cp $(GAME_NAME).desktop /usr/share/applications/
 	ln -s --force /usr/share/$(GAME_NAME)/run-$(GAME_NAME) /usr/games/$(GAME_NAME) 

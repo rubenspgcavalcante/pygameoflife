@@ -30,14 +30,13 @@ class DisplayController(Controller):
         self.activeNotification = None
 
         self.layers = []
-
-        self.bind(GameStartEvent(), self.show)
-
         self.game = game
 
+        self.bind(GameStartEvent(), self.show)
         self.bind(NewGenerationEvent(), self.getGeneration)
         self.bind(ChangeSpeedEvent(), self.changeSpeed)
         self.bind(SetCellEvent(), self.setCell)
+        self.bind(DelCellEvent(), self.delCell)
 
 
     def defaultAction(self):
@@ -50,6 +49,15 @@ class DisplayController(Controller):
         cellSprite = CellSprite(self.screen)
         cellSprite.put((x, y), Resource.get("animation", "frames") - 1)
         pygame.display.flip()
+
+    def delCell(self, event):
+        x, y = event.posx, event.posy
+        x = int(x/16)
+        y = int(y/16)
+        cellSprite = CellSprite(self.screen)
+        cellSprite.remove((x, y))
+        pygame.display.flip()
+
 
     def orderedUpdate(self):
         if self.activeNotification is not None:
