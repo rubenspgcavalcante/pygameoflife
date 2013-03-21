@@ -12,25 +12,23 @@ class Mediator:
 		self.eventQueue= []
 		self.debug = True
 
+
 	def registerListener( self, listener ):
 		self.listeners[ listener ] = 1
+
 
 	def unregisterListener( self, listener ):
 		if listener in self.listeners:
 			del self.listeners[ listener ]
 
-	def debugBlackList(self, event):
-		if isinstance(event, TickEvent) or \
-		isinstance(event, NewGenerationEvent):
-			return True
 		
 	def post( self, event ):
 		listeners = self.listeners.items()
 
-		if self.debug and not self.debugBlackList(event):
-			print event.name
-
 		for listener in listeners:
+			#if isinstance(event, ShowNotificationEvent):
+			#	print listener[0]
+
 			listener[0].notify( event )
 
 		del listeners

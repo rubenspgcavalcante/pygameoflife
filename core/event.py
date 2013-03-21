@@ -67,3 +67,18 @@ class ChangeSpeedEvent(Event):
             self.state = ChangeSpeedEvent.UP
         else:
             self.state = ChangeSpeedEvent.DOWN
+
+class ScreenAvaibleEvent(Event):
+    def __init__(self, screen=None):
+        self.name = "Screen Avaible Event"
+        self.screen = screen
+
+class ShowNotificationEvent(Event):
+    def __init__(self, notification=None):
+        self.name = "Show notification"
+        self.notification = notification
+
+class DisplayRefreshEvent(Event):
+    def __init__(self, layer=None):
+        self.name = "Display Refresh"
+        self.layer = layer

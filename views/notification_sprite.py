@@ -27,15 +27,17 @@ class NotificationSprite(View):
         self.tick = pygame.time.get_ticks()
         self.screen.blit(self.image, self.position)
 
+    def remove(self):
+        self.clean()
+        self.active = False
+
     def update(self):
         if self.active:
             timePassed = (pygame.time.get_ticks() - self.tick)/1000
             if timePassed < self.wait:  
                 self.screen.blit(self.image, self.position)
-
             else:
-                self.clean()
-                self.active = False
+                self.remove()
 
 
     def clean(self):

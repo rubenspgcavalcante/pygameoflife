@@ -42,6 +42,7 @@ class DisplayController(Controller):
     def defaultAction(self):
         pass
 
+
     def setCell(self, event):
         x, y = event.posx, event.posy
         x = int(x/16)
@@ -50,6 +51,7 @@ class DisplayController(Controller):
         cellSprite.put((x, y), Resource.get("animation", "frames") - 1)
         pygame.display.flip()
 
+
     def delCell(self, event):
         x, y = event.posx, event.posy
         x = int(x/16)
@@ -57,62 +59,58 @@ class DisplayController(Controller):
         cellSprite = CellSprite(self.screen)
         cellSprite.remove((x, y))
         pygame.display.flip()
+        
 
+    def updateCells(self, lists, state):
+        cellSprite = CellSprite(self.screen)
+        frames = Resource.get("animation", "frames")
 
-    def orderedUpdate(self):
-        if self.activeNotification is not None:
-            self.activeNotification.clean()
-            self.activeNotification.update()
+        for position in lists.whitelist:
+            cellSprite.put(position, state)
 
-        pygame.display.flip()
+        for position in lists.blacklist:
+            cellSprite.remove(position)
+        
+        #Stables
+        for position in lists.stables:
+            cellSprite.put(position, frames-1)
 
 
     def getGeneration(self, event):
-        cellSprite = CellSprite(self.screen)
-        frames = Resource.get("animation", "frames")
         self.speed = Config().get("game", "speed")
+        frames = Resource.get("animation", "frames")
 
         #Animation loop
         for state in range(frames):
             pygame.time.wait(self.speed)
-            for position in event.whitelist:
-                cellSprite.put(position, state)
+            self.trigger(DisplayRefreshEvent(0))
+            self.updateCells(event, state) 
+            for i in range(1, 4):
+                self.trigger(DisplayRefreshEvent(i))
 
-            for position in event.blacklist:
-                cellSprite.remove(position)
-            
-            #Stables
-            for position in event.stables:
-                cellSprite.put(position, frames-1)
-
-            self.orderedUpdate()
-
+            pygame.display.flip()
 
 
     def changeSpeed(self, event):
         currentSpeed = Config().get("game", "speed")
         diference = currentSpeed + event.delayChange
-
-        #Before change, clean the area of the efective active notification, if exists
-        if self.activeNotification is not None:
-                self.activeNotification.clean()
-
+        
         if event.state == ChangeSpeedEvent.UP:
-            self.activeNotification = self.speedUpNotification
+            self.trigger(ShowNotificationEvent("speedUp"))
 
         elif event.state == ChangeSpeedEvent.DOWN:
-            self.activeNotification = self.speedDownNotification
+            self.trigger(ShowNotificationEvent("speedDown"))
 
         if diference < 0 or diference < Config().get("game", "min-delay"):
             currentSpeed = Config().get("game", "min-delay")
+
         elif diference > Config().get("game", "max-delay"):
             currentSpeed += Config().get("game", "min-delay")
+
         else:
             currentSpeed = diference
 
         Config().set("game", "speed", currentSpeed)
-
-        self.activeNotification.put()
 
 
     def show(self, event):
@@ -128,3 +126,4 @@ class DisplayController(Controller):
         self.speedDownNotification = SpeedDownNotification(self.screen)
 
         self.game.state = Game.STATE_RUNNING
+        self.trigger(ScreenAvaibleEvent(self.screen))

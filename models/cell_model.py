@@ -3,14 +3,12 @@ from math import floor
 import pygame
 from pygame.locals import *
 
-from core.model import Model
 from resources.manager import Resource
 
-class Cell(Model):
+class Cell:
     """Entity Cell, represents a living/dead cell"""
 
     def __init__(self, keepAlive=0):
-        Model.__init__(self)
         self.id = id(self)
         self.alive = True
         self.keepAlive = keepAlive
