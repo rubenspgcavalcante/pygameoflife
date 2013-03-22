@@ -5,8 +5,8 @@ Thumbs.db
 build
 freeze
 resources/cache/*
-resources/qtresources.py
-resources/qtlauncher.py
+helpers/qtresources.py
+views/qtlauncher.py
 releases/
 !releases/.gitkeep
 !resources/cache/.gitkeep
