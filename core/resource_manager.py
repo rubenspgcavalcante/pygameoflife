@@ -9,8 +9,6 @@ import pygame
 from PyQt4 import uic
 
 from core.config import Config
-from helpers.struct import Struct
-
 
 class Resource(object):
 
