@@ -46,8 +46,9 @@ class NotificationController(Model):
             return False
 
     def removeNotification(self, event):
-        if self.activeNotification is not None:
+        if self.activeNotification is not None and self.activeNotification.active:
             self.activeNotification.remove()
+            self.activeNotification = None
 
     def update(self, event):
         if self.activeNotification is not None and self.enabled:

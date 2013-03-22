@@ -33,7 +33,6 @@ build: resources
 	cp --parents ./views/*.pyc build/
 	cp --parents ./controllers/*.pyc build/
 	cp --parents ./helpers/*.pyc build/
-	cp --parents ./resources/*.pyc build/
 
 	mkdir -p freezed
 	mkdir -p freezed/$(GAME_NAME)
@@ -47,8 +46,8 @@ build: resources
 
 resources:
 	#Generating game images and qt resources
-	pyrcc4 -py2 resources/qt/resources.qrc -o resources/qtresources.py
-	pyuic4 resources/qt/launcher.ui -o resources/qtlauncher.py
+	pyrcc4 -py2 resources/qt/resources.qrc -o helpers/qtresources.py
+	pyuic4 resources/qt/launcher.ui -o views/qtlauncher.py
 	python __main__.py genimg
 
 clean:
@@ -56,6 +55,7 @@ clean:
 	rm build/ -rf
 	rm freezed/ -rf
 	rm cx_Freeze-* -rf
+	rm *~ -rf
 
 install: isroot
 	cp releases/$(ZIP_NAME).zip /usr/share/

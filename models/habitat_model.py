@@ -9,7 +9,7 @@ from core.config import Config
 
 from models.cell_model import Cell
 
-from resources.manager import Resource
+from core.resource_manager import Resource
 
 class Habitat(Model):
 

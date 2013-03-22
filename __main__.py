@@ -12,8 +12,8 @@ from controllers.launcher_controller import *
 from controllers.notification_controller import *
 from models.game_model import Game
 
-from resources.manager import Resource
-from resources import qtresources
+from core.resource_manager import Resource
+from helpers import qtresources
 
 if __name__ == "__main__":
 

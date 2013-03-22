@@ -3,7 +3,7 @@ from math import floor
 import pygame
 from pygame.locals import *
 
-from resources.manager import Resource
+from core.resource_manager import Resource
 
 class Cell:
     """Entity Cell, represents a living/dead cell"""

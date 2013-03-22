@@ -1,5 +1,5 @@
 from core.view import *
-from resources.manager import Resource
+from core.resource_manager import Resource
 
 class HabitatSprite(View):
     def __init__(self):

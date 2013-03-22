@@ -17,15 +17,15 @@ class Resource(object):
     @staticmethod
     def get(obj, attr=None):
 
-        path = os.path.dirname(os.path.abspath(__file__))
+        path = os.path.dirname((os.path.dirname(os.path.abspath(__file__))))
 
-        if not os.path.exists(path):
+        if not os.path.exists(path + "/"):
             #If compiled, the binarie is represented like a dir, so we must remove it
-            path = re.sub(r'((/|\\)run-pygameoflife(.exe)?)', "", path).replace("/manager.pyc", "")
+            path = re.sub(r'((/|\\)run-pygameoflife(.exe)?)', "", path).replace("/resource_manager.pyc", "")
 
         resource = {
                 "general":{
-                    "resourcesPath": path,
+                    "resourcesPath": path + "/resources/",
                     "sourcedir": "src/",
                     "processeddir": "cache/",
                     "staticdir": "static/",
@@ -101,36 +101,6 @@ class Resource(object):
 
         singleImg = pygame.image.load(os.path.join(path, entity + ".png")).convert_alpha()
         return singleImg
-
-
-    @staticmethod
-    def getQtUI(uiName):
-        """
-        Loads a Qt UI file
-        """
-        path =  Resource.get("general", "resourcesPath") + \
-                Resource.get("general", "qtui")
-
-        qtUI = uic.loadUi(path + uiName + ".ui")
-
-        return qtUI
-
-
-    @staticmethod
-    def getQss(uiName):
-        """
-        Loads a Qt Style Sheet file
-        """
-        path =  Resource.get("general", "resourcesPath") + \
-                Resource.get("general", "qtui")
-
-        basePath = Resource.get("general", "resourcesPath")
-
-        cssFile = open(path + uiName + ".qss", "r")
-        qtCSS = cssFile.read().replace("\n", "").replace("%path%", basePath)
-        cssFile.close()
-
-        return qtCSS
 
 
     @staticmethod

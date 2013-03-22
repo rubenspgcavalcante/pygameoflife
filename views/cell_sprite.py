@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 
 from core.view import *
-from resources.manager import *
+from core.resource_manager import Resource
 
 class CellSprite(View):
     def __init__(self, screen):

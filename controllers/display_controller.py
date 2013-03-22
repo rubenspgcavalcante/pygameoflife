@@ -14,7 +14,7 @@ from views.cell_sprite import CellSprite
 from views.habitat_sprite import HabitatSprite
 from views.notification_sprite import *
 
-from resources.manager import *
+from core.resource_manager import *
 
 class DisplayController(Controller):
     def __init__(self, game):

@@ -4,7 +4,7 @@ import pygame
 from pygame.locals import *
 
 from core.view import *
-from resources.manager import *
+from core.resource_manager import *
 
 class NotificationSprite(View):
     def __init__(self, screen):

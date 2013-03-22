@@ -6,8 +6,8 @@ from core.controller import *
 from core.event import *
 from core.config import Config
 
-from resources.manager import Resource
-from resources.qtlauncher import Ui_MainWindow
+from core.resource_manager import Resource
+from views.qtlauncher import Ui_MainWindow
 
 
 class LauncherController(QtGui.QMainWindow, Controller):
