@@ -40,6 +40,7 @@ build: resources
 
 	cp --parents ./resources/cache/*.png freezed/$(GAME_NAME)/
 	cp --parents ./resources/static/*.png freezed/$(GAME_NAME)/
+	cp --parents ./resources/audio/*.wav freezed/$(GAME_NAME)/
 
 	rm -f releases/$(ZIP_NAME).zip
 	cd freezed && zip -9urT ../releases/$(ZIP_NAME).zip * && cd ..

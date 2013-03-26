@@ -35,8 +35,8 @@ class DisplayController(Controller):
         self.bind(GameStartEvent(), self.show)
         self.bind(NewGenerationEvent(), self.getGeneration)
         self.bind(ChangeSpeedEvent(), self.changeSpeed)
-        self.bind(SetCellEvent(), self.setCell)
-        self.bind(DelCellEvent(), self.delCell)
+        self.bind(CellAddedEvent(), self.setCell)
+        self.bind(CellRemovedEvent(), self.delCell)
 
 
     def defaultAction(self):

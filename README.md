@@ -17,9 +17,9 @@ It's a celular automaton wich follows a few rules
 #Download
 To execute just run the "run-pygameoflife" executable.  
 The current releases are:
-*    Version 0.82:
-    *    [Windows i686](http://sourceforge.net/projects/pygame-of-life/files/pygameoflife_0.82_Win_i686.zip/download)
-    *    [Linux x86-64](http://sourceforge.net/projects/pygame-of-life/files/pygameoflife_0.82_Linux_x86_64.zip/download)
+*    Version 0.9:
+    *    [Windows i686](http://sourceforge.net/projects/pygame-of-life/files/pygameoflife_0.9_Win_i686.zip/download)
+    *    [Linux x86-64](http://sourceforge.net/projects/pygame-of-life/files/pygameoflife_0.9_Linux_x86_64.zip/download)
 
 ###The Rules
 

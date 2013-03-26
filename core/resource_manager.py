@@ -25,6 +25,7 @@ class Resource(object):
                 "general":{
                     "resourcesPath": path + "/resources/",
                     "sourcedir": "src/",
+                    "audio": "audio/",
                     "processeddir": "cache/",
                     "staticdir": "static/",
                     "qtui": "qt/",
@@ -99,6 +100,20 @@ class Resource(object):
 
         singleImg = pygame.image.load(os.path.join(path, entity + ".png")).convert_alpha()
         return singleImg
+
+    @staticmethod
+    def audio(filename, music=False):
+        """
+        Loads a audio file and return a pygame sound object
+        """
+        path = os.path.join(Resource.get("general", "resourcesPath"), Resource.get("general", "audio"))
+        if music:
+            music = pygame.mixer.music
+            music.load(os.path.join(path, filename))
+            return music
+
+        else:
+            return pygame.mixer.Sound(os.path.join(path, filename))
 
 
     @staticmethod

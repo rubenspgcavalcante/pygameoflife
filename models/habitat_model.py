@@ -3,7 +3,7 @@ from random import random
 import pygame
 from pygame.locals import *
 
-from core.event import SetCellEvent, DelCellEvent
+from core.event import CellAddedEvent, CellRemovedEvent, SetCellEvent, DelCellEvent
 from core.model import Model
 from core.config import Config
 
@@ -45,8 +45,10 @@ class Habitat(Model):
         x = int(x/16)
         y = int(y/16)
 
-        keepAlive = Config().get("cell", "setedCellKeepAlive")
-        self.grid[x][y] = Cell(keepAlive)
+        if self.grid[x][y] is None or self.grid[x][y].is_dead():
+            keepAlive = Config().get("cell", "setedCellKeepAlive")
+            self.grid[x][y] = Cell(keepAlive)
+            self.trigger(CellAddedEvent(event.posx, event.posy))
 
 
     def delCell(self, event):
@@ -54,8 +56,9 @@ class Habitat(Model):
         x = int(x/16)
         y = int(y/16)
 
-        if self.grid[x][y] is not None:
+        if self.grid[x][y] is not None and not self.grid[x][y].is_dead():
             self.grid[x][y].kill()
+            self.trigger(CellRemovedEvent(event.posx, event.posy))
 
 
     def check_neighborhood(self, position):

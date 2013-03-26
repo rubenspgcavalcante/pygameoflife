@@ -10,6 +10,8 @@ from controllers.cpuspinner_controller import *
 from controllers.display_controller import *
 from controllers.launcher_controller import *
 from controllers.notification_controller import *
+from controllers.sound_effect_controller import *
+
 from models.game_model import Game
 
 from core.resource_manager import Resource
@@ -36,6 +38,7 @@ if __name__ == "__main__":
         spinner = CPUSpinnerController()
         launcher = LauncherController()
         notifications = NotificationController()
+        sounds = SoundEffectController()
 
         game = Game()
         display = DisplayController(game)

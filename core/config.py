@@ -7,9 +7,11 @@ class Config(object):
         self.config = {
             "game": {
                 "window-size": (1024, 768),
-                "version": "0.82",
+                "version": "0.9",
                 "install-dir": "/usr/share/pygameoflife",
                 "speed": None,
+                "effects-volume": 1,
+                "music-volume": 1,
                 "min-delay": 0,
                 "max-delay": 100,
             },

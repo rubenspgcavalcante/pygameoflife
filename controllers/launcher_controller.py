@@ -42,7 +42,10 @@ class LauncherController(QtGui.QMainWindow, Controller):
 
 
     def connectSignals(self):
+        #Sliders
         self.connect(self.ui.populationSlider, QtCore.SIGNAL('valueChanged(int)'), self.updatePopLabel)
+        self.connect(self.ui.soundFxSlider, QtCore.SIGNAL('valueChanged(int)'), self.updateSoundLabel)
+        self.connect(self.ui.musicSlider, QtCore.SIGNAL('valueChanged(int)'), self.updateMusicLabel)
 
         # Connect up the buttons.
         self.connect(self.ui.keyMap, QtCore.SIGNAL("clicked()"), self.showKeyMap)
@@ -101,10 +104,15 @@ class LauncherController(QtGui.QMainWindow, Controller):
     def runGame(self):
         resolution = self.ui.resolutionComboBox.itemData(self.ui.resolutionComboBox.currentIndex()).toPyObject()
         speed = self.ui.speedComboBox.itemData(self.ui.speedComboBox.currentIndex()).toPyObject()
+
         initialPop = float(self.ui.populationSlider.value())/100
+        fxVol = float(self.ui.soundFxSlider.value())/100
+        musicVol = float(self.ui.musicSlider.value())/100
 
         Config().set("game", "window-size", resolution)
         Config().set("population", "first-percentage", initialPop)
+        Config().set("game", "effects-volume", fxVol)
+        Config().set("game", "music-volume", musicVol)
         Config().set("game", "speed", speed)
         self.qApp.quit()
         self.hide()
@@ -118,3 +126,11 @@ class LauncherController(QtGui.QMainWindow, Controller):
 
     def updatePopLabel(self, value):
         self.ui.populationValueLabel.setText(str(value) + "%")
+
+
+    def updateSoundLabel(self, value):
+        self.ui.soundFxValueLabel.setText(str(value) + "%")
+
+
+    def updateMusicLabel(self, value):
+        self.ui.musicValueLabel.setText(str(value) + "%")

@@ -40,9 +40,21 @@ class SetCellEvent(Event):
         self.posx = posx
         self.posy = posy
 
+class CellAddedEvent(Event):
+    def __init__(self, posx=None, posy=None):
+        self.name = "Cell Added Event"
+        self.posx = posx
+        self.posy = posy
+
 class DelCellEvent(Event):
     def __init__(self, posx=None, posy=None):
         self.name = "Delete Cell Event"
+        self.posx = posx
+        self.posy = posy
+
+class CellRemovedEvent(Event):
+    def __init__(self, posx=None, posy=None):
+        self.name = "Cell Removed Event"
         self.posx = posx
         self.posy = posy
 
