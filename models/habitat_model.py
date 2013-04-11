@@ -1,4 +1,6 @@
 from random import random
+from datetime import datetime
+from ctypes import *
 
 import pygame
 from pygame.locals import *
@@ -38,6 +40,14 @@ class Habitat(Model):
             for j in range(self.gridSize[1]):
                 if Config().get("population", "first-percentage") >= random():
                     self.grid[i][j] = Cell()
+
+    def turnIntoCArray(self):
+        entrylist = []
+        for i in self.grid:
+            entrylist.append((C.c_ubyte*len(i))(*i))
+
+
+        self.grid = (C.POINTER(C.c_ubyte) * len(entrylist))(*entrylist)
 
 
     def setCell(self, event):
@@ -130,6 +140,7 @@ class Habitat(Model):
         return (whitelist, blacklist, stables)
 
     def nextGeneration(self):
+        startTime = datetime.now()
         whitelist, blacklist, stables = self.who_die_or_birth()
 
         #Damage cells
@@ -158,4 +169,8 @@ class Habitat(Model):
             else:
                 self.grid[lin][col].birth()
 
+        endTime = datetime.now()
+        total = endTime - startTime
+
+        print float(total.microseconds)/10**6
         return (whitelist, blacklist, stables)
