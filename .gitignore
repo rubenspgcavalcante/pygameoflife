@@ -11,3 +11,5 @@ releases/
 !releases/.gitkeep
 !resources/cache/.gitkeep
 !releases/*.zip
+C/shared/*.so
+C/objects/*.o

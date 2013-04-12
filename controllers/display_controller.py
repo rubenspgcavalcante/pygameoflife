@@ -61,19 +61,16 @@ class DisplayController(Controller):
         pygame.display.flip()
         
 
-    def updateCells(self, lists, state):
+    def updateCells(self):
         cellSprite = CellSprite(self.screen)
         frames = Resource.get("animation", "frames")
 
-        for position in lists.whitelist:
-            cellSprite.put(position, state)
-
-        for position in lists.blacklist:
-            cellSprite.remove(position)
-        
-        #Stables
-        for position in lists.stables:
-            cellSprite.put(position, frames-1)
+        for i in range(self.game.habitat.gridSize[0]):
+            for j in range(self.game.habitat.gridSize[1]):
+                if self.game.habitat.grid[i][j] == 1:
+                    cellSprite.put((i, j), Resource.get("animation", "frames") - 1)
+                else:
+                    cellSprite.remove((i, j))
 
 
     def getGeneration(self, event):
@@ -84,10 +81,8 @@ class DisplayController(Controller):
         for state in range(frames):
             pygame.time.wait(self.speed)
             self.trigger(DisplayRefreshEvent(0))
-            self.updateCells(event, state) 
-            for i in range(1, 4):
-                self.trigger(DisplayRefreshEvent(i))
-
+            self.updateCells()
+            
             pygame.display.flip()
 
 

@@ -59,11 +59,8 @@ class CellRemovedEvent(Event):
         self.posy = posy
 
 class NewGenerationEvent(Event):
-    def __init__(self, whitelist=None, blacklist=None, stables=None):
+    def __init__(self):
         self.name = "New Generation Event"
-        self.whitelist = whitelist
-        self.blacklist = blacklist
-        self.stables = stables
 
 class PauseEvent(Event):
     def __init__(self):

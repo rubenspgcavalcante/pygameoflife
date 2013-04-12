@@ -24,8 +24,8 @@ class Game(Model):
 
     def defaultAction(self):
         if self.state == Game.STATE_RUNNING:
-            whitelist, blacklist, stables = self.habitat.nextGeneration()
-            self.trigger(NewGenerationEvent(whitelist, blacklist, stables))
+            self.habitat.nextGeneration()
+            self.trigger(NewGenerationEvent())
 
         elif self.state == Game.STATE_PAUSED:
             pass
