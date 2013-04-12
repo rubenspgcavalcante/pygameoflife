@@ -4,6 +4,7 @@ import os
 import sys
 import re
 import Image
+from ctypes import CDLL
 
 import pygame
 from PyQt4 import uic
@@ -26,6 +27,7 @@ class Resource(object):
                     "resourcesPath": path + "/resources/",
                     "sourcedir": "src/",
                     "audio": "audio/",
+                    "library": "library/",
                     "processeddir": "cache/",
                     "staticdir": "static/",
                     "qtui": "qt/",
@@ -114,6 +116,22 @@ class Resource(object):
 
         else:
             return pygame.mixer.Sound(os.path.join(path, filename))
+
+
+    @staticmethod
+    def dll(filename):
+        """
+        Loads a dinamic library, if in Windows a DLL if in Linux a SO
+        """
+        path = os.path.join(Resource.get("general", "resourcesPath"), Resource.get("general", "library"))
+        if os.name == "posix":
+            extension = ".so"
+        elif os.name == "nt":
+            extension = ".dll"
+
+        lib = CDLL(path + filename + extension)
+        return lib
+
 
 
     @staticmethod

@@ -19,22 +19,26 @@ class NotificationSprite(View):
         self.image = Resource.image(self.__class__.__name__, True)
         self.bg = Resource.image("bg", True)
 
+
     def defaultAction(self):
         pass
+
 
     def put(self):
         self.active = True
         self.tick = pygame.time.get_ticks()
         self.screen.blit(self.image, self.position)
 
+
     def remove(self):
         self.clean()
         self.active = False
 
+
     def update(self):
         if self.active:
             timePassed = (pygame.time.get_ticks() - self.tick)/1000
-            if timePassed < self.wait:  
+            if timePassed < self.wait:
                 self.screen.blit(self.image, self.position)
             else:
                 self.remove()
@@ -50,6 +54,7 @@ class NotificationSprite(View):
 class SpeedUpNotification(NotificationSprite):
     def __init__(self, screen):
         NotificationSprite.__init__(self, screen)
+
 
 class SpeedDownNotification(NotificationSprite):
     def __init__(self, screen):

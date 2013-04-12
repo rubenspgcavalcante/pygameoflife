@@ -25,7 +25,7 @@ all: build clean
 teste:
 	echo $(GAME_VERSION)
 
-build: resources
+build: resources library
 	python $(FLAGS)
 	mkdir -p build
 	cp --parents ./*.pyc build/
@@ -41,6 +41,8 @@ build: resources
 	cp --parents ./resources/cache/*.png freezed/$(GAME_NAME)/
 	cp --parents ./resources/static/*.png freezed/$(GAME_NAME)/
 	cp --parents ./resources/audio/*.wav freezed/$(GAME_NAME)/
+	if [ $(OS_TYPE) = Linux ]; then cp --force --parents ./resources/library/*.so freezed/$(GAME_NAME)/ ; fi;
+	if [ $(OS_TYPE) = Win ]; then cp --force --parents ./resources/library/*.dll freezed/$(GAME_NAME)/ ; fi;
 
 	rm -f releases/$(ZIP_NAME).zip
 	cd freezed && zip -9urT ../releases/$(ZIP_NAME).zip * && cd ..
@@ -50,6 +52,10 @@ resources:
 	pyrcc4 -py2 resources/qt/resources.qrc -o helpers/qtresources.py
 	pyuic4 resources/qt/launcher.ui -o views/qtlauncher.py
 	python __main__.py genimg
+
+library:
+	cd C && make
+	cp C/shared/game_of_life_algorithm.so resources/library
 
 clean:
 	find . -name "*.pyc" -exec rm -rf {} \;

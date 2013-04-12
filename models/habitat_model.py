@@ -87,5 +87,5 @@ class Habitat(Model):
 
 
     def nextGeneration(self):
-        lib = CDLL("C/shared/game_of_life_algorithm.so")
+        lib = Resource.dll("game_of_life_algorithm")
         lib.nextGeneration(self.grid, self.gridSize[0], self.gridSize[1])

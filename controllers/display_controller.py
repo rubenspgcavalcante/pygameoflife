@@ -31,7 +31,7 @@ class DisplayController(Controller):
 
         self.layers = []
         self.game = game
-        self.cellStates = [[{"live": 0, "keepAlive": 0}] * self.game.habitat.gridSize[1] for x in xrange(self.game.habitat.gridSize[0])]
+        self.cellStates = [[0] * self.game.habitat.gridSize[1] for x in xrange(self.game.habitat.gridSize[0])]
 
         self.bind(GameStartEvent(), self.show)
         self.bind(NewGenerationEvent(), self.getGeneration)
@@ -46,15 +46,16 @@ class DisplayController(Controller):
 
     def setCell(self, event):
         x, y = event.posx, event.posy
-        self.cellStates[x][y] = {"live": True, "keepAlive": 10}
+        #The value ten means hi will live for 10 generations
+        self.cellStates[x][y] = 10
         cellSprite = CellSprite(self.screen)
-        cellSprite.put((x, y), Resource.get("animation", "frames") - 1)
+        cellSprite.put((x, y))
         pygame.display.flip()
 
 
     def delCell(self, event):
         x, y = event.posx, event.posy
-        self.cellStates[x][y] = {"live": False, "keepAlive": 0}
+        self.cellStates[x][y] = 0
         cellSprite = CellSprite(self.screen)
         cellSprite.remove((x, y))
         pygame.display.flip()
@@ -62,34 +63,33 @@ class DisplayController(Controller):
 
     def updateCells(self):
         cellSprite = CellSprite(self.screen)
-        frames = Resource.get("animation", "frames")
 
         for i in range(self.game.habitat.gridSize[0]):
             for j in range(self.game.habitat.gridSize[1]):
                 #If a cell is setted to keeps alive
-                if self.cellStates[i][j]["keepAlive"] > 0:
-                    self.cellStates[i][j]["keepAlive"] -= 1
-                    self.game.habitat.grid[i][j] = True
+                if self.cellStates[i][j] > 1:
+                    self.cellStates[i][j] -= 1
+                    self.game.habitat.grid[i][j] = 1
 
                 if self.game.habitat.grid[i][j]:
-                    if not self.cellStates[i][j]["live"]:
-                        self.cellStates[i][j] = {"live": True, "keepAlive": 0}
-                        cellSprite.put((i, j), Resource.get("animation", "frames") - 1)
+                    if not self.cellStates[i][j]:
+                        self.cellStates[i][j] = 1
+                        cellSprite.put((i, j))
 
-                elif self.cellStates[i][j]["live"]:
-                    self.cellStates[i][j] = {"live": False, "keepAlive": 0}
+                elif self.cellStates[i][j]:
+                    self.cellStates[i][j] = 0
                     cellSprite.remove((i, j))
 
 
     def getGeneration(self, event):
         self.speed = Config().get("game", "speed")
-        frames = Resource.get("animation", "frames")
-
+        
         #Animation loop
         pygame.time.wait(self.speed)
         self.trigger(DisplayRefreshEvent(0))
         self.updateCells()
-        
+
+        self.trigger(DisplayRefreshEvent(3))
         pygame.display.flip()
 
 

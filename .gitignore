@@ -12,4 +12,5 @@ releases/
 !resources/cache/.gitkeep
 !releases/*.zip
 C/shared/*.so
+C/shared/*.dll
 C/objects/*.o
