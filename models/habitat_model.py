@@ -71,7 +71,9 @@ class Habitat(Model):
         x = int(x/16)
         y = int(y/16)
 
-        self.grid[x][y] = True
+        if not self.grid[x][y]:
+            self.grid[x][y] = True
+            self.trigger(CellAddedEvent(posx=x, posy=y))
 
 
     def delCell(self, event):
@@ -79,7 +81,9 @@ class Habitat(Model):
         x = int(x/16)
         y = int(y/16)
 
-        self.grid[x][y] = False
+        if self.grid[x][y]:
+            self.grid[x][y] = False
+            self.trigger(CellRemovedEvent(posx=x, posy=y))
 
 
     def nextGeneration(self):
