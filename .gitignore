@@ -14,3 +14,4 @@ releases/
 C/shared/*.so
 C/shared/*.dll
 C/objects/*.o
+C/test*

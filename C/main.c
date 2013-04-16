@@ -4,10 +4,8 @@
 
 #define true 1
 #define false 0
-typedef char bool;
 
 int main(){
-
     bool** array = make2DArrayBool(3, 3);
 
     for(int i = 0; i < 3; i++){

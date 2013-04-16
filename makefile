@@ -11,6 +11,7 @@ HIDE_CONSOLE_WIN32 = $(shell if [ `uname` != Linux ] ; then echo --base-name=Win
 # --------------------------------------- Game attributes ----------------------------------------------------#
 OS_TYPE = $(shell if [ `uname` = Linux ] ; then echo Linux ; else echo Win ; fi)
 ARCH_TYPE = $(shell if [ `uname -p` != unknown ] ; then uname -p ; else uname -m ; fi)
+LIB_TYPE := $(shell if [ `uname` = Linux ] ; then echo .so ; else echo .dll ; fi)
 BIN_NAME = $(shell if [ `uname` = Linux ] ; then echo run-$(GAME_NAME) ; else echo run-$(GAME_NAME).exe ; fi)
 GAME_VERSION = $(shell python __main__.py --version)
 GAME_NAME = pygameoflife
@@ -55,7 +56,7 @@ resources:
 
 library:
 	cd C && make
-	cp C/shared/game_of_life_algorithm.so resources/library
+	cp C/shared/game_of_life_algorithm$(LIB_TYPE) resources/library
 
 clean:
 	find . -name "*.pyc" -exec rm -rf {} \;
