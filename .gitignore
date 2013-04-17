@@ -13,6 +13,8 @@ releases/
 !resources/cache/.gitkeep
 !releases/*.zip
 resources/library/*
+resources/*.py
+resources/*.pyc
 C/shared/*
 C/objects/*
 C/test*
