@@ -11,12 +11,18 @@ Last build in Travis continuous integration
 
 ##About
 
-This game is based in the 'Game of Life' or simply 'Life' proposed by John Conway in a scientific [article](http://ddi.cs.uni-potsdam.de/HyFISCH/Produzieren/lis_projekt/proj_gamelife/ConwayScientificAmerican.htm) in 1970.  
-It's a celular automaton wich follows a few rules
+This game is based in the 'Game of Life' or simply 'Life' proposed by John Conway in a scientific [article](http://ddi.cs.uni-potsdam.de/HyFISCH/Produzieren/lis_projekt/proj_gamelife/ConwayScientificAmerican.htm) in 1970. It's a celular automaton wich follows a few rules described more above.
+
+The game uses the dynamicity and practicity of python with pygame and the speed of the C.
+Most of the game is in python, but the core algorithm, with complexity O(n²), needs a performatic solution, so I've used
+the force of the C and the performance improved an average of 500 times more! (available in 1.x versions)
 
 #Download
 To execute just run the "run-pygameoflife" executable.  
 The current releases are:
+*    Version 1.0 beta:
+    *    [Windows i686](http://sourceforge.net/projects/pygame-of-life/files/pygameoflife_1.0b_Win_i686.zip/download)
+    *    [Linux x86-64](http://sourceforge.net/projects/pygame-of-life/files/pygameoflife_1.0b_Linux_x86_64.zip/download)
 *    Version 0.9:
     *    [Windows i686](http://sourceforge.net/projects/pygame-of-life/files/pygameoflife_0.9_Win_i686.zip/download)
     *    [Linux x86-64](http://sourceforge.net/projects/pygame-of-life/files/pygameoflife_0.9_Linux_x86_64.zip/download)
@@ -34,7 +40,9 @@ The current releases are:
 
 ***
 
-#Running
+#Running and build by the source
+
+##Running
 To run directly just install the dependeces, generates the resources and execute by:
 ```
 make setup
@@ -45,6 +53,7 @@ python __main__.py
 ##Dependeces
 Tested in Ubuntu 12.10 LTS 64 wich the following versions
 *    python >= 2.6.x
+*    gcc >= 3.4.x
 *    pygame >= 1.9.x
 *    pyqt >= 4.x
 *    pyuic4 >= 4.9.x
@@ -73,7 +82,9 @@ to unistall, just run
 sudo make unistall
 ```
 
-##Author
+***
+
+#Author
 
 Rubens Pinheiro Gonçalves Cavalcante  
 email: [rubenspgcavalcante@gmail.com](mailto:rubenspgcavalcante@gmail.com)

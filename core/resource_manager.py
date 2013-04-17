@@ -148,17 +148,19 @@ class Resource(object):
         proccessedDir = os.path.join(basePath, Resource.get("general", "processeddir"))
 
         for _dir in os.listdir(src):
-
             if "frames" in _dir:
-                entity = _dir.split("-")[0]
-                resource = Resource.get(entity)
-                width = resource["size"][0] * Resource.get("animation", "frames")
-
-                size = (width, resource["size"][0])
-                final = Image.new("RGBA", size)
-                
                 sortedFiles = os.listdir(src + _dir)
                 sortedFiles.sort()
+
+                #
+                # Opens the first file and get the template size based on the
+                # width and number of images
+                #
+                sprite = Image.open(os.path.join(src, _dir, sortedFiles[0]))
+                width = sprite.size[0] * len(sortedFiles)
+                size = (width, sprite.size[1])
+
+                final = Image.new("RGBA", size)
 
                 for index, _file in enumerate(sortedFiles):
 

@@ -23,7 +23,7 @@ ZIP_NAME = $(GAME_NAME)_$(GAME_VERSION)_$(OS_TYPE)_$(ARCH_TYPE)
 # -- Rules -- #
 all: build clean
 
-teste:
+version:
 	echo $(GAME_VERSION)
 
 build: resources library

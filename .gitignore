@@ -1,3 +1,4 @@
+!.gitkeep
 *.pyc
 *~
 ehthumbs.db
@@ -11,7 +12,7 @@ releases/
 !releases/.gitkeep
 !resources/cache/.gitkeep
 !releases/*.zip
-C/shared/*.so
-C/shared/*.dll
-C/objects/*.o
+resources/library/*
+C/shared/*
+C/objects/*
 C/test*
