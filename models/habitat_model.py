@@ -55,7 +55,7 @@ class Habitat(Model):
     def turnIntoCArray(self):
         entrylist = []
         for sublist in self.grid:
-            entrylist.append((c_ubyte*len(sublist))(*sublist))
+            entrylist.append((c_ubyte * len(sublist))(*sublist))
 
         self.grid = (POINTER(c_ubyte) * len(entrylist))(*entrylist)
 

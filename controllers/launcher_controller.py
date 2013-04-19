@@ -16,7 +16,7 @@ class LauncherController(QtGui.QMainWindow, Controller):
         self.qApp = QtGui.QApplication(sys.argv)
 
         QtGui.QMainWindow.__init__(self)
-        Controller.__init__(self)        
+        Controller.__init__(self)
 
         # Set up the user interface from Designer.
         self.ui = Ui_MainWindow()
@@ -44,6 +44,7 @@ class LauncherController(QtGui.QMainWindow, Controller):
 
 
     def connectSignals(self):
+
         #Sliders
         self.connect(self.ui.populationSlider, QtCore.SIGNAL('valueChanged(int)'), self.updatePopLabel)
         self.connect(self.ui.soundFxSlider, QtCore.SIGNAL('valueChanged(int)'), self.updateSoundLabel)
@@ -62,17 +63,13 @@ class LauncherController(QtGui.QMainWindow, Controller):
         self.closeEvent = self.exit
 
 
-    def buildCustomTitleBar(self):
-        print self.ui.customTitleBar
-
-
-    def mousePressEvent(self,event):
+    def mousePressEvent(self, event):
         if event.button() == QtCore.Qt.LeftButton:
             self.ui.customTitleBar.moving = True
             self.ui.customTitleBar.offset = event.pos()
 
 
-    def mouseMoveEvent(self,event):
+    def mouseMoveEvent(self, event):
         if self.ui.customTitleBar.moving:
             self.move(event.globalPos() - self.ui.customTitleBar.offset)
 
@@ -104,12 +101,12 @@ class LauncherController(QtGui.QMainWindow, Controller):
         for speed in Config().get("setup", "speed"):
             value = Config().get("setup", "speed")[speed]
             self.ui.speedComboBox.addItem(speed, value)
-            
+
 
     def showKeyMap(self):
         self.ui.keyMapWindow = QtGui.QWidget()
         self.ui.keyMapWindow.setWindowTitle("Key map")
-        self.ui.keyMapWindow.setFixedSize(QtCore.QSize(800, 240));
+        self.ui.keyMapWindow.setFixedSize(QtCore.QSize(800, 240))
         windowFrame = self.ui.keyMapWindow.frameGeometry()
         centerPosition = QtGui.QDesktopWidget().availableGeometry().center()
         windowFrame.moveCenter(centerPosition)
@@ -126,9 +123,9 @@ class LauncherController(QtGui.QMainWindow, Controller):
         resolution = self.ui.resolutionComboBox.itemData(self.ui.resolutionComboBox.currentIndex()).toPyObject()
         speed = self.ui.speedComboBox.itemData(self.ui.speedComboBox.currentIndex()).toPyObject()
 
-        initialPop = float(self.ui.populationSlider.value())/100
-        fxVol = float(self.ui.soundFxSlider.value())/100
-        musicVol = float(self.ui.musicSlider.value())/100
+        initialPop = float(self.ui.populationSlider.value()) / 100
+        fxVol = float(self.ui.soundFxSlider.value()) / 100
+        musicVol = float(self.ui.musicSlider.value()) / 100
 
         Config().set("game", "window-size", resolution)
         Config().set("population", "first-percentage", initialPop)

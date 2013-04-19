@@ -122,6 +122,7 @@ class Resource(object):
         Loads a dinamic library, if in Windows a DLL if in Linux a SO
         """
         path = os.path.join(Resource.get("general", "resourcesPath"), Resource.get("general", "library"))
+        extension = ""
         if os.name == "posix":
             extension = ".so"
         elif os.name == "nt":
