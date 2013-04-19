@@ -6,6 +6,15 @@ QMainWindow {
 QLabel {
 	color: #000;
 }
+
+#customTitleBar {
+    background-image: url(":images/bg.png");
+    color:white;
+    font:12px bold;
+    font-weight:bold;
+    border-radius: 1px;
+    height: 11px;
+}
 /******************* Combo box style ************************/
 QComboBox {
 	border: 1px solid #333;

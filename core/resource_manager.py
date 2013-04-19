@@ -71,13 +71,13 @@ class Resource(object):
         an entity
         """
 
-        path =  os.path.join(Resource.get("general", "resourcesPath"), Resource.get("general", "processeddir"))
+        path = os.path.join(Resource.get("general", "resourcesPath"), Resource.get("general", "processeddir"))
 
         sprite = pygame.image.load(os.path.join(path, entity + ".png")).convert_alpha()
 
         images = []
         spriteWidth, spriteHeight = sprite.get_size()
-        width, height =  Resource.get(entity, "size")
+        width, height = Resource.get(entity, "size")
 
         for i in xrange(int(spriteWidth / width)):
             images.append(sprite.subsurface((i * width, 0, width, height)))
@@ -171,7 +171,7 @@ class Resource(object):
                         print _file + " is not a valid type, not using it"
 
                 
-                entity = _dir.split("-")[0];
+                entity = _dir.split("-")[0]
 
                 print "generating: " + entity + ".png"
                 final.save(os.path.join(proccessedDir , entity + ".png"))

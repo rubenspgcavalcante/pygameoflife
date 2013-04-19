@@ -1,3 +1,4 @@
+from PyQt4.uic.Compiler.qtproxies import QtCore
 import sys
 
 from PyQt4 import QtCore, QtGui
@@ -5,6 +6,7 @@ from PyQt4 import QtCore, QtGui
 from core.controller import *
 from core.event import *
 from core.config import Config
+from helpers.qtresources import *
 
 from views.qtlauncher import Ui_MainWindow
 
@@ -21,11 +23,12 @@ class LauncherController(QtGui.QMainWindow, Controller):
         self.ui.setupUi(self)
 
         self.setDefaults()
-        self.loadQss();
+        self.loadQss()
+        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
 
         self.center()
         self.show()
-        self.setFixedSize(self.size());
+        self.setFixedSize(self.size())
 
         self.connectSignals()
 
@@ -46,6 +49,10 @@ class LauncherController(QtGui.QMainWindow, Controller):
         self.connect(self.ui.soundFxSlider, QtCore.SIGNAL('valueChanged(int)'), self.updateSoundLabel)
         self.connect(self.ui.musicSlider, QtCore.SIGNAL('valueChanged(int)'), self.updateMusicLabel)
 
+        #Title bar
+        self.connect(self.ui.customTitleBar, QtCore.SIGNAL('mouseMove()'), self.mouseMoveEvent)
+        self.connect(self.ui.customTitleBar, QtCore.SIGNAL('mouseMove()'), self.mousePressEvent)
+
         # Connect up the buttons.
         self.connect(self.ui.keyMap, QtCore.SIGNAL("clicked()"), self.showKeyMap)
         self.connect(self.ui.submit, QtCore.SIGNAL("clicked()"), self.runGame)
@@ -53,6 +60,21 @@ class LauncherController(QtGui.QMainWindow, Controller):
 
         #Window close button
         self.closeEvent = self.exit
+
+
+    def buildCustomTitleBar(self):
+        print self.ui.customTitleBar
+
+
+    def mousePressEvent(self,event):
+        if event.button() == QtCore.Qt.LeftButton:
+            self.ui.customTitleBar.moving = True
+            self.ui.customTitleBar.offset = event.pos()
+
+
+    def mouseMoveEvent(self,event):
+        if self.ui.customTitleBar.moving:
+            self.move(event.globalPos() - self.ui.customTitleBar.offset)
 
 
     def loadQss(self):
