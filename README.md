@@ -96,6 +96,6 @@ Rubens Pinheiro Gonçalves Cavalcante
 email: [rubenspgcavalcante@gmail.com](mailto:rubenspgcavalcante@gmail.com)
 
 ##License & Rights
-
-Using GNU LESSER GENERAL PUBLIC LICENSE *Version 3, 29 June 2007*  
-[gnu.org](http://www.gnu.org/copyleft/gpl.html,"GPLv3")  
+![Gnu GPLv3](resources/static/gnugpl.png)
+Using GNU GENERAL PUBLIC LICENSE *Version 3, 29 June 2007*
+[gnu.org](http://www.gnu.org/copyleft/gpl.html,"GPLv3")

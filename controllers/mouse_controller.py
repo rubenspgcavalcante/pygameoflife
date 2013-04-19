@@ -1,8 +1,6 @@
 import pygame
-from pygame.locals import *
 
 from core.event import *
-from core.constants import *
 from core.controller import *
 
 class MouseController(Controller):

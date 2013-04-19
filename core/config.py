@@ -1,8 +1,8 @@
-from core.singleton import singleton
+import core.singleton
 
-@singleton
+
+@core.singleton.singleton
 class Config(object):
-
     def __init__(self):
         self.config = {
             "game": {
@@ -53,7 +53,7 @@ class Config(object):
                 self.config[key] = value
 
             else:
-                 self.config[key][attr] = value
+                self.config[key][attr] = value
 
         except KeyError:
             return None

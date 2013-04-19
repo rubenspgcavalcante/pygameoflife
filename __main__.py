@@ -1,9 +1,6 @@
 import sys
 
-from core.event import *
-from core.mediator import *
-
-from controllers.pygame_input_controller import *
+import controllers.pygame_input_controller
 from controllers.keyboard_controller import *
 from controllers.mouse_controller import *
 from controllers.cpuspinner_controller import *
@@ -15,7 +12,6 @@ from controllers.sound_effect_controller import *
 from models.game_model import Game
 
 from core.resource_manager import Resource
-from helpers import qtresources
 
 if __name__ == "__main__":
 
@@ -32,7 +28,7 @@ if __name__ == "__main__":
         print "'--help' show this help\n"
 
     else:
-        inputs = PygameInputController()
+        inputs = controllers.pygame_input_controller.PygameInputController()
         keyboard = KeyboardController()
         mouse = MouseController()
         spinner = CPUSpinnerController()

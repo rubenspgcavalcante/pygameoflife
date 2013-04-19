@@ -1,7 +1,4 @@
-import time
-
 import pygame
-from pygame.locals import *
 
 from core.view import *
 from core.resource_manager import *

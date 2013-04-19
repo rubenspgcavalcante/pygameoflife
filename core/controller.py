@@ -1,5 +1,3 @@
-from core.event import *
-from core.mediator import Mediator
 from core.mvc_commons import MVCCommons
 
 class Controller(MVCCommons):

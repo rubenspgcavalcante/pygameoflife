@@ -1,12 +1,11 @@
 import sys
 
-from PyQt4 import QtCore, QtGui, uic
+from PyQt4 import QtCore, QtGui
 
 from core.controller import *
 from core.event import *
 from core.config import Config
 
-from core.resource_manager import Resource
 from views.qtlauncher import Ui_MainWindow
 
 

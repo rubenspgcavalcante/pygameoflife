@@ -1,5 +1,4 @@
 import pygame
-from pygame.locals import *
 
 from core.controller import Controller
 from core.resource_manager import Resource

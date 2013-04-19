@@ -1,6 +1,7 @@
 !.gitkeep
 *.pyc
 *~
+.idea/*
 ehthumbs.db
 Thumbs.db
 build

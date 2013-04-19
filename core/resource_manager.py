@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import os
-import sys
 import re
 import Image
 from ctypes import CDLL
 
 import pygame
-from PyQt4 import uic
 
 from core.config import Config
 

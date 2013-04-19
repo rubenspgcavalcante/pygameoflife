@@ -1,15 +1,9 @@
 from random import random
-from datetime import datetime
 from ctypes import *
-
-import pygame
-from pygame.locals import *
 
 from core.event import CellAddedEvent, CellRemovedEvent, SetCellEvent, DelCellEvent
 from core.model import Model
 from core.config import Config
-
-from models.cell_model import Cell
 
 from core.resource_manager import Resource
 

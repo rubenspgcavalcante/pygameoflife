@@ -1,6 +1,5 @@
 from weakref import WeakKeyDictionary
 
-from core.event import *
 from core.singleton import singleton
 
 @singleton

@@ -1,4 +1,3 @@
-import pygame
 from pygame.locals import *
 
 from core.event import *
