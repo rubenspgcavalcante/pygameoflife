@@ -15,6 +15,16 @@ QLabel {
     border-radius: 1px;
     height: 11px;
 }
+
+#closeButton {
+    background: none;
+    background-image: url(":images/close.png");
+    border: none;
+}
+    #closeButton:pressed{
+        background-image: url(":images/close-pressed.png");
+    }
+
 /******************* Combo box style ************************/
 QComboBox {
 	border: 1px solid #333;

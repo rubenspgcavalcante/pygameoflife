@@ -1,4 +1,3 @@
-from PyQt4.uic.Compiler.qtproxies import QtCore
 import sys
 
 from PyQt4 import QtCore, QtGui
@@ -57,6 +56,8 @@ class LauncherController(QtGui.QMainWindow, Controller):
         # Connect up the buttons.
         self.connect(self.ui.keyMap, QtCore.SIGNAL("clicked()"), self.showKeyMap)
         self.connect(self.ui.submit, QtCore.SIGNAL("clicked()"), self.runGame)
+
+        self.connect(self.ui.closeButton, QtCore.SIGNAL("clicked()"), self.exit)
         self.connect(self.ui.cancel, QtCore.SIGNAL("clicked()"), self.exit)
 
         #Window close button

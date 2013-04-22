@@ -3,6 +3,8 @@
         <file>launcher.qss</file>
 		<file>images/launcher-bg.png</file>
 		<file>images/bg.png</file>
+        <file>images/close.png</file>
+        <file>images/close-pressed.png</file>
 		<file>images/button.png</file>
 		<file>images/button-press.png</file>
 		<file>images/arrow.png</file>
