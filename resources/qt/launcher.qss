@@ -12,8 +12,12 @@ QLabel {
     color:white;
     font:12px bold;
     font-weight:bold;
-    border-radius: 1px;
+    border-radius: 2px;
     height: 11px;
+}
+
+#windowTitle{
+    color: white;
 }
 
 #closeButton {
@@ -99,16 +103,12 @@ QStatusBar {
 	background-image: url(":images/bg.png");
 }
 
-QSlider::groove:horizontal {
-	background: #999;
-	height: 16px;
-}
 
 /*************************** Slider style ******************************/
 
 QSlider::sub-page:horizontal {
 	background: qlineargradient(x1: 0, y1: 0.2, x2: 1, y2: 1, stop: 0 #FFF, stop: 1 #000);
-	border: 1px solid qlineargradient(x1: 0, y1: 0.2, x2: 1, y2: 1, stop: 0 #FFF, stop: 1 #000);
+	border: 1px solid #000;
 }
 
 QSlider::add-page:horizontal {
@@ -118,15 +118,14 @@ QSlider::add-page:horizontal {
 }
 
 QSlider::handle:horizontal {
-	background-image: url(":images/sliderbar.png");
-	border: 1px solid #222;
-	width: 24px;
-	height: 12px;
+	background: url(":images/sliderbar.png") no-repeat center;
 }
 
 QSlider::handle:horizontal:hover {
 	background-image: url(":images/sliderbar-active.png");
 }
+
+
 
 QPushButton#keyMap {
 	background-image: url(":images/keyboard.png");
