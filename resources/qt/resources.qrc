@@ -1,17 +1,18 @@
-<!DOCTYPE RCC><RCC version="1.0">
-	<qresource>
-        <file>launcher.qss</file>
-		<file>images/launcher-bg.png</file>
-		<file>images/bg.png</file>
-        <file>images/close.png</file>
-        <file>images/close-pressed.png</file>
-		<file>images/button.png</file>
-		<file>images/button-press.png</file>
-		<file>images/arrow.png</file>
-		<file>images/sliderbar.png</file>
-		<file>images/sliderbar-active.png</file>
-		<file>images/keyboard.png</file>
-		<file>images/keyboard-pressed.png</file>
-		<file>images/keymap.png</file>
-	</qresource>
+<!DOCTYPE RCC>
+<RCC version="1.0">
+  <qresource>
+    <file>launcher.qss</file>
+    <file>images/button-press.png</file>
+    <file>images/close.png</file>
+    <file>images/arrow.png</file>
+    <file>images/keyboard.png</file>
+    <file>images/close-pressed.png</file>
+    <file>images/keymap.png</file>
+    <file>images/sliderbar.png</file>
+    <file>images/keyboard-pressed.png</file>
+    <file>images/bg.png</file>
+    <file>images/launcher-bg.png</file>
+    <file>images/sliderbar-active.png</file>
+    <file>images/button.png</file>
+  </qresource>
 </RCC>

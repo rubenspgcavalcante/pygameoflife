@@ -6,6 +6,7 @@ import Image
 from ctypes import CDLL
 
 import pygame
+from lxml import etree
 
 from core.config import Config
 
@@ -29,6 +30,7 @@ class Resource(object):
                     "processeddir": "cache/",
                     "staticdir": "static/",
                     "qtui": "qt/",
+                    "qcss": "launcher.qss",
                 },
 
                 "display":{
@@ -177,3 +179,29 @@ class Resource(object):
                 print "generating: " + entity + ".png"
                 final.save(os.path.join(proccessedDir , entity + ".png"))
 
+    @staticmethod
+    def generateQrcFile():
+        """
+        Generates the qrc xml file, used to compile the files to use in qt
+        """
+        root = etree.Element("RCC", {"version": "1.0"})
+        etree.SubElement(root, "qresource")
+
+        basePath = Resource.get("general", "resourcesPath")
+        qtDir = os.path.join(basePath, Resource.get("general", "qtui"))
+        qtImages = os.path.join(qtDir, "images")
+
+        #Adds first the Qt CSS file
+        qcss = etree.Element("file")
+        qcss.text = os.path.join(Resource.get("general", "qcss"))
+        root[0].append(qcss)
+
+        for imagesFile in os.listdir(qtImages):
+            fileTag = etree.Element("file")
+            fileTag.text = os.path.join("images", imagesFile)
+            root[0].append(fileTag)
+
+        xmlString = etree.tostring(root, pretty_print=True, doctype="<!DOCTYPE RCC>")
+        qrcFile = open(os.path.join(qtDir, "resources.qrc"), "w")
+        qrcFile.write(xmlString)
+        qrcFile.close()

@@ -5,6 +5,7 @@ CURRENT_DIR = ${PWD##*/}
 CX_FREEZE_VER = 4.3.1
 CX_FREEZE_LINK = "http://downloads.sourceforge.net/project/cx-freeze/$(CX_FREEZE_VER)/cx_Freeze-$(CX_FREEZE_VER).tar.gz"
 EXCLUDE_MODULES = tcl,ttk,Tkinter,setuptolls,numpy
+INCLUDE_MODULES = lxml.etree,lxml._elementpath
 APT_DEPENDECES= gcc python python-dev python-imaging python-pygame python-qt4 pyqt4-dev-tools zip
 HIDE_CONSOLE_WIN32 = $(shell if [ `uname` != Linux ] ; then echo --base-name=Win32GUI ; fi)
 
@@ -37,7 +38,7 @@ build: resources library
 
 	mkdir -p freezed
 	mkdir -p freezed/$(GAME_NAME)
-	cxfreeze __main__.py $(HIDE_CONSOLE_WIN32) --target-dir freezed/$(GAME_NAME) --target-name $(BIN_NAME) --exclude-modules=$(EXCLUDE_MODULES)
+	cxfreeze __main__.py $(HIDE_CONSOLE_WIN32) --target-dir freezed/$(GAME_NAME) --target-name $(BIN_NAME) --exclude-modules=$(EXCLUDE_MODULES) --include-modules=$(INCLUDE_MODULES)
 
 	cp --parents ./resources/cache/*.png freezed/$(GAME_NAME)/
 	cp --parents ./resources/static/*.png freezed/$(GAME_NAME)/
@@ -50,9 +51,10 @@ build: resources library
 
 resources:
 	#Generating game images and qt resources
+	python __main__.py --genimg
+	python __main__.py --genqrc
 	pyrcc4 -py2 resources/qt/resources.qrc -o helpers/qtresources.py
 	pyuic4 resources/qt/launcher.ui -o views/qtlauncher.py
-	python __main__.py genimg
 
 library:
 	cd C && make

@@ -37,7 +37,6 @@ class LauncherController(QtGui.QMainWindow, Controller):
     def appExec(self, event):
         self.qApp.exec_()
 
-
     def defaultAction(self):
         pass
 
