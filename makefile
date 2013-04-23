@@ -19,14 +19,11 @@ GAME_NAME = pygameoflife
 ZIP_NAME = $(GAME_NAME)_$(GAME_VERSION)_$(OS_TYPE)_$(ARCH_TYPE)
 # ------------------------------------- End game attributes --------------------------------------------------#
 
-.PHONY: resources
-
 # -- Rules -- #
-all: build clean
+all: releases/$(ZIP_NAME).zip clean
 
-version:
-	echo $(GAME_VERSION)
 
+############################################### Building procedures ###########################################
 build: resources library
 	python $(FLAGS)
 	mkdir -p build
@@ -36,10 +33,12 @@ build: resources library
 	cp --parents ./controllers/*.pyc build/
 	cp --parents ./helpers/*.pyc build/
 
+
+releases/$(ZIP_NAME).zip: build
 	mkdir -p freezed
 	mkdir -p freezed/$(GAME_NAME)
 	cxfreeze __main__.py $(HIDE_CONSOLE_WIN32) --target-dir freezed/$(GAME_NAME) --target-name $(BIN_NAME) --exclude-modules=$(EXCLUDE_MODULES) --include-modules=$(INCLUDE_MODULES)
-
+	
 	cp --parents ./resources/cache/*.png freezed/$(GAME_NAME)/
 	cp --parents ./resources/static/*.png freezed/$(GAME_NAME)/
 	cp --parents ./resources/audio/*.wav freezed/$(GAME_NAME)/
@@ -48,25 +47,44 @@ build: resources library
 
 	rm -f releases/$(ZIP_NAME).zip
 	cd freezed && zip -9urT ../releases/$(ZIP_NAME).zip * && cd ..
+############################################ End Building procedures #########################################
 
-resources:
-	#Generating game images and qt resources
+
+############################# Creation of resources ###############################
+.PHONY: resources
+resources: helpers/qtresources.py views/qtlauncher.py
 	python __main__.py --genimg
+
+
+resources/qt/resources.qrc:
 	python __main__.py --genqrc
+
+
+helpers/qtresources.py: resources/qt/resources.qrc
 	pyrcc4 -py2 resources/qt/resources.qrc -o helpers/qtresources.py
+
+
+views/qtlauncher.py: resources/qt/launcher.ui
 	pyuic4 resources/qt/launcher.ui -o views/qtlauncher.py
 
-library:
+
+library: C/makefile
 	cd C && make
 	cp C/shared/game_of_life_algorithm$(LIB_TYPE) resources/library
+########################### End of Creation of resources #########################
 
+.PHONY: clean
 clean:
 	find . -name "*.pyc" -exec rm -rf {} \;
 	rm build/ -rf
 	rm freezed/ -rf
 	rm cx_Freeze-* -rf
 	rm *~ -rf
+	rm views/qtlauncher.py
+	rm helpers/qtresources.py
 
+
+.PHONY: install
 install: isroot
 	cp releases/$(ZIP_NAME).zip /usr/share/
 	unzip -uo /usr/share/$(ZIP_NAME).zip -d /usr/share
@@ -76,11 +94,15 @@ install: isroot
 	ln -s --force /usr/share/$(GAME_NAME)/run-$(GAME_NAME) /usr/games/$(GAME_NAME) 
 	chmod +x /usr/games/$(GAME_NAME)
 
+
+.PHONY: uninstall
 uninstall: isroot
 	rm -rf /usr/share/$(GAME_NAME)
 	rm -f /usr/games/$(GAME_NAME)
 	rm -f /usr/share/applications/$(GAME_NAME).desktop
 
+
+.PHONY: setup
 setup: isroot
 	#Dowload and install dependeces
 	apt-get update --fix-missing
@@ -90,6 +112,8 @@ setup: isroot
 	cd cx_Freeze-$(CX_FREEZE_VER) && python setup.py install
 	rm -rf cx_Freeze-$(CX_FREEZE_VER) cx_Freeze-$(CX_FREEZE_VER).tar.gz build
 
+
+.PHONY: isroot
 isroot:
 	@export USER=`whoami`
 	@if [ "$(USER)" != "root" ]; then \
