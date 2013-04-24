@@ -80,9 +80,7 @@ clean:
 	rm freezed/ -rf
 	rm cx_Freeze-* -rf
 	rm *~ -rf
-	rm views/qtlauncher.py
-	rm helpers/qtresources.py
-
+	
 
 .PHONY: install
 install: isroot

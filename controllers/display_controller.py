@@ -13,7 +13,15 @@ from views.notification_sprite import *
 
 
 class DisplayController(Controller):
+    """
+    Controls all the display actions and responses
+    """
     def __init__(self, game):
+        """
+        Initiates the display controller
+        @type game: Game
+        @param game: The associated game model
+        """
         Controller.__init__(self)
         os.environ['SDL_VIDEO_CENTERED'] = '1'
 
@@ -34,7 +42,6 @@ class DisplayController(Controller):
         self.bind(SetCellEvent(), self.setCell)
         self.bind(DelCellEvent(), self.delCell)
 
-
     def defaultAction(self):
         if self.game.nextIteration():
             self.speed = Config().get("game", "speed")
@@ -46,7 +53,6 @@ class DisplayController(Controller):
 
             self.trigger(DisplayRefreshEvent(3))
             pygame.display.flip()
-
 
     def setCell(self, event):
         cellWidth, cellHeight = Resource.get("cell", "size")
@@ -60,7 +66,6 @@ class DisplayController(Controller):
             pygame.display.flip()
             self.trigger(CellAddedEvent())
 
-
     def delCell(self, event):
         cellWidth, cellHeight = Resource.get("cell", "size")
         x, y = int(event.posx)/cellWidth, int(event.posy)/cellHeight
@@ -71,7 +76,6 @@ class DisplayController(Controller):
             cellSprite.remove((x, y))
             pygame.display.flip()
             self.trigger(CellRemovedEvent())
-        
 
     def updateCells(self):
         cellSprite = CellSprite(self.screen)
@@ -91,7 +95,6 @@ class DisplayController(Controller):
                 elif self.cellStates[i][j]:
                     self.cellStates[i][j] = 0
                     cellSprite.remove((i, j))
-
 
     def changeSpeed(self, event):
         currentSpeed = Config().get("game", "speed")
@@ -113,7 +116,6 @@ class DisplayController(Controller):
             currentSpeed = difference
 
         Config().set("game", "speed", currentSpeed)
-
 
     def show(self, event):
         config = Config()

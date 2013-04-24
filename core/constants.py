@@ -1,2 +1,4 @@
 DELAY_UP = 10
 DELAY_DOWN = -10
+
+CALLBACK_TYPE = lambda: None
