@@ -1,33 +1,36 @@
 from core.event import *
 from core.mediator import Mediator
 
+
 class MVCCommons:
-	def __init__(self):
+    def __init__(self):
 
-		# The mediator is a singleton, so every mediator api instance
-		# will have the same mediator reference.
+        #
+        # The mediator is a singleton, so every mediator api instance
+        # will have the same mediator reference.
+        #
+        self.eventManager = Mediator()
+        self.eventManager.registerListener(self)
+        self.registeredEvents = {}
 
-		self.eventManager = Mediator()
-		self.eventManager.registerListener(self)
+    def notify(self, event):
+        if isinstance(event, TickEvent):
+            self.defaultAction()
 
-		self.registeredEvents = {}
+        else:
+            try:
+                self.registeredEvents[event.name](event)
 
-	def notify(self, event):
-		if isinstance(event, TickEvent):
-			self.defaultAction()
+            except KeyError as e:
+                pass
 
-		else:
-			try:
-				self.registeredEvents[event.name](event)
+    def defaultAction(self):
+        raise Exception(self.__class__.__name__ + " class must implement defaultAction method")
 
-			except KeyError as e:
-				pass
-
-	def defaultAction(self):
-		raise Exception(self.__class__.__name__ + " class must implement defaultAction method")
-
-	def bind(self, event, callback):
-		self.registeredEvents.update({event.name: callback})
-
-	def trigger(self, event):
-		self.eventManager.post(event)
+    def bind(self, event, callback):
+        """
+        Mark to wait the event to be triggered and execute the callback if it does
+        :param event: core.event.Event
+        :param callback: Function The callback function
+        """
+        self.registeredEvents.update({event.name: callback})

@@ -5,32 +5,19 @@ from PyQt4 import QtCore, QtGui
 from core.controller import *
 from core.event import *
 from core.config import Config
-from helpers.qtresources import *
-
-from views.qtlauncher import Ui_MainWindow
+from models.frameless_window_model import FramelessWindowModel
 
 
-class LauncherController(QtGui.QMainWindow, Controller):
+class LauncherController(FramelessWindowModel, Controller):
     def __init__(self):
-        self.qApp = QtGui.QApplication(sys.argv)
-
-        QtGui.QMainWindow.__init__(self)
         Controller.__init__(self)
-
-        # Set up the user interface from Designer.
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)
-
+        FramelessWindowModel.__init__(self)
         self.setDefaults()
-        self.loadQss()
-        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-
+        self.loadQss("launcher.qss")
         self.center()
         self.show()
         self.setFixedSize(self.size())
-
         self.connectSignals()
-
         self.bind(AppStartEvent(), self.appExec)
 
 
@@ -40,17 +27,12 @@ class LauncherController(QtGui.QMainWindow, Controller):
     def defaultAction(self):
         pass
 
-
     def connectSignals(self):
 
         #Sliders
         self.connect(self.ui.populationSlider, QtCore.SIGNAL('valueChanged(int)'), self.updatePopLabel)
         self.connect(self.ui.soundFxSlider, QtCore.SIGNAL('valueChanged(int)'), self.updateSoundLabel)
         self.connect(self.ui.musicSlider, QtCore.SIGNAL('valueChanged(int)'), self.updateMusicLabel)
-
-        #Title bar
-        self.connect(self.ui.customTitleBar, QtCore.SIGNAL('mouseMove()'), self.mouseMoveEvent)
-        self.connect(self.ui.customTitleBar, QtCore.SIGNAL('mouseMove()'), self.mousePressEvent)
 
         # Connect up the buttons.
         self.connect(self.ui.keyMap, QtCore.SIGNAL("clicked()"), self.showKeyMap)
@@ -61,29 +43,6 @@ class LauncherController(QtGui.QMainWindow, Controller):
 
         #Window close button
         self.closeEvent = self.exit
-
-
-    def mousePressEvent(self, event):
-        if event.button() == QtCore.Qt.LeftButton:
-            self.ui.customTitleBar.moving = True
-            self.ui.customTitleBar.offset = event.pos()
-
-
-    def mouseMoveEvent(self, event):
-        if self.ui.customTitleBar.moving:
-            self.move(event.globalPos() - self.ui.customTitleBar.offset)
-
-
-    def loadQss(self):
-        css = QtCore.QFile(':/launcher.qss')
-        css.open(QtCore.QIODevice.ReadOnly)
-
-        if css.isOpen():
-            self.setStyleSheet(QtCore.QVariant(css.readAll()).toString())
-            css.close()
-            return True
-        else:
-            return False
 
 
     def center(self):

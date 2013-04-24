@@ -22,11 +22,8 @@ class Habitat(Model):
         cols = int(winSize[1]/16)
         self.gridSize = (lins, cols)
         self.keepAlive = []
-
         self.grid = [ [None] * cols for i in range(lins)]
 
-        self.bind(SetCellEvent(), self.setCell)
-        self.bind(DelCellEvent(), self.delCell)
 
     def defaultAction(self):
         pass
@@ -60,24 +57,20 @@ class Habitat(Model):
         self.grid = (POINTER(c_ubyte) * len(entrylist))(*entrylist)
 
 
-    def setCell(self, event):
-        x, y = event.posx, event.posy
-        x = int(x/16)
-        y = int(y/16)
-
+    def setCell(self, x, y):
         if not self.grid[x][y]:
             self.grid[x][y] = True
-            self.trigger(CellAddedEvent(posx=x, posy=y))
+            return True
+        else:
+            return False
 
 
-    def delCell(self, event):
-        x, y = event.posx, event.posy
-        x = int(x/16)
-        y = int(y/16)
-
+    def delCell(self, x, y):
         if self.grid[x][y]:
             self.grid[x][y] = False
-            self.trigger(CellRemovedEvent(posx=x, posy=y))
+            return True
+        else:
+            return False
 
 
     def nextGeneration(self):

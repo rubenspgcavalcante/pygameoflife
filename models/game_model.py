@@ -15,6 +15,9 @@ class Game(Model):
         self.state = Game.STATE_PREPARING
         self.bind(PauseEvent(), self.pause)
 
+    def defaultAction(self):
+        pass
+
     def pause(self, event):
         if self.state == Game.STATE_RUNNING:
             self.state = Game.STATE_PAUSED
@@ -22,10 +25,11 @@ class Game(Model):
         elif self.state == Game.STATE_PAUSED:
             self.state = Game.STATE_RUNNING
 
-    def defaultAction(self):
+    def nextIteration(self):
         if self.state == Game.STATE_RUNNING:
             self.habitat.nextGeneration()
-            self.trigger(NewGenerationEvent())
+            return True
 
         elif self.state == Game.STATE_PAUSED:
-            pass
+            return False
+

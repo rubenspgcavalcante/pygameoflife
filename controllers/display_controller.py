@@ -30,31 +30,47 @@ class DisplayController(Controller):
         self.cellStates = [[0] * self.game.habitat.gridSize[1] for x in xrange(self.game.habitat.gridSize[0])]
 
         self.bind(GameStartEvent(), self.show)
-        self.bind(NewGenerationEvent(), self.getGeneration)
         self.bind(ChangeSpeedEvent(), self.changeSpeed)
-        self.bind(CellAddedEvent(), self.setCell)
-        self.bind(CellRemovedEvent(), self.delCell)
+        self.bind(SetCellEvent(), self.setCell)
+        self.bind(DelCellEvent(), self.delCell)
 
 
     def defaultAction(self):
-        pass
+        if self.game.nextIteration():
+            self.speed = Config().get("game", "speed")
+
+            #Animation loop
+            pygame.time.wait(self.speed)
+            self.trigger(DisplayRefreshEvent(0))
+            self.updateCells()
+
+            self.trigger(DisplayRefreshEvent(3))
+            pygame.display.flip()
 
 
     def setCell(self, event):
-        x, y = event.posx, event.posy
-        #The value ten means hi will live for 10 generations
-        self.cellStates[x][y] = 10
-        cellSprite = CellSprite(self.screen)
-        cellSprite.put((x, y))
-        pygame.display.flip()
+        cellWidth, cellHeight = Resource.get("cell", "size")
+        x, y = int(event.posx)/cellWidth, int(event.posy)/cellHeight
+
+        if self.game.habitat.setCell(x, y):
+            #The value ten means hi will live for 10 generations
+            self.cellStates[x][y] = 10
+            cellSprite = CellSprite(self.screen)
+            cellSprite.put((x, y))
+            pygame.display.flip()
+            self.trigger(CellAddedEvent())
 
 
     def delCell(self, event):
-        x, y = event.posx, event.posy
-        self.cellStates[x][y] = 0
-        cellSprite = CellSprite(self.screen)
-        cellSprite.remove((x, y))
-        pygame.display.flip()
+        cellWidth, cellHeight = Resource.get("cell", "size")
+        x, y = int(event.posx)/cellWidth, int(event.posy)/cellHeight
+
+        if self.game.habitat.delCell(x, y):
+            self.cellStates[x][y] = 0
+            cellSprite = CellSprite(self.screen)
+            cellSprite.remove((x, y))
+            pygame.display.flip()
+            self.trigger(CellRemovedEvent())
         
 
     def updateCells(self):
@@ -77,21 +93,9 @@ class DisplayController(Controller):
                     cellSprite.remove((i, j))
 
 
-    def getGeneration(self, event):
-        self.speed = Config().get("game", "speed")
-        
-        #Animation loop
-        pygame.time.wait(self.speed)
-        self.trigger(DisplayRefreshEvent(0))
-        self.updateCells()
-
-        self.trigger(DisplayRefreshEvent(3))
-        pygame.display.flip()
-
-
     def changeSpeed(self, event):
         currentSpeed = Config().get("game", "speed")
-        diference = currentSpeed + event.delayChange
+        difference = currentSpeed + event.delayChange
         
         if event.state == ChangeSpeedEvent.UP:
             self.trigger(ShowNotificationEvent("speedUp"))
@@ -99,14 +103,14 @@ class DisplayController(Controller):
         elif event.state == ChangeSpeedEvent.DOWN:
             self.trigger(ShowNotificationEvent("speedDown"))
 
-        if diference < 0 or diference < Config().get("game", "min-delay"):
+        if difference < 0 or difference < Config().get("game", "min-delay"):
             currentSpeed = Config().get("game", "min-delay")
 
-        elif diference > Config().get("game", "max-delay"):
+        elif difference > Config().get("game", "max-delay"):
             currentSpeed += Config().get("game", "min-delay")
 
         else:
-            currentSpeed = diference
+            currentSpeed = difference
 
         Config().set("game", "speed", currentSpeed)
 
