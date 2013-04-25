@@ -23,7 +23,7 @@ class Resource(object):
 
         resource = {
                 "general":{
-                    "resourcesPath": path + "/resources/",
+                    "resourcesPath": os.path.join(path, "resources/"),
                     "sourcedir": "src/",
                     "audio": "audio/",
                     "library": "library/",
@@ -37,10 +37,6 @@ class Resource(object):
                     "icon": "",
                     "icon-size": (64, 64),
                     "title": "PyGame of the Life",
-                },
-
-                "animation": {
-                    "frames": 4,
                 },
                 
                 "cell": {

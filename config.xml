@@ -1,0 +1,63 @@
+<configuration>
+    <general>
+        <resourcespath>
+            $BASEPATHresource/
+        </resourcespath>
+
+        <sourcedir>
+            src/
+        </sourcedir>
+
+        <audio>
+            audio/
+        </audio>
+
+        <library>
+            library/
+        </library>
+
+        <processeddir>
+            cache/
+        </processeddir>
+
+        <staticdir>
+            static/
+        </staticdir>
+
+        <qtui>
+            qt/
+        </qtui>
+
+        <qss>
+            launcher.qss
+        </qss>
+
+    </general>
+
+    <display>
+        <icon></icon>
+        <icon-size>
+            (64, 64)
+        </icon-size>
+        <title>
+            Pygame of Life
+        </title>
+    </display>
+
+    <cell>
+        <size>(16, 16)</size>
+    </cell>
+
+    <habitat>
+        <filename>
+            habitat.png
+        </filename>
+        <size>
+            $WINDOW_SIZE
+        </size>
+        <frames>
+            1
+        </frames>
+    </habitat>
+
+</configuration>
