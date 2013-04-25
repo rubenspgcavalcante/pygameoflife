@@ -45,7 +45,7 @@
     </display>
 
     <cell>
-        <size>(16, 16)</size>
+        <size type="tuple(int)">(16, 16)</size>
     </cell>
 
     <habitat>

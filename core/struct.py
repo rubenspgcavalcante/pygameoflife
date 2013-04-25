@@ -6,13 +6,9 @@ class Struct:
 
         self.__dict__.update(entries)
 
-    @property
-    def type(self):
-        return 'Struct'
-
     def showAttributes(self, ident=0):
         for i in dir(self):
-            if i not in ('__doc__', '__init__', '__module__', 'showAttributes', 'type'):
+            if i not in ('__doc__', '__init__', '__module__', 'showAttributes'):
                 if self.__dict__[i].__class__.__name__ == 'Struct':
                     print ("\t" * ident) + i +":"
                     self.__dict__[i].showAttributes(ident+1)
