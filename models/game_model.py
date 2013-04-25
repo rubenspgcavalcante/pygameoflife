@@ -13,12 +13,11 @@ class Game(Model):
         self.habitat = Habitat()
         self.habitat.generateFirstPopulation()
         self.state = Game.STATE_PREPARING
-        self.bind(PauseEvent(), self.pause)
 
     def defaultAction(self):
         pass
 
-    def pause(self, event):
+    def pause(self):
         if self.state == Game.STATE_RUNNING:
             self.state = Game.STATE_PAUSED
 

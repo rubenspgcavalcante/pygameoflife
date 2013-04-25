@@ -1,12 +1,13 @@
+from core.controller import Controller
 from core.model import Model
 from core.event import *
 
 from views.notification_sprite import *
 
-class NotificationController(Model):
+class NotificationController(Controller):
 
     def __init__(self):
-        Model.__init__(self)
+        Controller.__init__(self)
         self.activeNotification = None
         self.enabled = False
         self.notificationLib = None

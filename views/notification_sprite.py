@@ -5,9 +5,7 @@ from core.resource_manager import *
 
 class NotificationSprite(View):
     def __init__(self, screen):
-        View.__init__(self)
-
-        self.screen = screen
+        View.__init__(self, screen)
         self.position = (0,0)
         self.wait = 1
         self.tick = 0

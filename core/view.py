@@ -1,5 +1,12 @@
-from core.mvc_commons import MVCCommons
+import pygame
+import pygame.display
 
-class View(MVCCommons):
-    def __init__(self):
-        MVCCommons.__init__(self)
+
+class View():
+    def __init__(self, screen):
+        """
+        View associated to a pygame screen
+        @type screen: pygame.display
+        @param screen: The pygame screen module reference
+        """
+        self.screen = screen

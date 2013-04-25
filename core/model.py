@@ -1,5 +1,3 @@
-from core.mvc_commons import MVCCommons
-
-class Model(MVCCommons):
+class Model():
     def __init__(self):
-        MVCCommons.__init__(self)
+        pass

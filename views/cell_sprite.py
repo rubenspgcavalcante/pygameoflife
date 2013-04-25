@@ -3,9 +3,7 @@ from core.resource_manager import Resource
 
 class CellSprite(View):
     def __init__(self, screen):
-        View.__init__(self)
-
-        self.screen = screen
+        View.__init__(self, screen)
         self.cell = Resource.image("cell", True)
         self.background = Resource.image("bg", True)
 

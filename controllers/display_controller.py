@@ -39,6 +39,7 @@ class DisplayController(Controller):
 
         self.bind(GameStartEvent(), self.show)
         self.bind(ChangeSpeedEvent(), self.changeSpeed)
+        self.bind(PauseEvent(), self.pause)
         self.bind(SetCellEvent(), self.setCell)
         self.bind(DelCellEvent(), self.delCell)
 
@@ -96,6 +97,9 @@ class DisplayController(Controller):
                     self.cellStates[i][j] = 0
                     cellSprite.remove((i, j))
 
+    def pause(self, event):
+        self.game.pause()
+
     def changeSpeed(self, event):
         currentSpeed = Config().get("game", "speed")
         difference = currentSpeed + event.delayChange
@@ -123,8 +127,8 @@ class DisplayController(Controller):
         pygame.display.set_icon(Resource.image("icon", static=True))
         pygame.display.set_caption(Resource.get("display", "title"))
 
-        habitat = HabitatSprite()
-        habitat.generate(self.screen)
+        habitat = HabitatSprite(self.screen)
+        habitat.generate()
 
         self.speedUpNotification = SpeedUpNotification(self.screen)
         self.speedDownNotification = SpeedDownNotification(self.screen)
