@@ -7,12 +7,11 @@ from core.types_parser import TypeParser
 
 class XMLConfigurationParser(object):
     def __init__(self):
-        self.conf = None
         self.typeParser = TypeParser()
 
     def clean(self, text):
         if text is not None:
-            return text.replace(" ", "").replace("\n", "").replace("\t", "")
+            return text.replace("\n", "").replace("\t", "")
         else:
             return ""
 
@@ -23,13 +22,14 @@ class XMLConfigurationParser(object):
 
         @type element: Element
         @param element: The element tree which contains the tag
+        @rtype : tuple
         """
         attributeType = element.attrib["type"]
-        if re.match(r'(int)', attributeType):
-            return self.typeParser.tuple(element.attrib["type"], 'int')
+        if attributeType == "tuple(int)":
+            return self.typeParser.tuple(element.text, 'int')
 
-        elif re.match(r'(str)', attributeType):
-            return self.typeParser.tuple(element.attrib["type"], 'str')
+        elif attributeType == "tuple(str)":
+            return self.typeParser.tuple(element.text, 'str')
 
     def XMLToDict(self, parent_element):
         """
@@ -52,19 +52,30 @@ class XMLConfigurationParser(object):
                 else:
                     result[element.tag] = [result[element.tag], obj]
             else:
-                if 'type' in element.attrib and re.match(r'(tuple)', element.attrib["type"]):
-                    obj = self.parseTupleTag(element)
+                if 'type' in element.attrib:
+                    if re.match(r'(tuple)', element.attrib["type"]):
+                        obj = self.parseTupleTag(element)
+
+                    elif element.attrib["type"] == "int":
+                        obj = self.typeParser.int(element.text)
+
+                    elif element.attrib["type"] == "float":
+                        obj = self.typeParser.float(element.text)
 
                 result[element.tag] = obj
         return result
 
-    def parse(self, file):
+    def parse(self, filePath):
+        """
+        Parse a file and loads it into a structured format
+
+        @type filePath: str
+        @param filePath: The path to the XML configuration file
+        @rtype : Struct
+        """
         xml = None
-        with open(file, 'rt') as confFile:
+        with open(filePath, 'rt') as confFile:
             xml = ElementTree.parse(confFile)
 
         confDict = self.XMLToDict(xml._root)
-        self.conf = Struct(**confDict)
-
-x = XMLConfigurationParser()
-x.parse("/home/trix-rubens/projetos/pygameoflife/config.xml")
+        return Struct(**confDict)

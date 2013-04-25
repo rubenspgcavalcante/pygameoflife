@@ -1,47 +1,26 @@
 <configuration>
     <general>
-        <resourcespath>
-            $BASEPATHresource/
-        </resourcespath>
+        <resourcespath>$BASEPATHresource/</resourcespath>
 
-        <sourcedir>
-            src/
-        </sourcedir>
+        <sourcedir>src/</sourcedir>
 
-        <audio>
-            audio/
-        </audio>
+        <audio>audio/</audio>
 
-        <library>
-            library/
-        </library>
+        <library>library/</library>
 
-        <processeddir>
-            cache/
-        </processeddir>
+        <processeddir>cache/</processeddir>
 
-        <staticdir>
-            static/
-        </staticdir>
+        <staticdir>static/</staticdir>
 
-        <qtui>
-            qt/
-        </qtui>
+        <qtui>qt/</qtui>
 
-        <qss>
-            launcher.qss
-        </qss>
-
+        <qss>launcher.qss</qss>
     </general>
 
     <display>
         <icon></icon>
-        <icon-size>
-            (64, 64)
-        </icon-size>
-        <title>
-            Pygame of Life
-        </title>
+        <iconsize type="tuple(int)">(64, 64)</iconsize>
+        <title>Pygame of Life</title>
     </display>
 
     <cell>
@@ -49,15 +28,9 @@
     </cell>
 
     <habitat>
-        <filename>
-            habitat.png
-        </filename>
-        <size>
-            $WINDOW_SIZE
-        </size>
-        <frames>
-            1
-        </frames>
+        <filename>habitat.png</filename>
+        <size>$WINDOW_SIZE</size>
+        <frames type="int">1</frames>
     </habitat>
 
 </configuration>
