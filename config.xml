@@ -1,6 +1,6 @@
 <configuration>
-    <general>
-        <resourcespath>$BASEPATHresource/</resourcespath>
+    <path>
+        <resourcespath template="true">{BASEPATH}/resource/</resourcespath>
 
         <sourcedir>src/</sourcedir>
 
@@ -14,23 +14,56 @@
 
         <qtui>qt/</qtui>
 
-        <qss>launcher.qss</qss>
-    </general>
+    </path>
 
-    <display>
-        <icon></icon>
-        <iconsize type="tuple(int)">(64, 64)</iconsize>
-        <title>Pygame of Life</title>
-    </display>
+    <game>
+        <version>1.0b</version>
 
-    <cell>
-        <size type="tuple(int)">(16, 16)</size>
-    </cell>
+        <window>
+            <defaultsize type="tuple(int)">(1024, 768)</defaultsize>
+        </window>
 
-    <habitat>
-        <filename>habitat.png</filename>
-        <size>$WINDOW_SIZE</size>
-        <frames type="int">1</frames>
-    </habitat>
+        <install>
+            <path>/usr/share/pygameoflife</path>
+        </install>
+
+        <volume>
+            <fx type="int">1</fx>
+            <music type="int">1</music>
+        </volume>
+
+        <delay>
+            <max type="int">100</max>
+            <min type="int">0</min>
+        </delay>
+        <display>
+            <iconsize type="tuple(int)">(64, 64)</iconsize>
+            <title>Pygame of Life</title>
+        </display>
+
+        <habitat>
+            <filename>habitat.png</filename>
+        </habitat>
+
+        <cell>
+            <settedCellKeepAlive>6</settedCellKeepAlive>
+            <filename>cell.png</filename>
+            <size type="tuple(int)">(16, 16)</size>
+        </cell>
+    </game>
+
+    <setup>
+        <resolution>
+            <small type="tuple(int)">(400, 300)</small>
+            <medium type="tuple(int)">(800, 600)</medium>
+            <large type="tuple(int)">(1024, 768)</large>
+        </resolution>
+
+        <speed>
+            <slow type="int">50</slow>
+            <medium type="int">30</medium>
+            <fast type="int">10</fast>
+        </speed>
+    </setup>
 
 </configuration>

@@ -65,7 +65,7 @@ class Resource(object):
     @staticmethod
     def sprite(entity):
         """
-        Loads a set of images (sprite) wich forms a animation that represents
+        Loads a set of images (sprite) which forms a animation that represents
         an entity
         """
 

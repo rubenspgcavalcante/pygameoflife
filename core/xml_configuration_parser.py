@@ -31,18 +31,21 @@ class XMLConfigurationParser(object):
         elif attributeType == "tuple(str)":
             return self.typeParser.tuple(element.text, 'str')
 
-    def XMLToDict(self, parent_element):
+    def XMLToDict(self, parent_element, template_args=None):
         """
         Parse a XML etree object into a dict, recursively
 
         @type parent_element: Element
         @param parent_element: The parent element to serve as the wraper of the dict
+
+        @type template_args: dict
+        @param template_args: Template arguments to process the tags with the 'template' attribute
         @returns The parsed dict
         """
         result = dict()
         for element in parent_element:
             if len(element):
-                obj = self.XMLToDict(element)
+                obj = self.XMLToDict(element, template_args)
             else:
                 obj = self.clean(element.text)
 
@@ -62,20 +65,28 @@ class XMLConfigurationParser(object):
                     elif element.attrib["type"] == "float":
                         obj = self.typeParser.float(element.text)
 
+                if 'template' in element.attrib:
+                    if element.attrib['template'] == 'true' and template_args != None:
+                        obj = element.text.format(**template_args)
+
                 result[element.tag] = obj
         return result
 
-    def parse(self, filePath):
+    def parse(self, filePath, **variables):
         """
         Parse a file and loads it into a structured format
 
         @type filePath: str
         @param filePath: The path to the XML configuration file
+
+        @type variables: dict
+        @param variables: The template variables to substitute in the xml file
+
         @rtype : Struct
         """
         xml = None
         with open(filePath, 'rt') as confFile:
             xml = ElementTree.parse(confFile)
 
-        confDict = self.XMLToDict(xml._root)
+        confDict = self.XMLToDict(xml._root, variables)
         return Struct(**confDict)

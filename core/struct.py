@@ -1,3 +1,4 @@
+import re
 class Struct:
     def __init__(self, **entries):
         """
@@ -9,20 +10,25 @@ class Struct:
         for key, value in entries.items():
             if type(value) == dict:
                 entries[key] = Struct(**value)
-
         self.__dict__.update(entries)
 
     def __str__(self):
-        buffer = ""
-        self._prettyString(buffer)
-        return buffer
+        formated = "[Struct instance ; Object id {id}]\n".format(id=id(self))
+        formated += "=" * 80
+        formated += self._prettyString()
+        formated += "=" * 80
+        return formated
 
-    def _prettyString(self, buffer, ident=0):
+    def _prettyString(self, ident=0):
+        buffer = ""
         for i in dir(self):
-            if i not in ('__doc__', '__init__', '__module__', '__str__', '_prettyString'):
+            if re.match(r"__[a-z]+__", i) is None and i != "_prettyString":
                 if self.__dict__[i].__class__.__name__ == 'Struct':
-                    buffer = ("\t" * ident) + i + ":"
-                    self.__dict__[i]._prettyString(buffer, ident+1)
+                    buffer += "\n" + ("\t" * ident) + i + ":\n"
+                    buffer += self.__dict__[i]._prettyString(ident+1)
 
                 else:
-                    buffer = ("\t" * ident) + i
+                    buffer += ("\t" * ident) + i +": "
+                    buffer += str(self.__dict__[i]) + " {valType}\n".format(valType=type(self.__dict__[i]))
+
+        return buffer
