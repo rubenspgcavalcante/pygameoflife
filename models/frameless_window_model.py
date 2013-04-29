@@ -18,16 +18,21 @@ class FramelessWindowModel(QtGui.QMainWindow):
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
 
         self.connect(self.ui.customTitleBar, QtCore.SIGNAL('mouseMove()'), self.mouseMoveEvent)
-        self.connect(self.ui.customTitleBar, QtCore.SIGNAL('mouseMove()'), self.mousePressEvent)
+        self.connect(self.ui.customTitleBar, QtCore.SIGNAL('mousePress()'), self.mousePressEvent)
+        self.connect(self.ui.customTitleBar, QtCore.SIGNAL('mouseRelease()'), self.mouseReleaseEvent)
 
     def mousePressEvent(self, event):
         if event.button() == QtCore.Qt.LeftButton:
+            QtGui.QApplication.setOverrideCursor(QtGui.QCursor(QtCore.Qt.DragMoveCursor))
             self.ui.customTitleBar.moving = True
             self.ui.customTitleBar.offset = event.pos()
 
     def mouseMoveEvent(self, event):
-        if self.ui.customTitleBar.moving:
+        if hasattr(self.ui.customTitleBar, "moving") and self.ui.customTitleBar.moving:
             self.move(event.globalPos() - self.ui.customTitleBar.offset)
+
+    def mouseReleaseEvent(self, event):
+        QtGui.QApplication.restoreOverrideCursor()
 
     def loadQss(self, filename):
         """

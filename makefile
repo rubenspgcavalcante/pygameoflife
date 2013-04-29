@@ -58,9 +58,11 @@ resources: helpers/qtresources.py views/qtlauncher.py
 	python __main__.py --genimg
 
 
-resources/qt/resources.qrc:
+resources/qt/resources.qrc: resources/qt/resources.qss
 	python __main__.py --genqrc
 
+resources/qt/resources.qss:
+	
 
 helpers/qtresources.py: resources/qt/resources.qrc
 	pyrcc4 -py2 resources/qt/resources.qrc -o helpers/qtresources.py
