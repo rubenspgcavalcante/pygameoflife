@@ -26,7 +26,7 @@ class DisplayController(Controller):
         os.environ['SDL_VIDEO_CENTERED'] = '1'
 
         pygame.init()
-
+        self.config = Config()
         self.screen = None
         self.speed = None
         self.speedUpNotification = None
@@ -45,7 +45,7 @@ class DisplayController(Controller):
 
     def defaultAction(self):
         if self.game.nextIteration():
-            self.speed = Config().get("game", "speed")
+            self.speed = self.config.attr.game.speed
 
             #Animation loop
             pygame.time.wait(self.speed)
@@ -56,7 +56,7 @@ class DisplayController(Controller):
             pygame.display.flip()
 
     def setCell(self, event):
-        cellWidth, cellHeight = Resource.get("cell", "size")
+        cellWidth, cellHeight = self.config.attr.game.cell.size
         x, y = int(event.posx)/cellWidth, int(event.posy)/cellHeight
 
         if self.game.habitat.setCell(x, y):
@@ -68,7 +68,7 @@ class DisplayController(Controller):
             self.trigger(CellAddedEvent())
 
     def delCell(self, event):
-        cellWidth, cellHeight = Resource.get("cell", "size")
+        cellWidth, cellHeight = self.config.attr.game.cell.size
         x, y = int(event.posx)/cellWidth, int(event.posy)/cellHeight
 
         if self.game.habitat.delCell(x, y):
@@ -101,7 +101,7 @@ class DisplayController(Controller):
         self.game.pause()
 
     def changeSpeed(self, event):
-        currentSpeed = Config().get("game", "speed")
+        currentSpeed = self.config.attr.game.speed
         difference = currentSpeed + event.delayChange
         
         if event.state == ChangeSpeedEvent.UP:
@@ -110,22 +110,23 @@ class DisplayController(Controller):
         elif event.state == ChangeSpeedEvent.DOWN:
             self.trigger(ShowNotificationEvent("speedDown"))
 
-        if difference < 0 or difference < Config().get("game", "min-delay"):
-            currentSpeed = Config().get("game", "min-delay")
+        if difference < 0 or difference < self.config.attr.game.delay.min:
+            currentSpeed = self.config.attr.game.delay.min
 
-        elif difference > Config().get("game", "max-delay"):
-            currentSpeed += Config().get("game", "min-delay")
+        elif difference > self.config.attr.game.delay.max:
+            currentSpeed += self.config.attr.game.delay.max
 
         else:
             currentSpeed = difference
 
-        Config().set("game", "speed", currentSpeed)
+        self.config.attr.game.speed = currentSpeed
 
     def show(self, event):
-        config = Config()
-        self.screen = pygame.display.set_mode(config.get("game", "window-size"))
-        pygame.display.set_icon(Resource.image("icon", static=True))
-        pygame.display.set_caption(Resource.get("display", "title"))
+        resource = Resource()
+        self.game.loadHabitat()
+        self.screen = pygame.display.set_mode(self.config.attr.game.window.size)
+        pygame.display.set_icon(resource.image("icon", static=True))
+        pygame.display.set_caption(self.config.attr.game.display.title)
 
         habitat = HabitatSprite(self.screen)
         habitat.generate()

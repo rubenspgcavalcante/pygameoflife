@@ -7,75 +7,25 @@ from ctypes import CDLL
 
 import pygame
 from lxml import etree
-
+import core.singleton
 from core.config import Config
 
+@core.singleton.singleton
 class Resource(object):
 
-    @staticmethod
-    def get(obj, attr=None):
+    def __init__(self):
+        self.config = Config()
 
-        path = os.path.dirname((os.path.dirname(os.path.abspath(__file__))))
-
-        if not os.path.exists(path + "/"):
-            #If compiled, the binarie is represented like a dir, so we must remove it
-            path = re.sub(r'((/|\\)run-pygameoflife(.exe)?)', "", path).replace("/resource_manager.pyc", "")
-
-        resource = {
-                "general":{
-                    "resourcesPath": os.path.join(path, "resources/"),
-                    "sourcedir": "src/",
-                    "audio": "audio/",
-                    "library": "library/",
-                    "processeddir": "cache/",
-                    "staticdir": "static/",
-                    "qtui": "qt/",
-                    "qcss": "launcher.qss",
-                },
-
-                "display":{
-                    "icon": "",
-                    "icon-size": (64, 64),
-                    "title": "PyGame of the Life",
-                },
-                
-                "cell": {
-                    "size": (16, 16),
-                },
-
-                "habitat": {
-                    "filename": "habitat.png",
-                    "size": Config().get("game", "window-size"),
-                    "frames": 1,
-                },
-
-            }
-
-        try:
-            if attr is None:
-                return resource[obj]
-
-            else:
-                return resource[obj][attr]
-
-        except KeyError:
-            return None
-
-
-    @staticmethod
-    def sprite(entity):
+    def sprite(self, entity):
         """
         Loads a set of images (sprite) which forms a animation that represents
         an entity
         """
-
-        path = os.path.join(Resource.get("general", "resourcesPath"), Resource.get("general", "processeddir"))
-
+        path = os.path.join(self.config.attr.path.resources, self.config.attr.processeddir)
         sprite = pygame.image.load(os.path.join(path, entity + ".png")).convert_alpha()
-
         images = []
         spriteWidth, spriteHeight = sprite.get_size()
-        width, height = Resource.get(entity, "size")
+        width, height = getattr(self.config.attr.game, entity).size
 
         for i in xrange(int(spriteWidth / width)):
             images.append(sprite.subsurface((i * width, 0, width, height)))
@@ -83,28 +33,25 @@ class Resource(object):
         return images
 
 
-    @staticmethod
-    def image(entity, static=False):
+    def image(self, entity, static=False):
         """
         Loads an single image that represents the entity in the game
         """
-
-        path = Resource.get("general", "resourcesPath")
+        path = self.config.attr.path.resources
         if static:
-            path = os.path.join(path, Resource.get("general", "staticdir"))
+            path = os.path.join(path, self.config.attr.path.staticdir)
 
         else:
-            path = os.path.join(path, Resource.get("general", "processeddir"))
+            path = os.path.join(path, self.config.attr.path.processeddir)
 
         singleImg = pygame.image.load(os.path.join(path, entity + ".png")).convert_alpha()
         return singleImg
 
-    @staticmethod
-    def audio(filename, music=False):
+    def audio(self, filename, music=False):
         """
         Loads a audio file and return a pygame sound object
         """
-        path = os.path.join(Resource.get("general", "resourcesPath"), Resource.get("general", "audio"))
+        path = os.path.join(self.config.attr.path.resources, self.config.attr.path.audio)
         if music:
             music = pygame.mixer.music
             music.load(os.path.join(path, filename))
@@ -113,13 +60,11 @@ class Resource(object):
         else:
             return pygame.mixer.Sound(os.path.join(path, filename))
 
-
-    @staticmethod
-    def dll(filename):
+    def dll(self, filename):
         """
         Loads a dinamic library, if in Windows a DLL if in Linux a SO
         """
-        path = os.path.join(Resource.get("general", "resourcesPath"), Resource.get("general", "library"))
+        path = os.path.join(self.config.attr.path.resources, self.config.attr.path.library)
         extension = ""
         if os.name == "posix":
             extension = ".so"
@@ -129,20 +74,16 @@ class Resource(object):
         lib = CDLL(path + filename + extension)
         return lib
 
-
-
-    @staticmethod
-    def generateSprites():
+    def generateSprites(self):
         """
         Generates all the sprites merging the frames in the source directory
         The frames must be in a directory with the name {entity}-frames, where
         entity is the name of the respectively model.
         The frames must be numered XX.png in order of the animation.
         """
-
-        basePath = Resource.get("general", "resourcesPath")
-        src = os.path.join(basePath, Resource.get("general", "sourcedir"))
-        proccessedDir = os.path.join(basePath, Resource.get("general", "processeddir"))
+        basePath = self.config.attr.path.resources
+        src = os.path.join(basePath, self.config.attr.path.sourcedir)
+        proccessedDir = os.path.join(basePath, self.config.attr.path.processeddir)
 
         for _dir in os.listdir(src):
             if "frames" in _dir:
@@ -175,21 +116,20 @@ class Resource(object):
                 print "generating: " + entity + ".png"
                 final.save(os.path.join(proccessedDir , entity + ".png"))
 
-    @staticmethod
-    def generateQrcFile():
+    def generateQrcFile(self):
         """
         Generates the qrc xml file, used to compile the files to use in qt
         """
         root = etree.Element("RCC", {"version": "1.0"})
         etree.SubElement(root, "qresource")
 
-        basePath = Resource.get("general", "resourcesPath")
-        qtDir = os.path.join(basePath, Resource.get("general", "qtui"))
+        basePath = self.config.attr.path.resources
+        qtDir = os.path.join(basePath, self.config.attr.path.qtui)
         qtImages = os.path.join(qtDir, "images")
 
         #Adds first the Qt CSS file
         qcss = etree.Element("file")
-        qcss.text = os.path.join(Resource.get("general", "qcss"))
+        qcss.text = os.path.join("launcher.qss")
         root[0].append(qcss)
 
         for imagesFile in os.listdir(qtImages):

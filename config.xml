@@ -1,6 +1,6 @@
 <configuration>
     <path>
-        <resourcespath template="true">{BASEPATH}/resource/</resourcespath>
+        <resources template="true">{BASEPATH}/resources/</resources>
 
         <sourcedir>src/</sourcedir>
 
@@ -19,8 +19,10 @@
     <game>
         <version>1.0b</version>
 
+        <speed type="int">0</speed>
+
         <window>
-            <defaultsize type="tuple(int)">(1024, 768)</defaultsize>
+            <size type="tuple(int)">(1024, 768)</size>
         </window>
 
         <install>
@@ -36,6 +38,7 @@
             <max type="int">100</max>
             <min type="int">0</min>
         </delay>
+
         <display>
             <iconsize type="tuple(int)">(64, 64)</iconsize>
             <title>Pygame of Life</title>
@@ -43,7 +46,12 @@
 
         <habitat>
             <filename>habitat.png</filename>
+            <size></size>
         </habitat>
+
+        <population>
+            <percentage type="float">0.0</percentage>
+        </population>
 
         <cell>
             <settedCellKeepAlive>6</settedCellKeepAlive>

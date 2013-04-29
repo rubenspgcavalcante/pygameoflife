@@ -12,6 +12,7 @@ class LauncherController(FramelessWindowModel, Controller):
     def __init__(self):
         Controller.__init__(self)
         FramelessWindowModel.__init__(self)
+        self.config = Config()
         self.setDefaults()
         self.loadQss("launcher.qss")
         self.center()
@@ -53,12 +54,15 @@ class LauncherController(FramelessWindowModel, Controller):
 
 
     def setDefaults(self):
-        for item in Config().get("setup", "resolutions"):
+        resolutions = self.config.attr.setup.resolution
+        for size in ('small', 'medium', 'large'):
+            item = getattr(resolutions, size)
             text = str(item[0]) + " x " + str(item[1])
             self.ui.resolutionComboBox.addItem(text, item)
 
-        for speed in Config().get("setup", "speed"):
-            value = Config().get("setup", "speed")[speed]
+        speeds = self.config.attr.setup.speed
+        for speed in ('slow', 'medium', 'fast'):
+            value = getattr(speeds, speed)
             self.ui.speedComboBox.addItem(speed, value)
 
 
@@ -86,11 +90,12 @@ class LauncherController(FramelessWindowModel, Controller):
         fxVol = float(self.ui.soundFxSlider.value()) / 100
         musicVol = float(self.ui.musicSlider.value()) / 100
 
-        Config().set("game", "window-size", resolution)
-        Config().set("population", "first-percentage", initialPop)
-        Config().set("game", "effects-volume", fxVol)
-        Config().set("game", "music-volume", musicVol)
-        Config().set("game", "speed", speed)
+        self.config.attr.game.window.size = resolution
+        self.config.attr.game.population.percentage = initialPop
+        self.config.attr.game.volume.fx = fxVol
+        self.config.attr.game.volume.music =  musicVol
+        self.config.attr.game.speed = speed
+
         self.qApp.quit()
         self.hide()
         self.trigger(GameStartEvent())

@@ -1,3 +1,4 @@
+from core.config import Config
 from core.model import Model
 from core.event import *
 from models.habitat_model import Habitat
@@ -5,17 +6,21 @@ from models.habitat_model import Habitat
 class Game(Model):
 
     STATE_PREPARING = 'preparing'
+    STATE_READY = 'ready'
     STATE_RUNNING = 'running'
     STATE_PAUSED = 'paused'
 
     def __init__(self):
         Model.__init__(self)
         self.habitat = Habitat()
-        self.habitat.generateFirstPopulation()
         self.state = Game.STATE_PREPARING
 
     def defaultAction(self):
         pass
+
+    def loadHabitat(self):
+        self.habitat.generateFirstPopulation()
+        self.state = Game.STATE_READY
 
     def pause(self):
         if self.state == Game.STATE_RUNNING:

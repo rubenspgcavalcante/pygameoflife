@@ -16,13 +16,16 @@ from core.resource_manager import Resource
 if __name__ == "__main__":
 
     if "--genimg" in sys.argv:
-        Resource.generateSprites()
+        resource = Resource()
+        resource.generateSprites()
 
     elif "--genqrc" in sys.argv:
-        Resource.generateQrcFile()
+        resource = Resource()
+        resource.generateQrcFile()
 
     elif "--version" in sys.argv:
-        print Config().get("game", "version")
+        conf = Config()
+        print conf.attr.game.version
 
     elif "--help" in sys.argv:
         print "Usage: run-pygameoflife <commands>\n\nCommands:"

@@ -10,15 +10,17 @@ class SoundEffectController(Controller):
     def __init__(self):
         Controller.__init__(self)
         pygame.mixer.init()
+        resource = Resource()
+        self.config = Config()
         self.musicOn = False
 
         self.effects = {
-            "bubble": Resource.audio("bubble.wav"),
-            "click": Resource.audio("click.wav"),
-            "delete": Resource.audio("delete.wav"),
+            "bubble": resource.audio("bubble.wav"),
+            "click": resource.audio("click.wav"),
+            "delete":resource.audio("delete.wav"),
         }
 
-        self.bgSound = Resource.audio("bg.wav", music=True)
+        self.bgSound = resource.audio("bg.wav", music=True)
 
         self.bind(CellAddedEvent(), self.onCellAddedDoBubble)
         self.bind(CellRemovedEvent(), self.onCellRemovedDoDelete)
@@ -53,8 +55,8 @@ class SoundEffectController(Controller):
 
 
     def onGameStartDoBackground(self, event):
-        pygame.mixer.music.set_volume(Config().get("game", "music-volume"))
-        fxVol = Config().get("game", "effects-volume")
+        pygame.mixer.music.set_volume(self.config.attr.game.volume.music)
+        fxVol = self.config.attr.game.volume.fx
         
         for i in self.effects:
             self.effects[i].set_volume(fxVol)

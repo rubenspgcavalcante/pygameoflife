@@ -6,13 +6,14 @@ from core.resource_manager import *
 class NotificationSprite(View):
     def __init__(self, screen):
         View.__init__(self, screen)
+        resource = Resource()
         self.position = (0,0)
         self.wait = 1
         self.tick = 0
         self.active = False
 
-        self.image = Resource.image(self.__class__.__name__, True)
-        self.bg = Resource.image("bg", True)
+        self.image = resource.image(self.__class__.__name__, True)
+        self.bg = resource.image("bg", True)
 
 
     def defaultAction(self):
