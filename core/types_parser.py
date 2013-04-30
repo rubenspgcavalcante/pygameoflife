@@ -15,9 +15,15 @@ class TypeParser(object):
         @rtype : tuple
         """
         resList = re.sub(r'\(*\)*\ *', r"", value).split(",")
-        if type == "int":
-            for key, value in enumerate(resList):
+        for key, value in enumerate(resList):
+            if type == "int":
                 resList[key] = int(value)
+
+            elif type == "float":
+                resList[key] = float(value)
+
+            elif type == "str":
+                resList[key] = str(value)
 
         return tuple(resList)
 

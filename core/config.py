@@ -1,11 +1,11 @@
 import re
 import os
+from core.singleton import singleton
 
-import core.singleton
 from core.xml_configuration_parser import XMLConfigurationParser
 
 
-@core.singleton.singleton
+@singleton
 class Config(object):
     def __init__(self):
 
@@ -16,6 +16,7 @@ class Config(object):
     def getBasePath(self):
         """
         Returns the project base path
+        @ret
         """
         path = os.path.dirname((os.path.dirname(os.path.abspath(__file__))))
         if not os.path.exists(path + "/"):
@@ -46,4 +47,3 @@ class Config(object):
     def reload(self):
         self._attr = self._parser.parse("config.xml")
         self._bck = self._attr
-

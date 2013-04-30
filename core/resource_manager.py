@@ -7,10 +7,10 @@ from ctypes import CDLL
 
 import pygame
 from lxml import etree
-import core.singleton
+from core.singleton import singleton
 from core.config import Config
 
-@core.singleton.singleton
+@singleton
 class Resource(object):
 
     def __init__(self):

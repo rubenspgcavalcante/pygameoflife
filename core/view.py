@@ -1,6 +1,4 @@
-import pygame
-import pygame.display
-
+from pygame import display
 
 class View():
     def __init__(self, screen):

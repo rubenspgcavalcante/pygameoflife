@@ -19,6 +19,10 @@ class XMLConfigurationParser(object):
         """
         Parses a tag of type 'tuple' and analyse the content type
         of this tuple
+        e.g.:
+            <tag type="tuple(int)">(20, 10)</tag>
+            <tag type="tuple(float)">(20.3, 10.1)</tag>
+            <tag type="tuple(str)">(hello, world)</tag>
 
         @type element: Element
         @param element: The element tree which contains the tag
@@ -28,15 +32,43 @@ class XMLConfigurationParser(object):
         if attributeType == "tuple(int)":
             return self.typeParser.tuple(element.text, 'int')
 
+        elif attributeType == "tuple(float)":
+            return self.typeParser.tuple(element.text, 'float')
+
         elif attributeType == "tuple(str)":
             return self.typeParser.tuple(element.text, 'str')
+
+    def processType(self, element):
+        """
+        Process a value using the default cast, referenced by the type
+        attribute into the tag
+        e.g.:
+            <tag type="int">20</tag>
+            <tag type="float">1.9</tag>
+
+        @type element: Element
+        @param element: The tag to covert
+        """
+        if re.match(r'(tuple)', element.attrib["type"]):
+            processed = self.parseTupleTag(element)
+
+        elif element.attrib["type"] == "int":
+            processed = self.typeParser.int(element.text)
+
+        elif element.attrib["type"] == "float":
+            processed = self.typeParser.float(element.text)
+
+        else:
+            processed = element.text
+
+        return processed
 
     def XMLToDict(self, parent_element, template_args=None):
         """
         Parse a XML etree object into a dict, recursively
 
         @type parent_element: Element
-        @param parent_element: The parent element to serve as the wraper of the dict
+        @param parent_element: The parent element to serve as the wrapper of the dict
 
         @type template_args: dict
         @param template_args: Template arguments to process the tags with the 'template' attribute
@@ -56,14 +88,7 @@ class XMLConfigurationParser(object):
                     result[element.tag] = [result[element.tag], obj]
             else:
                 if 'type' in element.attrib:
-                    if re.match(r'(tuple)', element.attrib["type"]):
-                        obj = self.parseTupleTag(element)
-
-                    elif element.attrib["type"] == "int":
-                        obj = self.typeParser.int(element.text)
-
-                    elif element.attrib["type"] == "float":
-                        obj = self.typeParser.float(element.text)
+                    obj = self.processType(element)
 
                 if 'template' in element.attrib:
                     if element.attrib['template'] == 'true' and template_args != None:

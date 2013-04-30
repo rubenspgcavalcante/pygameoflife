@@ -1,8 +1,9 @@
+from abc import abstractmethod
 from core.event import Event, TickEvent
 from core.mediator import Mediator
 
 
-class Controller():
+class Controller:
     def __init__(self):
         #
         # The mediator is a singleton, so every controller instance
@@ -29,12 +30,12 @@ class Controller():
             except KeyError as e:
                 pass
 
+    @abstractmethod
     def defaultAction(self):
         """
         Default action called at every TickEvent triggered
-        Is like a interface forcing the developer to implement this method
         """
-        raise Exception(self.__class__.__name__ + " class must implement defaultAction method")
+        raise NotImplementedError(self.__class__.__name__ + " class must implement defaultAction method")
 
     def bind(self, event, callback):
         """
