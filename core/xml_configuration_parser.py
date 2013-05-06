@@ -1,7 +1,7 @@
 import re
 from xml.etree import ElementTree
 from xml.etree.ElementTree import Element
-from core.struct import Struct
+from core.dict_struct import DictStruct
 from core.types_parser import TypeParser
 
 
@@ -107,11 +107,11 @@ class XMLConfigurationParser(object):
         @type variables: dict
         @param variables: The template variables to substitute in the xml file
 
-        @rtype : Struct
+        @rtype : DictStruct
         """
         xml = None
         with open(filePath, 'rt') as confFile:
             xml = ElementTree.parse(confFile)
 
         confDict = self.XMLToDict(xml._root, variables)
-        return Struct(**confDict)
+        return DictStruct(**confDict)

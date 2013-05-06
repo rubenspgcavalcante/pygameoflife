@@ -1,6 +1,4 @@
-from core.config import Config
 from core.model import Model
-from core.event import *
 from models.habitat_model import Habitat
 
 class Game(Model):

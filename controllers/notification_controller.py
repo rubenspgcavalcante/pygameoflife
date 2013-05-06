@@ -1,7 +1,5 @@
 from core.controller import Controller
-from core.model import Model
 from core.event import *
-
 from views.notification_sprite import *
 
 class NotificationController(Controller):
@@ -22,13 +20,15 @@ class NotificationController(Controller):
         self.notificationLib = {
             "speedUp": SpeedUpNotification(event.screen),
 
-            "speedDown": SpeedDownNotification(event.screen)
-        }
+            "speedDown": SpeedDownNotification(event.screen),
 
+            "save": SaveNotification(event.screen),
+
+            "load": LoadNotification(event.screen)
+        }
 
     def defaultAction(self):
         pass
-
 
     def show(self, event):
         if not self.enabled:

@@ -1,3 +1,4 @@
+import pygame
 from pygame.locals import *
 
 from core.event import *
@@ -15,6 +16,9 @@ class KeyboardController(Controller):
 
     def keyMap(self, event):
         triggerEvent = None
+
+        ctrlPressed = pygame.key.get_pressed()[K_LCTRL] or pygame.key.get_pressed()[K_RCTRL]
+
         if event.key == K_ESCAPE:
             triggerEvent = QuitEvent()
 
@@ -32,6 +36,12 @@ class KeyboardController(Controller):
 
         elif event.key == K_RIGHT:
             triggerEvent = ChangeSpeedEvent(DELAY_DOWN)
+
+        elif event.key == K_s and ctrlPressed:
+            triggerEvent = SaveEvent()
+
+        elif event.key == K_r and ctrlPressed:
+            triggerEvent = LoadEvent()
 
         if triggerEvent:
             self.trigger(triggerEvent)

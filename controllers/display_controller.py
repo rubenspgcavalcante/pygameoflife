@@ -29,9 +29,6 @@ class DisplayController(Controller):
         self.config = Config()
         self.screen = None
         self.speed = None
-        self.speedUpNotification = None
-        self.speedDownNotification = None
-        self.activeNotification = None
 
         self.layers = []
         self.game = game
@@ -42,6 +39,8 @@ class DisplayController(Controller):
         self.bind(PauseEvent(), self.pause)
         self.bind(SetCellEvent(), self.setCell)
         self.bind(DelCellEvent(), self.delCell)
+        self.bind(SaveEvent(), self.saveGame)
+        self.bind(LoadEvent(), self.loadState)
 
     def defaultAction(self):
         if self.game.nextIteration():
@@ -121,6 +120,29 @@ class DisplayController(Controller):
 
         self.config.attr.game.speed = currentSpeed
 
+    def saveGame(self, event):
+        self.game.habitat.saveState()
+        self.trigger(ShowNotificationEvent("save"))
+
+    def loadState(self, event):
+        self.game.habitat = self.game.habitat.loadState()
+        self.redraw()
+        self.trigger(ShowNotificationEvent("load"))
+
+    def redraw(self):
+        """
+        Force redraw of all the screen
+        """
+        habitatSprite = HabitatSprite(self.screen)
+        cellSprite = CellSprite(self.screen)
+        habitatSprite.generate()
+
+        for i in range(self.game.habitat.gridSize[0]):
+            for j in range(self.game.habitat.gridSize[1]):
+                if self.game.habitat.grid[i][j]:
+                    cellSprite.put((i,j))
+
+
     def show(self, event):
         resource = Resource()
         self.game.loadHabitat()
@@ -130,9 +152,6 @@ class DisplayController(Controller):
 
         habitat = HabitatSprite(self.screen)
         habitat.generate()
-
-        self.speedUpNotification = SpeedUpNotification(self.screen)
-        self.speedDownNotification = SpeedDownNotification(self.screen)
 
         self.game.state = Game.STATE_RUNNING
         self.trigger(ScreenAvaibleEvent(self.screen))

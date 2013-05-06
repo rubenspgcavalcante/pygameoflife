@@ -1,10 +1,11 @@
 from weakref import WeakKeyDictionary
-from core.event import Event
+import controllers
+from core.event import Event, TickEvent
 
 from core.singleton import singleton
 
 @singleton
-class Mediator:
+class Mediator(object):
     """this object is responsible for coordinating most communication
     between the Model, View, and Controller."""
     def __init__(self):

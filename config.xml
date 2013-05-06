@@ -1,4 +1,5 @@
-<configuration>
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
     <path>
         <resources template="true">{BASEPATH}/resources/</resources>
 
@@ -8,9 +9,9 @@
 
         <library>library/</library>
 
-        <processeddir>cache/</processeddir>
+        <cache>cache/</cache>
 
-        <staticdir>static/</staticdir>
+        <static>static/</static>
 
         <qtui>qt/</qtui>
 
@@ -74,4 +75,4 @@
         </speed>
     </setup>
 
-</configuration>
+</config>

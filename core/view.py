@@ -1,6 +1,6 @@
 from pygame import display
 
-class View():
+class View(object):
     def __init__(self, screen):
         """
         View associated to a pygame screen

@@ -5,6 +5,9 @@ from core.resource_manager import *
 
 class NotificationSprite(View):
     def __init__(self, screen):
+        """
+        Loads the notification image with the same name of the class
+        """
         View.__init__(self, screen)
         resource = Resource()
         self.position = (0,0)
@@ -53,5 +56,13 @@ class SpeedUpNotification(NotificationSprite):
 
 
 class SpeedDownNotification(NotificationSprite):
+    def __init__(self, screen):
+        NotificationSprite.__init__(self, screen)
+
+class SaveNotification(NotificationSprite):
+    def __init__(self, screen):
+        NotificationSprite.__init__(self, screen)
+
+class LoadNotification(NotificationSprite):
     def __init__(self, screen):
         NotificationSprite.__init__(self, screen)

@@ -8,7 +8,6 @@ from core.xml_configuration_parser import XMLConfigurationParser
 @singleton
 class Config(object):
     def __init__(self):
-
         self._parser = XMLConfigurationParser()
         self._attr = self._parser.parse(os.path.join(self.getBasePath(), "config.xml"), BASEPATH=self.getBasePath())
         self._bck = self._attr
@@ -16,7 +15,7 @@ class Config(object):
     def getBasePath(self):
         """
         Returns the project base path
-        @ret
+        @rtype: str
         """
         path = os.path.dirname((os.path.dirname(os.path.abspath(__file__))))
         if not os.path.exists(path + "/"):
@@ -42,8 +41,14 @@ class Config(object):
         pass
 
     def reset(self):
+        """
+        Resets the config object to the default state, based on config,xml
+        """
         self._attr = self._bck
 
     def reload(self):
+        """
+        Force the reload of the config.xml file
+        """
         self._attr = self._parser.parse("config.xml")
         self._bck = self._attr

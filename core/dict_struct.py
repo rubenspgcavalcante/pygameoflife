@@ -1,5 +1,5 @@
 import re
-class Struct:
+class DictStruct:
     def __init__(self, **entries):
         """
         Transforms a simple dict object into a structured object
@@ -9,7 +9,7 @@ class Struct:
         """
         for key, value in entries.items():
             if type(value) == dict:
-                entries[key] = Struct(**value)
+                entries[key] = DictStruct(**value)
         self.__dict__.update(entries)
 
     def __str__(self):

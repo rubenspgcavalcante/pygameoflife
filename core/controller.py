@@ -3,7 +3,7 @@ from core.event import Event, TickEvent
 from core.mediator import Mediator
 
 
-class Controller:
+class Controller(object):
     def __init__(self):
         #
         # The mediator is a singleton, so every controller instance

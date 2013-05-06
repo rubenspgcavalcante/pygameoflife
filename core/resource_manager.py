@@ -21,7 +21,7 @@ class Resource(object):
         Loads a set of images (sprite) which forms a animation that represents
         an entity
         """
-        path = os.path.join(self.config.attr.path.resources, self.config.attr.processeddir)
+        path = os.path.join(self.config.attr.path.resources, self.config.attr.cache)
         sprite = pygame.image.load(os.path.join(path, entity + ".png")).convert_alpha()
         images = []
         spriteWidth, spriteHeight = sprite.get_size()
@@ -39,10 +39,10 @@ class Resource(object):
         """
         path = self.config.attr.path.resources
         if static:
-            path = os.path.join(path, self.config.attr.path.staticdir)
+            path = os.path.join(path, self.config.attr.path.static)
 
         else:
-            path = os.path.join(path, self.config.attr.path.processeddir)
+            path = os.path.join(path, self.config.attr.path.cache)
 
         singleImg = pygame.image.load(os.path.join(path, entity + ".png")).convert_alpha()
         return singleImg
@@ -83,7 +83,7 @@ class Resource(object):
         """
         basePath = self.config.attr.path.resources
         src = os.path.join(basePath, self.config.attr.path.sourcedir)
-        proccessedDir = os.path.join(basePath, self.config.attr.path.processeddir)
+        proccessedDir = os.path.join(basePath, self.config.attr.path.cache)
 
         for _dir in os.listdir(src):
             if "frames" in _dir:
