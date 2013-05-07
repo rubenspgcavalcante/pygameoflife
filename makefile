@@ -27,6 +27,7 @@ all: releases/$(ZIP_NAME).zip clean
 build: resources library
 	python $(FLAGS)
 	mkdir -p build
+	mkdir -p build/logs
 	cp ./config.xml ./build/
 	cp --parents ./*.pyc build/
 	cp --parents ./models/*.pyc build/
@@ -38,6 +39,7 @@ build: resources library
 releases/$(ZIP_NAME).zip: build
 	mkdir -p freezed
 	mkdir -p freezed/$(GAME_NAME)
+	mkdir -p freezed/$(GAME_NAME)/logs
 	cxfreeze __main__.py $(HIDE_CONSOLE_WIN32) --target-dir freezed/$(GAME_NAME) --target-name $(BIN_NAME) --exclude-modules=$(EXCLUDE_MODULES) --include-modules=$(INCLUDE_MODULES)
 	
 	cp ./config.xml freezed/$(GAME_NAME)/

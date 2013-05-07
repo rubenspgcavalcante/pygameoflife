@@ -1,5 +1,6 @@
 from random import random
 from ctypes import *
+from core.error import CacheError
 
 from core.model import Model
 from core.config import Config

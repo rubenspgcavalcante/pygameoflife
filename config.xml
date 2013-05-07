@@ -15,6 +15,8 @@
 
         <qtui>qt/</qtui>
 
+        <log>logs/</log>
+
     </path>
 
     <game>
@@ -61,10 +63,16 @@
         </cell>
     </game>
 
+    <logger>
+        <info>info.log</info>
+        <debug>debug.log</debug>
+        <error>error.log</error>
+    </logger>
+
     <setup>
         <resolution>
-            <small type="tuple(int)">(400, 300)</small>
-            <medium type="tuple(int)">(800, 600)</medium>
+            <small type="tuple(int)">(400, 288)</small>
+            <medium type="tuple(int)">(800, 592)</medium>
             <large type="tuple(int)">(1024, 768)</large>
         </resolution>
 

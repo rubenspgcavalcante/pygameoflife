@@ -25,6 +25,9 @@ class NotificationController(Controller):
             "save": SaveNotification(event.screen),
 
             "load": LoadNotification(event.screen)
+
+            "loadError":
+
         }
 
     def defaultAction(self):
@@ -45,6 +48,7 @@ class NotificationController(Controller):
         except KeyError:
             print "Notification " + event.name + " doesn't exits"
             return False
+
 
     def removeNotification(self, event):
         if self.activeNotification is not None and self.activeNotification.active:

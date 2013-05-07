@@ -42,7 +42,6 @@ if __name__ == "__main__":
         notifications = NotificationController()
         sounds = SoundEffectController()
 
-        game = Game()
-        display = DisplayController(game)
+        display = DisplayController()
 
         spinner.run()

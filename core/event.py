@@ -97,6 +97,11 @@ class LoadEvent(Event):
         Event.__init__(self)
         self.name = "Load event"
 
+class LoadErrorEvent(Event):
+    def __init__(self):
+        Event.__init__(self)
+        self.name = "Load error event"
+
 class ChangeSpeedEvent(Event):
     UP = 1
     DOWN = 0
@@ -124,6 +129,11 @@ class ShowNotificationEvent(Event):
         self.name = "Show notification"
         self.notification = notification
 
+class ShowErrorNotificationEvent(Event):
+    def __init__(self, notification=None):
+        Event.__init__(self)
+        self.name = "Show error notification"
+        self.notification = notification
 
 class DisplayRefreshEvent(Event):
     def __init__(self, layer=None):

@@ -16,7 +16,7 @@ class DisplayController(Controller):
     """
     Controls all the display actions and responses
     """
-    def __init__(self, game):
+    def __init__(self):
         """
         Initiates the display controller
         @type game: Game
@@ -29,12 +29,12 @@ class DisplayController(Controller):
         self.config = Config()
         self.screen = None
         self.speed = None
+        self.game = None
 
         self.layers = []
-        self.game = game
-        self.cellStates = [[0] * self.game.habitat.gridSize[1] for x in xrange(self.game.habitat.gridSize[0])]
+        self.cellStates = []
 
-        self.bind(GameStartEvent(), self.show)
+        self.bind(GameStartEvent(), self.construct)
         self.bind(ChangeSpeedEvent(), self.changeSpeed)
         self.bind(PauseEvent(), self.pause)
         self.bind(SetCellEvent(), self.setCell)
@@ -143,8 +143,12 @@ class DisplayController(Controller):
                     cellSprite.put((i,j))
 
 
-    def show(self, event):
+    def construct(self, event):
         resource = Resource()
+
+        self.game = Game()
+        self.cellStates = [[0] * self.game.habitat.gridSize[1] for x in xrange(self.game.habitat.gridSize[0])]
+
         self.game.loadHabitat()
         self.screen = pygame.display.set_mode(self.config.attr.game.window.size)
         pygame.display.set_icon(resource.image("icon", static=True))

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import logging
 
 import os
 import re
@@ -141,3 +142,19 @@ class Resource(object):
         qrcFile = open(os.path.join(qtDir, "resources.qrc"), "w")
         qrcFile.write(xmlString)
         qrcFile.close()
+
+    def logFile(self, level=logging.INFO):
+        if level == logging.INFO:
+            fileName = Config().attr.logger.info
+
+        elif level == logging.DEBUG:
+            fileName = Config().attr.logger.debug
+
+        elif level == logging.ERROR:
+            fileName = Config().attr.logger.error
+
+        else:
+            raise TypeError("Use logging level enumeration as 'level' parameter")
+
+        logFile = os.path.join(Config().attr.path.log, fileName)
+        return logFile

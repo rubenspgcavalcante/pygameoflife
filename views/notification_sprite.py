@@ -66,3 +66,7 @@ class SaveNotification(NotificationSprite):
 class LoadNotification(NotificationSprite):
     def __init__(self, screen):
         NotificationSprite.__init__(self, screen)
+
+class LoadErrorNotification(NotificationSprite):
+    def __init__(self, screen):
+        NotificationSprite.__init__(self)
