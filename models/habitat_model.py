@@ -63,11 +63,13 @@ class Habitat(Model):
 
         del self.grid
         self.grid = bckpList
-        super(Habitat, self).saveState()
+        prefixName = str(lins) + "x" + str(cols)
+        super(Habitat, self).saveState(prefix=prefixName)
         self.turnIntoCArray()
 
     def loadState(self):
-        habitat = super(Habitat, self).loadState()
+        prefixName = str(self.gridSize[0]) + "x" + str(self.gridSize[1])
+        habitat = super(Habitat, self).loadState(prefix=prefixName)
         habitat.turnIntoCArray()
         return habitat
 

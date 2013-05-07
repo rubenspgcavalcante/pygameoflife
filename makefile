@@ -6,7 +6,7 @@ CX_FREEZE_VER = 4.3.1
 CX_FREEZE_LINK = "http://downloads.sourceforge.net/project/cx-freeze/$(CX_FREEZE_VER)/cx_Freeze-$(CX_FREEZE_VER).tar.gz"
 EXCLUDE_MODULES = tcl,ttk,Tkinter,setuptolls,numpy
 INCLUDE_MODULES = lxml.etree,lxml._elementpath
-APT_DEPENDECES= gcc python python-dev python-imaging python-pygame python-qt4 pyqt4-dev-tools zip
+APT_DEPENDECES= gcc python python-dev python-imaging python-lxml python-pygame python-qt4 pyqt4-dev-tools zip
 HIDE_CONSOLE_WIN32 = $(shell if [ `uname` != Linux ] ; then echo --base-name=Win32GUI ; fi)
 
 # --------------------------------------- Game attributes ----------------------------------------------------#

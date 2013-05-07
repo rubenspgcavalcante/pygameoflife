@@ -101,7 +101,7 @@ class DisplayController(Controller):
 
     def changeSpeed(self, event):
         currentSpeed = self.config.attr.game.speed
-        difference = currentSpeed + event.delayChange
+        totalDelay = currentSpeed + event.delayChange
         
         if event.state == ChangeSpeedEvent.UP:
             self.trigger(ShowNotificationEvent("speedUp"))
@@ -109,14 +109,14 @@ class DisplayController(Controller):
         elif event.state == ChangeSpeedEvent.DOWN:
             self.trigger(ShowNotificationEvent("speedDown"))
 
-        if difference < 0 or difference < self.config.attr.game.delay.min:
+        if totalDelay < 0 or totalDelay < self.config.attr.game.delay.min:
             currentSpeed = self.config.attr.game.delay.min
 
-        elif difference > self.config.attr.game.delay.max:
-            currentSpeed += self.config.attr.game.delay.max
+        elif totalDelay > self.config.attr.game.delay.max:
+            currentSpeed = self.config.attr.game.delay.max
 
         else:
-            currentSpeed = difference
+            currentSpeed = totalDelay
 
         self.config.attr.game.speed = currentSpeed
 

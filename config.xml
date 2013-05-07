@@ -36,7 +36,7 @@
         </volume>
 
         <delay>
-            <max type="int">100</max>
+            <max type="int">200</max>
             <min type="int">0</min>
         </delay>
 
