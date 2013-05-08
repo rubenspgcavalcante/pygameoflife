@@ -16,6 +16,7 @@ LIB_TYPE := $(shell if [ `uname` = Linux ] ; then echo .so ; else echo .dll ; fi
 BIN_NAME = $(shell if [ `uname` = Linux ] ; then echo run-$(GAME_NAME) ; else echo run-$(GAME_NAME).exe ; fi)
 GAME_VERSION = $(shell python __main__.py --version)
 GAME_NAME = pygameoflife
+USER_AND_GROUP = $(shell echo `whoami`:`whoami`)
 ZIP_NAME = $(GAME_NAME)_$(GAME_VERSION)_$(OS_TYPE)_$(ARCH_TYPE)
 # ------------------------------------- End game attributes --------------------------------------------------#
 
@@ -96,8 +97,9 @@ install: isroot
 	cp resources/static/icon.png /usr/share/$(GAME_NAME)/
 	cp $(GAME_NAME).desktop /usr/share/applications/
 	ln -s --force /usr/share/$(GAME_NAME)/run-$(GAME_NAME) /usr/games/$(GAME_NAME)
-	chmod +w /usr/share/$(GAME_NAME)/logs/
-	chmod +x /usr/games/$(GAME_NAME)
+	chmod a+wr /usr/share/$(GAME_NAME)/logs/
+	chmod a+wr /usr/share/$(GAME_NAME)/resources/cache
+	chmod a+x /usr/games/$(GAME_NAME)
 
 .PHONY: uninstall
 uninstall: isroot
