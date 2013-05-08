@@ -95,9 +95,9 @@ install: isroot
 	rm -f /usr/share/$(ZIP_NAME).zip
 	cp resources/static/icon.png /usr/share/$(GAME_NAME)/
 	cp $(GAME_NAME).desktop /usr/share/applications/
-	ln -s --force /usr/share/$(GAME_NAME)/run-$(GAME_NAME) /usr/games/$(GAME_NAME) 
+	ln -s --force /usr/share/$(GAME_NAME)/run-$(GAME_NAME) /usr/games/$(GAME_NAME)
+	chmod +w /usr/share/$(GAME_NAME)/logs/
 	chmod +x /usr/games/$(GAME_NAME)
-
 
 .PHONY: uninstall
 uninstall: isroot

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <path>
+        <base template="true">{BASEPATH}/</base>
+
         <resources template="true">{BASEPATH}/resources/</resources>
 
         <sourcedir>src/</sourcedir>

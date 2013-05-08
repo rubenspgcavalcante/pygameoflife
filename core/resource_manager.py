@@ -156,5 +156,5 @@ class Resource(object):
         else:
             raise TypeError("Use logging level enumeration as 'level' parameter")
 
-        logFile = os.path.join(Config().attr.path.log, fileName)
+        logFile = os.path.join(Config().attr.path.base + Config().attr.path.log, fileName)
         return logFile
