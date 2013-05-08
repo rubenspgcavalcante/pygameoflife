@@ -1,6 +1,7 @@
 import os
 
 import pygame
+from core.error import CacheError
 
 from core.event import *
 from core.controller import *
@@ -121,13 +122,22 @@ class DisplayController(Controller):
         self.config.attr.game.speed = currentSpeed
 
     def saveGame(self, event):
-        self.game.habitat.saveState()
-        self.trigger(ShowNotificationEvent("save"))
+        try:
+            self.game.habitat.saveState()
+            self.trigger(ShowNotificationEvent("save"))
+
+        except:
+            #TODO Show save error notification
+            pass
 
     def loadState(self, event):
-        self.game.habitat = self.game.habitat.loadState()
-        self.redraw()
-        self.trigger(ShowNotificationEvent("load"))
+        try:
+            self.game.habitat = self.game.habitat.loadState()
+            self.redraw()
+            self.trigger(ShowNotificationEvent("load"))
+
+        except CacheError as e:
+            self.trigger(ShowNotificationEvent("load", error=True))
 
     def redraw(self):
         """

@@ -69,4 +69,4 @@ class LoadNotification(NotificationSprite):
 
 class LoadErrorNotification(NotificationSprite):
     def __init__(self, screen):
-        NotificationSprite.__init__(self)
+        NotificationSprite.__init__(self, screen)

@@ -9,6 +9,7 @@ class NotificationController(Controller):
         self.activeNotification = None
         self.enabled = False
         self.notificationLib = None
+        self.errorNotificationLib = None
 
         self.bind(ScreenAvaibleEvent(), self.initNotifications)
         self.bind(ShowNotificationEvent(), self.show)
@@ -19,15 +20,13 @@ class NotificationController(Controller):
         self.enabled = True
         self.notificationLib = {
             "speedUp": SpeedUpNotification(event.screen),
-
             "speedDown": SpeedDownNotification(event.screen),
-
             "save": SaveNotification(event.screen),
+            "load": LoadNotification(event.screen),
+        }
 
-            "load": LoadNotification(event.screen)
-
-            "loadError":
-
+        self.errorNotificationLib = {
+            "load": LoadErrorNotification(event.screen)
         }
 
     def defaultAction(self):
@@ -41,7 +40,12 @@ class NotificationController(Controller):
             self.activeNotification.remove()
 
         try:
-            self.activeNotification = self.notificationLib[event.notification]
+            if event.error:
+                self.activeNotification = self.errorNotificationLib[event.notification]
+
+            else:
+                self.activeNotification = self.notificationLib[event.notification]
+
             self.activeNotification.put()
             return True
 

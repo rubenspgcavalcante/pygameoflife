@@ -124,15 +124,10 @@ class ScreenAvaibleEvent(Event):
 
 
 class ShowNotificationEvent(Event):
-    def __init__(self, notification=None):
+    def __init__(self, notification=None, error=False):
         Event.__init__(self)
         self.name = "Show notification"
-        self.notification = notification
-
-class ShowErrorNotificationEvent(Event):
-    def __init__(self, notification=None):
-        Event.__init__(self)
-        self.name = "Show error notification"
+        self.error = error
         self.notification = notification
 
 class DisplayRefreshEvent(Event):
