@@ -11,6 +11,7 @@ freeze
 resources/cache/*
 helpers/qtresources.py
 views/qtlauncher.py
+views/qtabout.py
 releases/
 !releases/.gitkeep
 !resources/cache/.gitkeep

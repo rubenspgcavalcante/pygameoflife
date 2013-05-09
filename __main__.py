@@ -14,23 +14,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
+
 __author__ = "Rubens Pinheiro Gonçalves Cavalcante"
 __date__ = "08/05/13 19:18"
 __licence__ = "GPLv3"
 __email__ = "rubenspgcavalcante@gmail.com"
 
 import sys
-
-import controllers.pygame_input_controller
-from controllers.keyboard_controller import *
-from controllers.mouse_controller import *
-from controllers.cpuspinner_controller import *
-from controllers.display_controller import *
-from controllers.launcher_controller import *
-from controllers.notification_controller import *
-from controllers.sound_effect_controller import *
-
 from core.resource_manager import Resource
+from core.config import Config
 
 if __name__ == "__main__":
 
@@ -53,14 +45,6 @@ if __name__ == "__main__":
         print "'--help' show this help\n"
 
     else:
-        inputs = controllers.pygame_input_controller.PygameInputController()
-        keyboard = KeyboardController()
-        mouse = MouseController()
-        spinner = CPUSpinnerController()
-        launcher = LauncherController()
-        notifications = NotificationController()
-        sounds = SoundEffectController()
-
-        display = DisplayController()
-
-        spinner.run()
+        #Loads all the application
+        from controllers.start_controller import StartController
+        StartController()
