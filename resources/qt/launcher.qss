@@ -132,8 +132,6 @@ QSlider::add-page:horizontal {
 	border-radius: 2px;
 }
 
-
-
 QPushButton#keyMap {
 	background-image: url(":images/keyboard.png");
 	background-position: center;
@@ -141,4 +139,13 @@ QPushButton#keyMap {
 
 QPushButton#keyMap:pressed {
 	background-image: url(":images/keyboard-pressed.png");
+}
+
+QPushButton#about {
+	background-image: url(":images/about.png");
+	background-position: center;
+}
+
+QPushButton#about:pressed {
+	background-image: url(":images/about-pressed.png");
 }

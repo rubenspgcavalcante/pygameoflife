@@ -12,9 +12,9 @@ Last build in Travis continuous integration
 #Download
 To execute just run the "run-pygameoflife" executable.  
 The current releases are:
-*    Version 1.1:
-    *    [Windows i686](http://sourceforge.net/projects/pygame-of-life/files/pygameoflife_1.1_Win_i686.zip/download)
-    *    [Linux x86-64](http://sourceforge.net/projects/pygame-of-life/files/pygameoflife_1.1_Linux_x86_64.zip/download)
+*    Version 1.12:
+    *    [Windows i686](http://sourceforge.net/projects/pygame-of-life/files/pygameoflife_1.12_Win_i686.zip/download)
+    *    [Linux x86-64](http://sourceforge.net/projects/pygame-of-life/files/pygameoflife_1.12_Linux_x86_64.zip/download)
 *    Version 1.0 beta:
     *    [Windows i686](http://sourceforge.net/projects/pygame-of-life/files/pygameoflife_1.0b_Win_i686.zip/download)
     *    [Linux x86-64](http://sourceforge.net/projects/pygame-of-life/files/pygameoflife_1.0b_Linux_x86_64.zip/download)

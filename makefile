@@ -16,7 +16,6 @@ LIB_TYPE := $(shell if [ `uname` = Linux ] ; then echo .so ; else echo .dll ; fi
 BIN_NAME = $(shell if [ `uname` = Linux ] ; then echo run-$(GAME_NAME) ; else echo run-$(GAME_NAME).exe ; fi)
 GAME_VERSION = $(shell python __main__.py --version)
 GAME_NAME = pygameoflife
-USER_AND_GROUP = $(shell echo `whoami`:`whoami`)
 ZIP_NAME = $(GAME_NAME)_$(GAME_VERSION)_$(OS_TYPE)_$(ARCH_TYPE)
 # ------------------------------------- End game attributes --------------------------------------------------#
 
@@ -44,6 +43,7 @@ releases/$(ZIP_NAME).zip: build
 	cxfreeze __main__.py $(HIDE_CONSOLE_WIN32) --target-dir freezed/$(GAME_NAME) --target-name $(BIN_NAME) --exclude-modules=$(EXCLUDE_MODULES) --include-modules=$(INCLUDE_MODULES)
 	
 	cp ./config.xml freezed/$(GAME_NAME)/
+	cp ./LICENSE.txt freezed/$(GAME_NAME)/
 	cp --parents ./resources/cache/*.png freezed/$(GAME_NAME)/
 	cp --parents ./resources/static/*.png freezed/$(GAME_NAME)/
 	cp --parents ./resources/audio/*.wav freezed/$(GAME_NAME)/
@@ -57,7 +57,7 @@ releases/$(ZIP_NAME).zip: build
 
 ############################# Creation of resources ###############################
 .PHONY: resources
-resources: helpers/qtresources.py views/qtlauncher.py
+resources: helpers/qtresources.py views/qtlauncher.py views/qtabout.py
 	python __main__.py --genimg
 
 
@@ -74,6 +74,8 @@ helpers/qtresources.py: resources/qt/resources.qrc
 views/qtlauncher.py: resources/qt/launcher.ui
 	pyuic4 resources/qt/launcher.ui -o views/qtlauncher.py
 
+views/qtabout.py: resources/qt/about.ui
+	pyuic4 resources/qt/about.ui -o views/qtabout.py
 
 library: C/makefile
 	cd C && make
